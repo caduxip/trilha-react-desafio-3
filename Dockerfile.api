@@ -7,11 +7,17 @@ COPY package*.json ./
 # Mantemos a instalação isolada para aproveitar cache entre rebuilds.
 RUN npm ci
 
-COPY db.json ./db.json
+COPY --chown=node:node db.json ./db.json
+
+# A API mock não precisa rodar como root.
+# Usar o usuário `node` reduz risco e aproxima o ambiente de práticas mais seguras.
+USER node
 
 EXPOSE 8001
 
 # O compose monta `db.json` por volume para que cadastro e reset local
 # reflitam imediatamente no container da API.
+HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=5 \
+  CMD wget --spider -q http://127.0.0.1:8001/users || exit 1
 
 CMD ["npx", "json-server", "--watch", "db.json", "--host", "0.0.0.0", "-p", "8001"]

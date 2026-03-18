@@ -2,13 +2,14 @@
 # O objetivo aqui é deixar a subida previsível para desenvolvimento e demonstração.
 services:
   api:
+    image: ${TRILHA_API_IMAGE:-trilha-react-api:local}
     build:
       context: .
       dockerfile: Dockerfile.api
     container_name: trilha-react-api
     restart: unless-stopped
     ports:
-      - '8001:8001'
+      - '${TRILHA_API_PORT:-8001}:8001'
     volumes:
       - ./db.json:/app/db.json
     # A API é considerada saudável quando o recurso básico de usuários responde.
@@ -20,6 +21,7 @@ services:
       start_period: 5s
 
   frontend:
+    image: ${TRILHA_FRONTEND_IMAGE:-trilha-react-frontend:local}
     build:
       context: .
       dockerfile: Dockerfile.frontend
@@ -33,9 +35,9 @@ services:
         condition: service_healthy
     restart: unless-stopped
     ports:
-      - '3000:80'
+      - '${TRILHA_FRONTEND_PORT:-3000}:8080'
     healthcheck:
-      test: ['CMD', 'wget', '--spider', '-q', 'http://127.0.0.1']
+      test: ['CMD', 'wget', '--spider', '-q', 'http://127.0.0.1:8080']
       interval: 10s
       timeout: 5s
       retries: 5

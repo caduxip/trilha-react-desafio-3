@@ -106,6 +106,9 @@ Variáveis disponíveis:
 - `REACT_APP_LOG_LEVEL`: define o nível mínimo de log do frontend (`debug`, `info`, `warn`, `error`, `silent`).
 - `REACT_APP_SENTRY_DSN`: DSN do projeto Sentry, quando a observabilidade externa estiver habilitada.
 - `REACT_APP_SENTRY_ENVIRONMENT`: nome do ambiente reportado ao Sentry, como `development`, `staging` ou `production`.
+- `TRILHA_API_PORT`: porta publicada do container da API mock no host local.
+- `TRILHA_FRONTEND_PORT`: porta publicada do container do frontend no host local.
+- `TRILHA_API_IMAGE` e `TRILHA_FRONTEND_IMAGE`: nomes/tags locais usados pelo Docker Compose.
 
 Se não for definida, a aplicação usa `http://127.0.0.1:8001` por padrão.
 
@@ -164,7 +167,10 @@ Observações importantes sobre o ambiente Docker:
 
 - o `frontend` espera a `api` ficar saudável antes de subir;
 - ambos os serviços possuem `healthcheck` no `docker-compose.yml`;
-- o build do frontend usa `REACT_APP_API_URL=http://127.0.0.1:8001` por padrão, porque a aplicação roda no navegador do host, não dentro do container nginx.
+- ambos os Dockerfiles também declaram `healthcheck`, o que ajuda em `docker run` e validações fora do Compose;
+- o build do frontend usa `REACT_APP_API_URL=http://127.0.0.1:8001` por padrão, porque a aplicação roda no navegador do host, não dentro do container nginx;
+- o runtime do frontend usa `nginx` em modo não-root e expõe a porta interna `8080`, enquanto o host continua usando `3000` por padrão;
+- a API mock roda com o usuário `node`, evitando privilégios desnecessários no container.
 
 ## Scripts disponíveis
 
@@ -499,6 +505,15 @@ Manutenção de dependências:
 - use `npm run deps:audit` ou `npm run deps:audit:prod` para acompanhar vulnerabilidades reportadas pelo npm;
 - a estratégia atual do projeto é aplicar primeiro upgrades diretos e de baixo risco, como `axios`, `react`, `react-dom` e libs de teste;
 - parte dos alertas restantes ainda vem da cadeia do `react-scripts`, então qualquer correção completa nessa frente tende a exigir uma modernização mais ampla do stack, e não apenas um `npm audit fix --force`.
+
+## Hardening do ambiente Docker
+
+O ambiente de containers agora aplica alguns cuidados adicionais sem mudar o fluxo básico de uso:
+
+- frontend servido por imagem unprivileged do `nginx`, evitando processo root no runtime final;
+- API mock rodando com o usuário `node`;
+- `healthcheck` tanto no `docker-compose.yml` quanto nos Dockerfiles;
+- portas e nomes de imagem parametrizáveis por `.env`, o que ajuda em máquinas onde `3000` ou `8001` já estão ocupadas.
 
 ## Qualidade e manutenção
 

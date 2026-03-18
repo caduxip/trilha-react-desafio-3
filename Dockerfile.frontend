@@ -15,15 +15,18 @@ ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 
 RUN npm run build
 
-# Runtime enxuto usando nginx para servir os arquivos estáticos.
-FROM nginx:1.27-alpine AS runtime
+# Runtime enxuto usando nginx em modo não-root para servir os arquivos estáticos.
+# Isso reduz privilégio desnecessário no container final.
+FROM nginxinc/nginx-unprivileged:1.27-alpine AS runtime
 
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 8080
 
-# O healthcheck final é definido no docker-compose porque ele representa
-# a forma como este container será usado no ambiente local do projeto.
+# Declaramos o healthcheck também no Dockerfile para que `docker run`
+# e pipelines isolados recebam o mesmo contrato básico do Compose.
+HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=5 \
+  CMD wget --spider -q http://127.0.0.1:8080 || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
