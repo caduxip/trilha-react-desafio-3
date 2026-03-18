@@ -24,7 +24,7 @@
     "test:ci": "react-scripts test --watchAll=false",
     "verify": "npm run test:ci && npm run build",
     "eject": "react-scripts eject",
-    "api": "json-server --watch db.json -p 8001" 
+    "api": "json-server --watch db.json --host 127.0.0.1 -p 8001" 
   },
   "eslintConfig": {
     "extends": [

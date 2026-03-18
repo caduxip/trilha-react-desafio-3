@@ -90,7 +90,7 @@ Variáveis disponíveis:
 
 - `REACT_APP_API_URL`: URL base da API consumida pelo frontend.
 
-Se não for definida, a aplicação usa `http://localhost:8001` por padrão.
+Se não for definida, a aplicação usa `http://127.0.0.1:8001` por padrão.
 
 ### 3. Subir a API fake
 
@@ -98,7 +98,7 @@ Se não for definida, a aplicação usa `http://localhost:8001` por padrão.
 npm run api
 ```
 
-A API será exposta em `http://localhost:8001`.
+A API será exposta em `http://127.0.0.1:8001`.
 
 ### 4. Subir o frontend
 
