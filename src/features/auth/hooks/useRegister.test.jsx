@@ -2,6 +2,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { STORAGE_KEYS } from '../../../constants/storage';
+import { ROUTER_FUTURE_FLAGS } from '../../../routes/future';
 import { AuthProvider } from '../context/auth';
 import { authService } from '../services/auth';
 import { useRegister } from './useRegister';
@@ -25,7 +26,9 @@ jest.mock('react-router-dom', () => {
 });
 
 const wrapper = ({ children }) => (
-  <MemoryRouter>
+  // A suíte usa as mesmas future flags da aplicação para reduzir diferença
+  // entre o comportamento testado e o comportamento em runtime.
+  <MemoryRouter future={ROUTER_FUTURE_FLAGS}>
     <AuthProvider>{children}</AuthProvider>
   </MemoryRouter>
 );

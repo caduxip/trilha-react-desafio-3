@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { AppErrorBoundary } from './components/AppErrorBoundary';
 import { AuthProvider } from './features/auth';
+import { ROUTER_FUTURE_FLAGS } from './routes/future';
 import { AppRoutes } from './routes';
 import { GlobalStyle } from './styles/global';
 import { theme } from './styles/theme';
@@ -16,7 +17,7 @@ function App() {
       {/* Injeta os tokens visuais usados pelos styled-components. */}
       <ThemeProvider theme={theme}>
         {/* Controla a navegação entre telas sem recarregar a página. */}
-        <Router>
+        <Router future={ROUTER_FUTURE_FLAGS}>
           <GlobalStyle />
           {/* Evita tela branca total quando algum componente lança erro em renderização. */}
           <AppErrorBoundary>

@@ -2,6 +2,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { STORAGE_KEYS } from '../../../constants/storage';
+import { ROUTER_FUTURE_FLAGS } from '../../../routes/future';
 import { AuthProvider } from '../context/auth';
 import { authService } from '../services/auth';
 import { useLogin } from './useLogin';
@@ -25,7 +26,7 @@ jest.mock('react-router-dom', () => {
 
 const wrapper = ({ children }) => (
   // O hook precisa do router para navegar e do provider para persistir sessão.
-  <MemoryRouter>
+  <MemoryRouter future={ROUTER_FUTURE_FLAGS}>
     <AuthProvider>{children}</AuthProvider>
   </MemoryRouter>
 );

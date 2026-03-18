@@ -155,7 +155,12 @@ test('allows the authenticated user to log out from the feed', async () => {
 
   userEvent.click(screen.getByRole('button', { name: /sair/i }));
 
-  expect(await screen.findByText('Implemente')).toBeInTheDocument();
+  expect(
+    await screen.findByRole('heading', {
+      level: 1,
+      name: /a plataforma para você aprender com experts/i,
+    }),
+  ).toBeInTheDocument();
   expect(window.localStorage.getItem(STORAGE_KEYS.authUser)).toBeNull();
 });
 

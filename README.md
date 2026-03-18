@@ -224,6 +224,7 @@ Esse comportamento é intencional para fins de estudo e prototipação.
 O projeto possui uma camada dedicada para rotas em `src/routes`, responsável por:
 
 - centralizar os paths da aplicação;
+- centralizar as future flags adotadas do React Router para reduzir ruído de migração;
 - separar guardas de rota pública e privada;
 - compor as rotas principais do app;
 - aplicar `lazy loading` nas páginas para reduzir o bundle inicial.
