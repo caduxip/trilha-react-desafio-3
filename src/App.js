@@ -1,6 +1,7 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
+import { AppErrorBoundary } from './components/AppErrorBoundary';
 import { AuthProvider } from './features/auth';
 import { AppRoutes } from './routes';
 import { GlobalStyle } from './styles/global';
@@ -12,7 +13,9 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <GlobalStyle />
-          <AppRoutes />
+          <AppErrorBoundary>
+            <AppRoutes />
+          </AppErrorBoundary>
         </Router>
       </ThemeProvider>
     </AuthProvider>

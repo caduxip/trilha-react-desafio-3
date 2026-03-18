@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { AsyncState } from '../../../../components/AsyncState';
 import { Button } from '../../../../components/Button';
 import { Card } from '../../../../components/Card';
 import { UserInfo } from '../../../../components/UserInfo';
@@ -10,9 +11,7 @@ import { feedService } from '../../services/feed';
 import {
   Container,
   Column,
-  EmptyText,
   SectionHeader,
-  StatusCard,
   Title,
   TitleHighlight,
 } from './styles';
@@ -79,24 +78,19 @@ const Feed = () => {
             ) : null}
           </SectionHeader>
 
-          {isLoading ? <StatusCard>{MESSAGES.feed.loading}</StatusCard> : null}
+          {isLoading ? <AsyncState title="Carregando feed" description={MESSAGES.feed.loading} /> : null}
 
           {!isLoading && error ? (
-            <StatusCard>
-              <p>{error}</p>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => setReloadKey((current) => current + 1)}
-                title="Tentar novamente"
-              />
-            </StatusCard>
+            <AsyncState
+              title="Falha ao carregar o feed"
+              description={error}
+              actionLabel={MESSAGES.ui.retry}
+              onAction={() => setReloadKey((current) => current + 1)}
+            />
           ) : null}
 
           {!isLoading && !error && !posts.length ? (
-            <StatusCard>
-              <EmptyText>{MESSAGES.feed.empty}</EmptyText>
-            </StatusCard>
+            <AsyncState title="Feed vazio" description={MESSAGES.feed.empty} />
           ) : null}
 
           {!isLoading && !error ? posts.map((post) => <Card key={post.id} post={post} />) : null}

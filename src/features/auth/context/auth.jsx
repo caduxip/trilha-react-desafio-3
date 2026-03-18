@@ -1,34 +1,19 @@
 import { createContext, useContext, useState } from 'react';
-import { STORAGE_KEYS } from '../../../constants/storage';
+import { authSession } from '../../../lib/storage/session';
 
 const AuthContext = createContext(null);
 
-const getStoredUser = () => {
-  const storedUser = localStorage.getItem(STORAGE_KEYS.authUser);
-
-  if (!storedUser) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(storedUser);
-  } catch (error) {
-    localStorage.removeItem(STORAGE_KEYS.authUser);
-    return null;
-  }
-};
-
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(getStoredUser);
+  const [user, setUser] = useState(() => authSession.get());
 
   const signIn = (nextUser) => {
     setUser(nextUser);
-    localStorage.setItem(STORAGE_KEYS.authUser, JSON.stringify(nextUser));
+    authSession.set(nextUser);
   };
 
   const signOut = () => {
     setUser(null);
-    localStorage.removeItem(STORAGE_KEYS.authUser);
+    authSession.clear();
   };
 
   return (

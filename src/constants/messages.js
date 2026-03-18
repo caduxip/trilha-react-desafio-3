@@ -1,4 +1,8 @@
 const MESSAGES = {
+  app: {
+    unexpectedError: 'Algo inesperado aconteceu nesta tela.',
+    unexpectedErrorHelp: 'Tente recarregar a página ou volte para o início para continuar.',
+  },
   auth: {
     invalidCredentials: 'Usuário ou senha inválidos.',
     loginUnavailable: 'Não foi possível acessar a API. Verifique o json-server e tente novamente.',
@@ -9,6 +13,11 @@ const MESSAGES = {
     loading: 'Carregando publicações...',
     loadError: 'Não foi possível carregar o feed agora. Tente novamente.',
     empty: 'Nenhuma publicação disponível no momento.',
+  },
+  ui: {
+    backHome: 'Voltar ao início',
+    reloadPage: 'Recarregar página',
+    retry: 'Tentar novamente',
   },
 };
 

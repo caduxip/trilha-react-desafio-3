@@ -50,6 +50,10 @@ const renderAtRoute = (route) => {
   return render(<App />);
 };
 
+const authenticateUser = () => {
+  window.localStorage.setItem(STORAGE_KEYS.authUser, JSON.stringify(createUser()));
+};
+
 beforeEach(() => {
   window.localStorage.clear();
   jest.clearAllMocks();
@@ -114,7 +118,7 @@ test('shows duplicated email feedback in the registration flow', async () => {
 });
 
 test('allows the authenticated user to log out from the feed', async () => {
-  window.localStorage.setItem(STORAGE_KEYS.authUser, JSON.stringify(createUser()));
+  authenticateUser();
 
   renderAtRoute(ROUTES.feed);
 
@@ -124,4 +128,34 @@ test('allows the authenticated user to log out from the feed', async () => {
 
   expect(await screen.findByText('Implemente')).toBeInTheDocument();
   expect(window.localStorage.getItem(STORAGE_KEYS.authUser)).toBeNull();
+});
+
+test('shows the empty state when the feed has no posts', async () => {
+  authenticateUser();
+  mockedFeedService.getPosts.mockResolvedValue([]);
+
+  renderAtRoute(ROUTES.feed);
+
+  expect(await screen.findByText('Feed vazio')).toBeInTheDocument();
+  expect(screen.getByText(MESSAGES.feed.empty)).toBeInTheDocument();
+});
+
+test('shows an error state and retries feed loading', async () => {
+  authenticateUser();
+
+  mockedFeedService.getPosts
+    .mockRejectedValueOnce(new Error('network'))
+    .mockResolvedValueOnce([createPost()]);
+
+  renderAtRoute(ROUTES.feed);
+
+  expect(await screen.findByText('Falha ao carregar o feed')).toBeInTheDocument();
+
+  userEvent.click(screen.getByRole('button', { name: MESSAGES.ui.retry }));
+
+  expect(await screen.findByText('Projeto para curso de HTML e CSS')).toBeInTheDocument();
+
+  await waitFor(() => {
+    expect(mockedFeedService.getPosts).toHaveBeenCalledTimes(2);
+  });
 });

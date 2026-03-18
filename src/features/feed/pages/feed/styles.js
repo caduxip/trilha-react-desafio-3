@@ -56,25 +56,3 @@ export const SectionHeader = styled.div`
     align-items: flex-start;
   }
 `;
-
-export const StatusCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: ${({ theme }) => theme.spacing.lg};
-  padding: ${({ theme }) => theme.spacing.xxl};
-  border-radius: ${({ theme }) => theme.radius.md};
-  background-color: ${({ theme }) => theme.colors.surfaceAlt};
-  margin-bottom: ${({ theme }) => theme.spacing.xxl};
-  color: ${({ theme }) => theme.colors.text};
-  font-family: ${({ theme }) => theme.fonts.body};
-  font-size: 14px;
-  line-height: 20px;
-`;
-
-export const EmptyText = styled.p`
-  color: ${({ theme }) => theme.colors.textMuted};
-  font-family: ${({ theme }) => theme.fonts.body};
-  font-size: 14px;
-  line-height: 20px;
-`;

@@ -48,6 +48,7 @@ src/
   config/            configuração compartilhada da aplicação
   constants/         mensagens, chaves e regras reutilizáveis
   features/          módulos por domínio, como auth e feed
+  lib/               utilitários de infraestrutura, como sessão local
   pages/             páginas globais fora dos domínios, como a home
   routes/            configuração de paths, guardas e composição de rotas
   services/          infraestrutura compartilhada, como cliente HTTP
@@ -109,7 +110,7 @@ O cadastro cria novos usuários diretamente nessa API fake enquanto o `json-serv
 O fluxo de autenticação é local/mockado:
 
 - login consulta o usuário no `json-server`;
-- a sessão é persistida em `localStorage`;
+- a sessão é persistida em `localStorage` via utilitário dedicado em `src/lib/storage/session.js`;
 - rotas privadas são protegidas no frontend;
 - logout remove a sessão local.
 
@@ -134,6 +135,16 @@ O projeto agora centraliza parte das definições transversais para reduzir dupl
 - `src/constants/validation.js`: regras compartilhadas de validação para os formulários.
 
 Essa organização ajuda a evitar strings e regras espalhadas por páginas e testes.
+
+## Resiliência de interface
+
+O frontend passou a contar com uma camada mínima de resiliência para falhas de UI e estados assíncronos:
+
+- `src/components/AppErrorBoundary`: fallback global para erros de render em nível de rota;
+- `src/components/AsyncState`: componente compartilhado para estados de carregamento, erro e vazio;
+- `src/lib/storage/session.js`: encapsulamento de leitura e escrita da sessão local.
+
+Com isso, a aplicação reduz lógica repetida e trata falhas de forma mais uniforme.
 
 ## Organização por feature
 
@@ -169,9 +180,11 @@ O projeto já conta com:
 - serviço dedicado para feed;
 - layout compartilhado para telas de autenticação;
 - configuração e constantes reutilizáveis centralizadas;
+- boundary de erro em nível de aplicação;
+- padrão compartilhado para estados de loading, erro e vazio;
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
-- testes cobrindo navegação, login, cadastro e logout;
+- testes cobrindo navegação, login, cadastro, logout e estados do feed;
 - melhorias básicas de responsividade no fluxo principal.
 
 Melhorias futuras recomendadas:
