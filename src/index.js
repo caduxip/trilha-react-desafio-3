@@ -3,6 +3,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { logger } from './lib/observability/logger';
+import reportWebVitals from './reportWebVitals';
 
 // `StrictMode` ajuda a identificar efeitos colaterais e padrões inseguros em desenvolvimento.
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -11,3 +13,9 @@ root.render(
     <App />
   </React.StrictMode>,
 );
+
+// Métricas de performance são opcionais e controladas por variável de ambiente.
+// Isso nos permite ligar a observabilidade sem alterar o código da aplicação.
+reportWebVitals((metric) => {
+  logger.reportWebVital(metric);
+});

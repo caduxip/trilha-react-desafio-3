@@ -93,6 +93,8 @@ cp .env.example .env
 Variáveis disponíveis:
 
 - `REACT_APP_API_URL`: URL base da API consumida pelo frontend.
+- `REACT_APP_ENABLE_WEB_VITALS`: habilita coleta opcional de métricas de performance no cliente.
+- `REACT_APP_LOG_LEVEL`: define o nível mínimo de log do frontend (`debug`, `info`, `warn`, `error`, `silent`).
 
 Se não for definida, a aplicação usa `http://127.0.0.1:8001` por padrão.
 
@@ -238,6 +240,16 @@ O frontend passou a contar com uma camada mínima de resiliência para falhas de
 - `src/lib/storage/session.js`: encapsulamento de leitura e escrita da sessão local.
 
 Com isso, a aplicação reduz lógica repetida e trata falhas de forma mais uniforme.
+
+## Observabilidade frontend
+
+O projeto agora possui uma camada leve de observabilidade no cliente:
+
+- `src/lib/observability/logger.js`: logger central com nível configurável por ambiente;
+- `src/reportWebVitals.js`: coleta opcional de métricas de performance usando `web-vitals`;
+- `src/components/AppErrorBoundary`: integração da captura de erros de render com o logger central.
+
+Essa estrutura ainda é simples, mas deixa o frontend pronto para evoluir depois para integrações com ferramentas externas sem espalhar `console.*` pelo código.
 
 ## Testes end-to-end
 
@@ -389,6 +401,7 @@ O projeto já conta com:
 - ambiente padronizado com `.env.example`, `.nvmrc` e workflow de CI;
 - lint automatizado via ESLint integrados ao fluxo do projeto;
 - formatação automática com Prettier integrada ao fluxo do projeto;
+- observabilidade frontend leve com logger central e captura opcional de Web Vitals;
 - conteinerização com Docker e Docker Compose para frontend + API mock;
 - testes cobrindo navegação, redirecionamentos, validação de login, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local, estados do feed e smoke E2E com navegador real.
 

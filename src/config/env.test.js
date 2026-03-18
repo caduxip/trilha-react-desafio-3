@@ -37,4 +37,37 @@ describe('ENV_CONFIG', () => {
 
     expect(() => require('./env')).toThrow('REACT_APP_API_URL deve ser uma URL absoluta válida.');
   });
+
+  test('uses false as the default for web vitals flag', () => {
+    process.env = {
+      ...ORIGINAL_ENV,
+    };
+    delete process.env.REACT_APP_ENABLE_WEB_VITALS;
+
+    const { ENV_CONFIG } = require('./env');
+
+    expect(ENV_CONFIG.enableWebVitals).toBe(false);
+  });
+
+  test('normalizes and validates the configured log level', () => {
+    process.env = {
+      ...ORIGINAL_ENV,
+      REACT_APP_LOG_LEVEL: 'INFO',
+    };
+
+    const { ENV_CONFIG } = require('./env');
+
+    expect(ENV_CONFIG.logLevel).toBe('info');
+  });
+
+  test('throws when REACT_APP_LOG_LEVEL is invalid', () => {
+    process.env = {
+      ...ORIGINAL_ENV,
+      REACT_APP_LOG_LEVEL: 'verbose',
+    };
+
+    expect(() => require('./env')).toThrow(
+      'REACT_APP_LOG_LEVEL deve ser um destes valores: debug, info, warn, error, silent.',
+    );
+  });
 });

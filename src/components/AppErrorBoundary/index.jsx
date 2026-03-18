@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { MESSAGES } from '../../constants/messages';
+import { logger } from '../../lib/observability/logger';
 import { ROUTES } from '../../routes/paths';
 import { Button } from '../Button';
 
@@ -22,10 +23,11 @@ class ErrorBoundaryRoot extends Component {
     return { hasError: true };
   }
 
-  componentDidCatch(error) {
-    if (process.env.NODE_ENV !== 'test') {
-      console.error(error);
-    }
+  componentDidCatch(error, errorInfo) {
+    logger.reportRuntimeError(error, {
+      componentStack: errorInfo?.componentStack,
+      source: 'AppErrorBoundary',
+    });
   }
 
   handleReload = () => {
