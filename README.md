@@ -52,7 +52,7 @@ src/
   components/        componentes reutilizáveis de UI e layout
   config/            configuração compartilhada da aplicação
   constants/         mensagens, chaves e regras reutilizáveis
-  features/          módulos por domínio, como auth e feed
+  features/          módulos por domínio, com páginas, hooks e serviços de cada fluxo
   lib/               utilitários compartilhados, como sessão local e schemas de formulário
   pages/             páginas globais fora dos domínios, como a home
   routes/            configuração de paths, guardas e composição de rotas
@@ -300,10 +300,20 @@ Esse modelo mantém a validação declarativa e preparada para crescer sem depen
 
 Os domínios principais da aplicação foram agrupados em `src/features`:
 
-- `src/features/auth`: contexto, páginas, validação, mapeadores e serviço de autenticação;
-- `src/features/feed`: página, mapeadores e serviço do feed autenticado.
+- `src/features/auth`: contexto, páginas, hooks, validação, mapeadores e serviço de autenticação;
+- `src/features/feed`: página, hook, mapeadores e serviço do feed autenticado.
 
 Essa organização aproxima UI, regras e integração de cada domínio, reduzindo dependências cruzadas entre pastas genéricas.
+
+## Hooks de domínio
+
+As features agora concentram parte do fluxo assíncrono em hooks próprios:
+
+- `src/features/auth/hooks/useLogin.js`: controla login, mensagem de erro e redirecionamento;
+- `src/features/auth/hooks/useRegister.js`: controla cadastro, erro de duplicidade e entrada automática na sessão;
+- `src/features/feed/hooks/useFeed.js`: controla carregamento, retry e estados do feed.
+
+Com isso, as páginas ficam mais enxutas e focadas em renderizar a interface, enquanto os hooks concentram o caso de uso do lado cliente.
 
 ## Camada de dados frontend
 
@@ -403,7 +413,7 @@ O projeto já conta com:
 - formatação automática com Prettier integrada ao fluxo do projeto;
 - observabilidade frontend leve com logger central e captura opcional de Web Vitals;
 - conteinerização com Docker e Docker Compose para frontend + API mock;
-- testes cobrindo navegação, redirecionamentos, validação de login, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local, estados do feed e smoke E2E com navegador real.
+- testes cobrindo navegação, redirecionamentos, validação de login, hooks de domínio, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local, estados do feed e smoke E2E com navegador real.
 
 Melhorias futuras recomendadas:
 

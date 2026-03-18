@@ -1,17 +1,13 @@
 // Página de login.
-// Responsável por validar os dados, acionar o serviço de auth e iniciar a sessão.
-import { useState } from 'react';
+// Responsável por validar os dados e delegar o fluxo assíncrono ao hook de domínio.
 import { MdEmail, MdLock } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import { AuthLayout } from '../../../../components/AuthLayout';
 import { Button } from '../../../../components/Button';
 import { Input } from '../../../../components/Input';
-import { MESSAGES } from '../../../../constants/messages';
 import { ROUTES } from '../../../../routes/paths';
-import { useAuth } from '../../context/auth';
-import { authService } from '../../services/auth';
+import { useLogin } from '../../hooks/useLogin';
 import { loginResolver } from '../../validation/schema';
 import {
   Form,
@@ -24,9 +20,7 @@ import {
 } from '../../styles';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { signIn } = useAuth();
-  const [apiError, setApiError] = useState('');
+  const { apiError, submitLogin } = useLogin();
 
   const {
     control,
@@ -43,36 +37,17 @@ const Login = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = async (formData) => {
-    // Limpa erros antigos antes de tentar novo login.
-    setApiError('');
-
-    try {
-      // A página conhece só o caso de uso "fazer login".
-      // Os detalhes de HTTP ficam encapsulados no serviço.
-      const user = await authService.login(formData);
-
-      if (user) {
-        // Sessão válida encontrada: salvamos no contexto e seguimos para a área privada.
-        signIn(user);
-        navigate(ROUTES.feed, { replace: true });
-        return;
-      }
-
-      // Quando o serviço não encontra o usuário, tratamos como credenciais inválidas.
-      setApiError(MESSAGES.auth.invalidCredentials);
-    } catch (e) {
-      // Erro de rede, indisponibilidade da API mock ou falha inesperada.
-      setApiError(MESSAGES.auth.loginUnavailable);
-    }
-  };
-
   return (
     <AuthLayout>
       <FormTitle>Faça seu login</FormTitle>
       <FormSubtitle>Acesse sua conta e make the change._</FormSubtitle>
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form
+        onSubmit={handleSubmit((formData) => {
+          // A página só dispara o caso de uso; o hook decide sessão, erro e redirecionamento.
+          return submitLogin(formData);
+        })}
+      >
         <Input
           autoComplete="email"
           label="E-mail"

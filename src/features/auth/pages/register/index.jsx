@@ -1,17 +1,13 @@
 // Página de cadastro.
-// Valida os dados, tenta criar o usuário e, em caso de sucesso, inicia a sessão automaticamente.
-import { useState } from 'react';
+// Valida os dados e delega o fluxo assíncrono ao hook da feature.
 import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import { AuthLayout } from '../../../../components/AuthLayout';
 import { Button } from '../../../../components/Button';
 import { Input } from '../../../../components/Input';
-import { MESSAGES } from '../../../../constants/messages';
 import { ROUTES } from '../../../../routes/paths';
-import { useAuth } from '../../context/auth';
-import { authService, EMAIL_IN_USE } from '../../services/auth';
+import { useRegister } from '../../hooks/useRegister';
 import { registerResolver } from '../../validation/schema';
 
 import {
@@ -26,9 +22,7 @@ import {
 } from '../../styles';
 
 const Register = () => {
-  const navigate = useNavigate();
-  const { signIn } = useAuth();
-  const [apiError, setApiError] = useState('');
+  const { apiError, submitRegister } = useRegister();
 
   const {
     control,
@@ -46,35 +40,17 @@ const Register = () => {
     reValidateMode: 'onChange',
   });
 
-  const onSubmit = async (formData) => {
-    // Cada tentativa nova começa sem mensagem de erro antiga.
-    setApiError('');
-
-    try {
-      // O serviço cuida da verificação de duplicidade e da criação no mock.
-      const user = await authService.register(formData);
-
-      signIn(user);
-      // Após cadastrar, o usuário já entra diretamente na área autenticada.
-      navigate(ROUTES.feed, { replace: true });
-    } catch (error) {
-      // Tratamos separadamente regra de negócio conhecida e erro genérico de integração.
-      if (error.code === EMAIL_IN_USE) {
-        setApiError(MESSAGES.auth.emailInUse);
-        return;
-      }
-
-      // Qualquer outro erro é comunicado de forma genérica e amigável.
-      setApiError(MESSAGES.auth.registerUnavailable);
-    }
-  };
-
   return (
     <AuthLayout>
       <FormTitle>Comece agora grátis</FormTitle>
       <FormSubtitle>Crie sua conta e make the change._</FormSubtitle>
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form
+        onSubmit={handleSubmit((formData) => {
+          // A página só coleta os dados; o hook da feature cuida do cadastro e navegação.
+          return submitRegister(formData);
+        })}
+      >
         <Input
           autoComplete="name"
           label="Nome completo"
