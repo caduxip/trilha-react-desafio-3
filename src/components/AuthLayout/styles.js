@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.main`
+export const Container = styled.main.attrs({
+  id: 'page-content',
+})`
   width: 100%;
   max-width: ${({ theme }) => theme.sizes.containerWidth};
   margin: ${({ theme }) => `${theme.spacing.pageTop} auto 0`};
@@ -18,9 +20,13 @@ export const Container = styled.main`
 
 export const Column = styled.div`
   flex: 1;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: 100%;
+  }
 `;
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.section`
   width: 100%;
   max-width: ${({ theme }) => theme.sizes.formWidth};
   margin-left: auto;
@@ -31,7 +37,7 @@ export const FormWrapper = styled.div`
   }
 `;
 
-export const HeroTitle = styled.h2`
+export const HeroTitle = styled.h1`
   max-width: 90%;
   color: ${({ theme }) => theme.colors.text};
   font-family: ${({ theme }) => theme.fonts.body};

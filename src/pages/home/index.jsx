@@ -23,10 +23,13 @@ const Home = () => {
             Domine as tecnologias utilizadas pelas empresas mais inovadoras do mundo e encare seu novo
             desafio profissional, evoluindo em comunidade com os melhores experts.
           </TextContent>
-          <Button as={Link} to={ROUTES.register} title="Começar agora" variant="secondary" />
+          <Button as={Link} size="lg" to={ROUTES.register} title="Começar agora" variant="secondary" />
         </Content>
 
-        <Banner src={bannerImage} alt="Imagem principal do site." />
+        <Banner
+          src={bannerImage}
+          alt="Ilustração de desenvolvimento de software com uma pessoa utilizando notebook."
+        />
       </Container>
     </>
   );

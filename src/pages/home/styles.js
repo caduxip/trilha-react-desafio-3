@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.main`
+export const Container = styled.main.attrs({
+  id: 'page-content',
+})`
   width: 100%;
   max-width: ${({ theme }) => theme.sizes.containerWidth};
   margin: ${({ theme }) => `${theme.spacing.pageTop} auto 0`};
@@ -22,9 +24,13 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: flex-start;
   max-width: 420px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    max-width: 100%;
+  }
 `;
 
-export const Title = styled.h2`
+export const Title = styled.h1`
   color: ${({ theme }) => theme.colors.text};
   font-family: ${({ theme }) => theme.fonts.body};
   font-size: ${({ theme }) => theme.typography.title.fontSize};

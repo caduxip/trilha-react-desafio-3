@@ -7,6 +7,7 @@ import { ROUTES } from '../../routes/paths';
 import { Button } from '../Button';
 
 import {
+  SkipLink,
   Container,
   Wrapper,
   BuscarInputContainer,
@@ -30,24 +31,29 @@ const Header = ({autenticado}) => {
     navigate(ROUTES.home, { replace: true });
   };
 
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <Wrapper>
+    <Wrapper as="header">
+      <SkipLink href="#page-content">Pular para o conteúdo principal</SkipLink>
       <Container>
           <Row>
             <LogoLink to={ROUTES.home}>
-              <img src={logo} alt="Logo da dio"/>
+              <img src={logo} alt="DIO" />
             </LogoLink>
             {isUserAuthenticated ? (
               <>
-               <BuscarInputContainer>
-                <Input placeholder='Buscar...' aria-label='Buscar'/>
+               <BuscarInputContainer as="form" onSubmit={handleSearchSubmit} role="search">
+                <Input placeholder='Buscar...' aria-label='Buscar' type="search" />
                </BuscarInputContainer>
                 <MenuText>Live Code</MenuText>
                 <MenuText>Global</MenuText>
               </>
             ) : null}
           </Row>
-          <Row>
+          <Row as={isUserAuthenticated ? 'div' : 'nav'} aria-label={isUserAuthenticated ? undefined : 'Navegação principal'}>
               {isUserAuthenticated ? (
                 <UserMenu>
                   <span>{user?.name ?? 'Usuário'}</span>
@@ -55,8 +61,8 @@ const Header = ({autenticado}) => {
                     Sair
                   </LogoutButton>
                   <UserPicture
-                    src="https://avatars.githubusercontent.com/u/45184516?v=4"
-                    alt="Usuário autenticado"
+                    src={user?.avatar ?? 'https://avatars.githubusercontent.com/u/45184516?v=4'}
+                    alt={`Avatar de ${user?.name ?? 'Usuário autenticado'}`}
                   />
                 </UserMenu>
               ) : (

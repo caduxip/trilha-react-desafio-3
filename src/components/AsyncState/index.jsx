@@ -9,7 +9,7 @@ import {
 
 const AsyncState = ({ actionLabel, description, onAction, title }) => {
   return (
-    <Surface>
+    <Surface aria-live="polite" role={actionLabel ? 'alert' : 'status'}>
       {title ? <Title>{title}</Title> : null}
       {description ? <Description>{description}</Description> : null}
 

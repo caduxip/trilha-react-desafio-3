@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
-export const Container = styled.main`
+export const Container = styled.main.attrs({
+  id: 'page-content',
+})`
   width: 100%;
   max-width: ${({ theme }) => theme.sizes.containerWidth};
   margin: ${({ theme }) => `${theme.spacing.pageTop} auto 0`};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing.xxl};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     max-width: ${({ theme }) => theme.sizes.containerWidthMobile};
@@ -42,6 +45,7 @@ export const Column = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     padding-right: 0;
     margin-bottom: ${({ theme }) => theme.spacing.xxxl};
+    width: 100%;
   }
 `;
 

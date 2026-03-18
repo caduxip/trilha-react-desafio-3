@@ -16,7 +16,7 @@ const AuthLayout = ({ children, heroTitle = DEFAULT_HERO_TITLE }) => {
           <HeroTitle>{heroTitle}</HeroTitle>
         </Column>
         <Column>
-          <FormWrapper>{children}</FormWrapper>
+          <FormWrapper aria-label="Área de autenticação">{children}</FormWrapper>
         </Column>
       </Container>
     </>

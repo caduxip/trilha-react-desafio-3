@@ -63,9 +63,9 @@ const Feed = () => {
     <>
       <Header />
       <Container>
-        <Column flex={3}>
+        <Column as="section" aria-labelledby="feed-title" flex={3}>
           <SectionHeader>
-            <Title>Feed</Title>
+            <Title id="feed-title">Feed</Title>
             {!isLoading && !error ? (
               <Button
                 type="button"
@@ -93,14 +93,14 @@ const Feed = () => {
           {!isLoading && !error ? posts.map((post) => <Card key={post.id} post={post} />) : null}
         </Column>
 
-        <Column flex={1}>
-          <TitleHighlight># RANKING 5 TOP DA SEMANA</TitleHighlight>
+        <Column as="aside" aria-labelledby="ranking-title" flex={1}>
+          <TitleHighlight id="ranking-title"># RANKING 5 TOP DA SEMANA</TitleHighlight>
           {ranking.map((user) => (
             <UserInfo
               key={user.id}
-              nome={user.nome}
-              image={user.image}
-              percentual={user.percentual}
+              avatar={user.image}
+              name={user.nome}
+              percentage={user.percentual}
             />
           ))}
         </Column>

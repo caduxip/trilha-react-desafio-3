@@ -28,6 +28,7 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - tema global com tokens compartilhados;
 - camada de dados com mapeamento e normalização de erro;
 - componentes base com contratos mais consistentes;
+- landmarks e navegação por teclado refinados;
 - testes de navegação, login, cadastro e logout.
 
 ## Stack utilizada
@@ -203,6 +204,18 @@ Os componentes base da interface foram fortalecidos para servir como biblioteca 
 
 Essa camada reduz improviso nas telas e melhora a previsibilidade para evolução visual futura.
 
+## Acessibilidade e responsividade
+
+O fluxo principal recebeu uma camada extra de refinamento para uso real:
+
+- `skip link` no cabeçalho para acesso rápido ao conteúdo principal;
+- landmarks semânticos em `header`, `main`, `section` e `aside`;
+- foco visível em links, botões e inputs;
+- semântica melhorada em heading principal, busca e barra de progresso;
+- ajustes de layout para navegação e conteúdo em telas menores.
+
+Isso melhora a navegação por teclado e reduz fragilidade da interface em cenários mobile.
+
 ## Qualidade e manutenção
 
 O projeto já conta com:
@@ -218,10 +231,10 @@ O projeto já conta com:
 - validação de formulários baseada em schema interno;
 - camada de dados desacoplada com mapeadores e erros normalizados;
 - componentes reutilizáveis com contratos e testes dedicados;
+- melhorias de acessibilidade e responsividade no fluxo principal;
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
-- testes cobrindo navegação, validação de login, serviços, componentes base, cadastro, logout e estados do feed;
-- melhorias básicas de responsividade no fluxo principal.
+- testes cobrindo navegação, validação de login, serviços, componentes base, cadastro, logout, skip navigation e estados do feed.
 
 Melhorias futuras recomendadas:
 

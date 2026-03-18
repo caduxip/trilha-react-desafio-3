@@ -84,6 +84,22 @@ test('renders the registration screen at /cadastro', async () => {
   expect(screen.getByRole('button', { name: /criar minha conta/i })).toBeInTheDocument();
 });
 
+test('renders skip navigation and a primary heading on the home page', async () => {
+  renderAtRoute(ROUTES.home);
+
+  expect(
+    await screen.findByRole('link', {
+      name: /pular para o conteúdo principal/i,
+    }),
+  ).toBeInTheDocument();
+  expect(
+    await screen.findByRole('heading', {
+      level: 1,
+      name: /implemente o seu futuro global agora/i,
+    }),
+  ).toBeInTheDocument();
+});
+
 test('blocks login submit when the form data is invalid', async () => {
   renderAtRoute(ROUTES.login);
 
