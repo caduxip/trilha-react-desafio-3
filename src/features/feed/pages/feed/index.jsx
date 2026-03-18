@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button } from '../../components/Button';
-import { Card } from '../../components/Card';
-import { UserInfo } from '../../components/UserInfo';
-import { Header } from '../../components/Header';
-import { MESSAGES } from '../../constants/messages';
+import { Button } from '../../../../components/Button';
+import { Card } from '../../../../components/Card';
+import { UserInfo } from '../../../../components/UserInfo';
+import { Header } from '../../../../components/Header';
+import { MESSAGES } from '../../../../constants/messages';
 import { feedService } from '../../services/feed';
 
 import {

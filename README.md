@@ -47,10 +47,10 @@ src/
   components/        componentes reutilizáveis de UI e layout
   config/            configuração compartilhada da aplicação
   constants/         mensagens, chaves e regras reutilizáveis
-  contexts/          contexto de autenticação
-  pages/             páginas da aplicação
+  features/          módulos por domínio, como auth e feed
+  pages/             páginas globais fora dos domínios, como a home
   routes/            configuração de paths, guardas e composição de rotas
-  services/          integração com API e regras de acesso a dados
+  services/          infraestrutura compartilhada, como cliente HTTP
   styles/            estilos globais, tema e tokens visuais
 ```
 
@@ -135,6 +135,15 @@ O projeto agora centraliza parte das definições transversais para reduzir dupl
 
 Essa organização ajuda a evitar strings e regras espalhadas por páginas e testes.
 
+## Organização por feature
+
+Os domínios principais da aplicação foram agrupados em `src/features`:
+
+- `src/features/auth`: contexto, páginas, estilos e serviço de autenticação;
+- `src/features/feed`: página e serviço do feed autenticado.
+
+Essa organização aproxima UI, regras e integração de cada domínio, reduzindo dependências cruzadas entre pastas genéricas.
+
 ## Tema e sistema visual
 
 O projeto possui uma base de tema centralizada em `src/styles/theme.js`, usada via `ThemeProvider`.
@@ -154,7 +163,8 @@ Com isso, os estilos centrais deixaram de depender de valores visuais espalhados
 
 O projeto já conta com:
 
-- separação entre páginas, componentes, contexto e serviços;
+- organização por feature para `auth` e `feed`;
+- separação entre componentes globais, domínio e infraestrutura compartilhada;
 - serviço dedicado para autenticação;
 - serviço dedicado para feed;
 - layout compartilhado para telas de autenticação;

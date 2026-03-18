@@ -1,7 +1,7 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { AuthProvider } from './contexts/auth';
+import { AuthProvider } from './features/auth';
 import { AppRoutes } from './routes';
 import { GlobalStyle } from './styles/global';
 import { theme } from './styles/theme';

@@ -3,13 +3,13 @@ import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { AuthLayout } from '../../components/AuthLayout';
-import { Button } from '../../components/Button';
-import { Input } from '../../components/Input';
-import { MESSAGES } from '../../constants/messages';
-import { authValidationRules } from '../../constants/validation';
-import { useAuth } from '../../contexts/auth';
-import { ROUTES } from '../../routes/paths';
+import { AuthLayout } from '../../../../components/AuthLayout';
+import { Button } from '../../../../components/Button';
+import { Input } from '../../../../components/Input';
+import { MESSAGES } from '../../../../constants/messages';
+import { authValidationRules } from '../../../../constants/validation';
+import { ROUTES } from '../../../../routes/paths';
+import { useAuth } from '../../context/auth';
 import { authService, EMAIL_IN_USE } from '../../services/auth';
 
 import {
@@ -21,7 +21,7 @@ import {
   InlineText,
   LegalText,
   StatusText,
-} from '../auth/styles';
+} from '../../styles';
 
 const Register = () => {
   const navigate = useNavigate();

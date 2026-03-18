@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo-dio.png';
 
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../features/auth';
 import { ROUTES } from '../../routes/paths';
 import { Button } from '../Button';
 

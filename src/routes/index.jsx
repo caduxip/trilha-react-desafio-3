@@ -12,19 +12,19 @@ const Home = lazy(() =>
 );
 
 const Login = lazy(() =>
-  import('../pages/login').then((module) => ({
+  import('../features/auth/pages/login').then((module) => ({
     default: module.Login,
   })),
 );
 
 const Register = lazy(() =>
-  import('../pages/register').then((module) => ({
+  import('../features/auth/pages/register').then((module) => ({
     default: module.Register,
   })),
 );
 
 const Feed = lazy(() =>
-  import('../pages/feed').then((module) => ({
+  import('../features/feed/pages/feed').then((module) => ({
     default: module.Feed,
   })),
 );

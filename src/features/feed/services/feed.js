@@ -1,4 +1,4 @@
-import { api } from './api';
+import { api } from '../../../services/api';
 
 const USERS_RESOURCE = '/users';
 const POSTS_RESOURCE = '/posts';

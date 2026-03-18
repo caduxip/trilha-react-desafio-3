@@ -3,13 +3,13 @@ import { MdEmail, MdLock } from 'react-icons/md'
 import { useForm } from "react-hook-form";
 import { useNavigate  } from "react-router-dom";
 
-import { AuthLayout } from '../../components/AuthLayout';
-import { Button } from '../../components/Button';
-import { Input } from '../../components/Input';
-import { MESSAGES } from '../../constants/messages';
-import { authValidationRules } from '../../constants/validation';
-import { useAuth } from '../../contexts/auth';
-import { ROUTES } from '../../routes/paths';
+import { AuthLayout } from '../../../../components/AuthLayout';
+import { Button } from '../../../../components/Button';
+import { Input } from '../../../../components/Input';
+import { MESSAGES } from '../../../../constants/messages';
+import { authValidationRules } from '../../../../constants/validation';
+import { ROUTES } from '../../../../routes/paths';
+import { useAuth } from '../../context/auth';
 import { authService } from '../../services/auth';
 import {
   Form,
@@ -19,7 +19,7 @@ import {
   HelperRow,
   HelperText,
   StatusText,
-} from '../auth/styles';
+} from '../../styles';
 
 const Login = () => {
     const navigate = useNavigate()

@@ -1,4 +1,4 @@
-import { api } from './api';
+import { api } from '../../../services/api';
 
 const USERS_RESOURCE = '/users';
 const EMAIL_IN_USE = 'EMAIL_IN_USE';

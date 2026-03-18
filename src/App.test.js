@@ -4,11 +4,11 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 import { MESSAGES } from './constants/messages';
 import { STORAGE_KEYS } from './constants/storage';
+import { authService } from './features/auth/services/auth';
+import { feedService } from './features/feed/services/feed';
 import { ROUTES } from './routes/paths';
-import { authService } from './services/auth';
-import { feedService } from './services/feed';
 
-jest.mock('./services/auth', () => ({
+jest.mock('./features/auth/services/auth', () => ({
   EMAIL_IN_USE: 'EMAIL_IN_USE',
   authService: {
     login: jest.fn(),
@@ -16,7 +16,7 @@ jest.mock('./services/auth', () => ({
   },
 }));
 
-jest.mock('./services/feed', () => ({
+jest.mock('./features/feed/services/feed', () => ({
   feedService: {
     getPosts: jest.fn(),
     getRanking: jest.fn(),
