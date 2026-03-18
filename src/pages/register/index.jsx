@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { AuthLayout } from '../../components/AuthLayout';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
+import { MESSAGES } from '../../constants/messages';
+import { authValidationRules } from '../../constants/validation';
 import { useAuth } from '../../contexts/auth';
 import { ROUTES } from '../../routes/paths';
 import { authService, EMAIL_IN_USE } from '../../services/auth';
@@ -20,22 +22,6 @@ import {
   LegalText,
   StatusText,
 } from '../auth/styles';
-
-const emailRules = {
-  required: 'E-mail é obrigatório',
-  pattern: {
-    value: /\S+@\S+\.\S+/,
-    message: 'Informe um e-mail válido',
-  },
-};
-
-const passwordRules = {
-  required: 'Senha é obrigatória',
-  minLength: {
-    value: 6,
-    message: 'A senha deve ter ao menos 6 caracteres',
-  },
-};
 
 const Register = () => {
   const navigate = useNavigate();
@@ -66,11 +52,11 @@ const Register = () => {
       navigate(ROUTES.feed, { replace: true });
     } catch (error) {
       if (error.code === EMAIL_IN_USE) {
-        setApiError('Este e-mail já está em uso.');
+        setApiError(MESSAGES.auth.emailInUse);
         return;
       }
 
-      setApiError('Não foi possível criar sua conta. Verifique a API e tente novamente.');
+      setApiError(MESSAGES.auth.registerUnavailable);
     }
   };
 
@@ -85,13 +71,7 @@ const Register = () => {
           leftIcon={<MdPerson />}
           name="name"
           control={control}
-          rules={{
-            required: 'Nome completo é obrigatório',
-            minLength: {
-              value: 3,
-              message: 'Informe seu nome completo',
-            },
-          }}
+          rules={authValidationRules.name}
           errorMessage={errors.name?.message}
         />
 
@@ -100,7 +80,7 @@ const Register = () => {
           leftIcon={<MdEmail />}
           name="email"
           control={control}
-          rules={emailRules}
+          rules={authValidationRules.email}
           errorMessage={errors.email?.message}
         />
 
@@ -110,7 +90,7 @@ const Register = () => {
           leftIcon={<MdLock />}
           name="senha"
           control={control}
-          rules={passwordRules}
+          rules={authValidationRules.password}
           errorMessage={errors.senha?.message}
         />
 

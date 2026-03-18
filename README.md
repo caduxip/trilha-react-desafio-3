@@ -45,6 +45,8 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 src/
   assets/            imagens e recursos estáticos
   components/        componentes reutilizáveis de UI e layout
+  config/            configuração compartilhada da aplicação
+  constants/         mensagens, chaves e regras reutilizáveis
   contexts/          contexto de autenticação
   pages/             páginas da aplicação
   routes/            configuração de paths, guardas e composição de rotas
@@ -122,6 +124,17 @@ O projeto possui uma camada dedicada para rotas em `src/routes`, responsável po
 - compor as rotas principais do app;
 - aplicar `lazy loading` nas páginas para reduzir o bundle inicial.
 
+## Configuração compartilhada
+
+O projeto agora centraliza parte das definições transversais para reduzir duplicação e acoplamento:
+
+- `src/config/api.js`: configuração base de integração HTTP, como `baseURL` e `timeout`;
+- `src/constants/messages.js`: mensagens reutilizadas de autenticação e feed;
+- `src/constants/storage.js`: chaves persistidas no `localStorage`;
+- `src/constants/validation.js`: regras compartilhadas de validação para os formulários.
+
+Essa organização ajuda a evitar strings e regras espalhadas por páginas e testes.
+
 ## Tema e sistema visual
 
 O projeto possui uma base de tema centralizada em `src/styles/theme.js`, usada via `ThemeProvider`.
@@ -145,6 +158,7 @@ O projeto já conta com:
 - serviço dedicado para autenticação;
 - serviço dedicado para feed;
 - layout compartilhado para telas de autenticação;
+- configuração e constantes reutilizáveis centralizadas;
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
 - testes cobrindo navegação, login, cadastro e logout;

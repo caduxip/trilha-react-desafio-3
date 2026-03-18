@@ -1,11 +1,10 @@
 import { createContext, useContext, useState } from 'react';
-
-const STORAGE_KEY = '@dio:user';
+import { STORAGE_KEYS } from '../constants/storage';
 
 const AuthContext = createContext(null);
 
 const getStoredUser = () => {
-  const storedUser = localStorage.getItem(STORAGE_KEY);
+  const storedUser = localStorage.getItem(STORAGE_KEYS.authUser);
 
   if (!storedUser) {
     return null;
@@ -14,7 +13,7 @@ const getStoredUser = () => {
   try {
     return JSON.parse(storedUser);
   } catch (error) {
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_KEYS.authUser);
     return null;
   }
 };
@@ -24,12 +23,12 @@ const AuthProvider = ({ children }) => {
 
   const signIn = (nextUser) => {
     setUser(nextUser);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextUser));
+    localStorage.setItem(STORAGE_KEYS.authUser, JSON.stringify(nextUser));
   };
 
   const signOut = () => {
     setUser(null);
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_KEYS.authUser);
   };
 
   return (

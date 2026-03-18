@@ -6,6 +6,8 @@ import { useNavigate  } from "react-router-dom";
 import { AuthLayout } from '../../components/AuthLayout';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
+import { MESSAGES } from '../../constants/messages';
+import { authValidationRules } from '../../constants/validation';
 import { useAuth } from '../../contexts/auth';
 import { ROUTES } from '../../routes/paths';
 import { authService } from '../../services/auth';
@@ -49,9 +51,9 @@ const Login = () => {
                 return
             }
 
-            setApiError('Usuário ou senha inválidos.')
+            setApiError(MESSAGES.auth.invalidCredentials)
         }catch(e){
-            setApiError('Não foi possível acessar a API. Verifique o json-server e tente novamente.')
+            setApiError(MESSAGES.auth.loginUnavailable)
         }
     };
 
@@ -66,13 +68,7 @@ const Login = () => {
                     leftIcon={<MdEmail />}
                     name="email"
                     control={control}
-                    rules={{
-                        required: 'E-mail é obrigatório',
-                        pattern: {
-                            value: /\S+@\S+\.\S+/,
-                            message: 'Informe um e-mail válido',
-                        },
-                    }}
+                    rules={authValidationRules.email}
                     errorMessage={errors.email?.message}
                 />
                 <Input
@@ -81,13 +77,7 @@ const Login = () => {
                     leftIcon={<MdLock />}
                     name="senha"
                     control={control}
-                    rules={{
-                        required: 'Senha é obrigatória',
-                        minLength: {
-                            value: 6,
-                            message: 'A senha deve ter ao menos 6 caracteres',
-                        },
-                    }}
+                    rules={authValidationRules.password}
                     errorMessage={errors.senha?.message}
                 />
                 <Button

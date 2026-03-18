@@ -4,6 +4,7 @@ import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { UserInfo } from '../../components/UserInfo';
 import { Header } from '../../components/Header';
+import { MESSAGES } from '../../constants/messages';
 import { feedService } from '../../services/feed';
 
 import {
@@ -47,7 +48,7 @@ const Feed = () => {
           return;
         }
 
-        setError('Não foi possível carregar o feed agora. Tente novamente.');
+        setError(MESSAGES.feed.loadError);
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -78,7 +79,7 @@ const Feed = () => {
             ) : null}
           </SectionHeader>
 
-          {isLoading ? <StatusCard>Carregando publicações...</StatusCard> : null}
+          {isLoading ? <StatusCard>{MESSAGES.feed.loading}</StatusCard> : null}
 
           {!isLoading && error ? (
             <StatusCard>
@@ -94,7 +95,7 @@ const Feed = () => {
 
           {!isLoading && !error && !posts.length ? (
             <StatusCard>
-              <EmptyText>Nenhuma publicação disponível no momento.</EmptyText>
+              <EmptyText>{MESSAGES.feed.empty}</EmptyText>
             </StatusCard>
           ) : null}
 

@@ -2,6 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import App from './App';
+import { MESSAGES } from './constants/messages';
+import { STORAGE_KEYS } from './constants/storage';
 import { ROUTES } from './routes/paths';
 import { authService } from './services/auth';
 import { feedService } from './services/feed';
@@ -108,11 +110,11 @@ test('shows duplicated email feedback in the registration flow', async () => {
   userEvent.type(screen.getByPlaceholderText('Password'), '123456');
   userEvent.click(screen.getByRole('button', { name: /criar minha conta/i }));
 
-  expect(await screen.findByText('Este e-mail já está em uso.')).toBeInTheDocument();
+  expect(await screen.findByText(MESSAGES.auth.emailInUse)).toBeInTheDocument();
 });
 
 test('allows the authenticated user to log out from the feed', async () => {
-  window.localStorage.setItem('@dio:user', JSON.stringify(createUser()));
+  window.localStorage.setItem(STORAGE_KEYS.authUser, JSON.stringify(createUser()));
 
   renderAtRoute(ROUTES.feed);
 
@@ -121,5 +123,5 @@ test('allows the authenticated user to log out from the feed', async () => {
   userEvent.click(screen.getByRole('button', { name: /sair/i }));
 
   expect(await screen.findByText('Implemente')).toBeInTheDocument();
-  expect(window.localStorage.getItem('@dio:user')).toBeNull();
+  expect(window.localStorage.getItem(STORAGE_KEYS.authUser)).toBeNull();
 });
