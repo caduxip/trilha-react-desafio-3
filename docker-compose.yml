@@ -1,22 +1,42 @@
+# Orquestra o frontend estático e a API mock local.
+# O objetivo aqui é deixar a subida previsível para desenvolvimento e demonstração.
 services:
   api:
     build:
       context: .
       dockerfile: Dockerfile.api
     container_name: trilha-react-api
+    restart: unless-stopped
     ports:
       - '8001:8001'
     volumes:
       - ./db.json:/app/db.json
+    # A API é considerada saudável quando o recurso básico de usuários responde.
+    healthcheck:
+      test: ['CMD', 'wget', '--spider', '-q', 'http://127.0.0.1:8001/users']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile.frontend
       args:
-        REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:8001}
+        # Como o app roda no navegador do host, o endereço padrão da API
+        # precisa ser acessível fora do container.
+        REACT_APP_API_URL: ${REACT_APP_API_URL:-http://127.0.0.1:8001}
     container_name: trilha-react-frontend
     depends_on:
-      - api
+      api:
+        condition: service_healthy
+    restart: unless-stopped
     ports:
       - '3000:80'
+    healthcheck:
+      test: ['CMD', 'wget', '--spider', '-q', 'http://127.0.0.1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s

@@ -147,6 +147,12 @@ ou:
 npm run docker:down
 ```
 
+Observações importantes sobre o ambiente Docker:
+
+- o `frontend` espera a `api` ficar saudável antes de subir;
+- ambos os serviços possuem `healthcheck` no `docker-compose.yml`;
+- o build do frontend usa `REACT_APP_API_URL=http://127.0.0.1:8001` por padrão, porque a aplicação roda no navegador do host, não dentro do container nginx.
+
 ## Scripts disponíveis
 
 - `npm start`: inicia o frontend em modo de desenvolvimento
@@ -347,7 +353,7 @@ O projeto agora possui uma base mínima para padronização de ambiente e entreg
 - `.dockerignore` reduzindo o contexto de build dos containers;
 - `Dockerfile.frontend` para gerar a build React e servir via nginx;
 - `Dockerfile.api` para subir o `json-server` em container;
-- `docker-compose.yml` orquestrando frontend e API mock juntos;
+- `docker-compose.yml` orquestrando frontend e API mock juntos, com `healthcheck` e dependência saudável entre serviços;
 - validação de `REACT_APP_API_URL` em tempo de bootstrap;
 - workflow de CI em `.github/workflows/frontend-ci.yml` executando verificação de código e uma etapa separada de smoke E2E com Playwright;
 - padronização do repositório em `npm`, evitando ambiguidade entre lockfiles.

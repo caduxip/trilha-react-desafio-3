@@ -4,10 +4,14 @@ FROM node:18-alpine
 WORKDIR /app
 
 COPY package*.json ./
+# Mantemos a instalação isolada para aproveitar cache entre rebuilds.
 RUN npm ci
 
 COPY db.json ./db.json
 
 EXPOSE 8001
+
+# O compose monta `db.json` por volume para que cadastro e reset local
+# reflitam imediatamente no container da API.
 
 CMD ["npx", "json-server", "--watch", "db.json", "--host", "0.0.0.0", "-p", "8001"]
