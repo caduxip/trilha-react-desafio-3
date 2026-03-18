@@ -29,7 +29,7 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - camada de dados com mapeamento e normalização de erro;
 - componentes base com contratos mais consistentes;
 - landmarks e navegação por teclado refinados;
-- testes automatizados ampliados para fluxos críticos e utilitários.
+- testes automatizados ampliados para fluxos críticos, utilitários e smoke E2E.
 
 ## Stack utilizada
 
@@ -157,6 +157,9 @@ npm run docker:down
 - `npm run format:check`: valida a formatação do projeto com Prettier
 - `npm test -- --watchAll=false`: executa os testes uma vez
 - `npm run test:ci`: executa os testes em modo apropriado para pipeline
+- `npm run e2e`: executa os smoke tests end-to-end com Playwright
+- `npm run e2e:headed`: executa os smoke tests com navegador visível
+- `npm run e2e:install`: instala o navegador Chromium usado pelos testes E2E
 - `npm run verify`: executa `format:check` + `lint` + `test:ci` + `build`
 - `npm run api`: inicia o `json-server` usando o arquivo `db.json`
 - `npm run docker:up`: sobe frontend + API mock via Docker Compose
@@ -171,6 +174,8 @@ O arquivo `db.json` contém:
 - dados de ranking consumidos pela área autenticada.
 
 O cadastro cria novos usuários diretamente nessa API fake enquanto o `json-server` estiver rodando.
+
+Nos testes E2E, a suíte não usa o `db.json` principal do projeto. O Playwright sobe uma API mock separada com uma cópia temporária da base para permitir cadastro e navegação sem poluir os dados locais.
 
 ## Autenticação atual
 
@@ -213,6 +218,21 @@ O frontend passou a contar com uma camada mínima de resiliência para falhas de
 - `src/lib/storage/session.js`: encapsulamento de leitura e escrita da sessão local.
 
 Com isso, a aplicação reduz lógica repetida e trata falhas de forma mais uniforme.
+
+## Testes end-to-end
+
+Os smoke tests E2E vivem em `tests/e2e` e validam os fluxos mais críticos do ponto de vista do usuário:
+
+- navegação pública da home para login;
+- autenticação com usuário já existente;
+- cadastro de novo usuário com entrada automática no feed.
+
+O arquivo `playwright.config.js` sobe automaticamente:
+
+- uma API mock isolada, baseada em cópia temporária do `db.json`;
+- o frontend React em modo de desenvolvimento.
+
+Isso reduz preparação manual e deixa a suíte mais próxima de um fluxo real de uso.
 
 ## Formulários e validação
 
@@ -305,7 +325,7 @@ O projeto agora possui uma base mínima para padronização de ambiente e entreg
 - `Dockerfile.api` para subir o `json-server` em container;
 - `docker-compose.yml` orquestrando frontend e API mock juntos;
 - validação de `REACT_APP_API_URL` em tempo de bootstrap;
-- workflow de CI em `.github/workflows/frontend-ci.yml` executando `npm ci`, `npm run format:check`, `npm run lint`, `npm run test:ci` e `npm run build`;
+- workflow de CI em `.github/workflows/frontend-ci.yml` executando verificação de código e uma etapa separada de smoke E2E com Playwright;
 - padronização do repositório em `npm`, evitando ambiguidade entre lockfiles.
 
 ## Qualidade e manutenção
@@ -330,7 +350,7 @@ O projeto já conta com:
 - lint automatizado via ESLint integrados ao fluxo do projeto;
 - formatação automática com Prettier integrada ao fluxo do projeto;
 - conteinerização com Docker e Docker Compose para frontend + API mock;
-- testes cobrindo navegação, redirecionamentos, validação de login, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local e estados do feed.
+- testes cobrindo navegação, redirecionamentos, validação de login, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local, estados do feed e smoke E2E com navegador real.
 
 Melhorias futuras recomendadas:
 
