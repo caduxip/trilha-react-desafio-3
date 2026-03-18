@@ -170,6 +170,7 @@ Observações importantes sobre o ambiente Docker:
 - `npm run lint:fix`: aplica correções automáticas suportadas pelo ESLint
 - `npm run format`: formata o projeto com Prettier
 - `npm run format:check`: valida a formatação do projeto com Prettier
+- `npm run tooling:update-browserslist`: atualiza o banco local do Browserslist e remove o aviso de `caniuse-lite` desatualizado
 - `npm test -- --watchAll=false`: executa os testes uma vez
 - `npm run test:ci`: executa os testes em modo apropriado para pipeline
 - `npm run test:coverage`: executa os testes com geração de cobertura local e valida o piso mínimo de cobertura
@@ -443,6 +444,11 @@ O projeto agora possui uma base mínima para padronização de ambiente e entreg
 - workflow de CI em `.github/workflows/frontend-ci.yml` executando verificação de código e uma etapa separada de smoke E2E com Playwright;
 - workflow de CI em `.github/workflows/frontend-ci.yml` publicando artefatos de cobertura, build e Playwright;
 - padronização do repositório em `npm`, evitando ambiguidade entre lockfiles.
+
+Manutenção de tooling:
+
+- quando o projeto voltar a exibir aviso de `caniuse-lite` desatualizado, use `npm run tooling:update-browserslist`;
+- o wrapper `scripts/update-browserslist-db.cjs` existe para deixar esse fluxo explícito e reutilizável no time.
 
 ## Qualidade e manutenção
 

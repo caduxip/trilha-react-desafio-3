@@ -24,6 +24,7 @@
     "lint:fix": "eslint src --ext .js,.jsx --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "tooling:update-browserslist": "node scripts/update-browserslist-db.cjs",
     "test": "react-scripts test",
     "test:ci": "react-scripts test --watchAll=false",
     "test:coverage": "react-scripts test --watchAll=false --coverage",
