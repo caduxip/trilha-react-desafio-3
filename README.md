@@ -160,6 +160,7 @@ npm run docker:down
 - `npm run e2e`: executa os smoke tests end-to-end com Playwright
 - `npm run e2e:headed`: executa os smoke tests com navegador visível
 - `npm run e2e:install`: instala o navegador Chromium usado pelos testes E2E
+- `npm run api:reset`: restaura o `db.json` para a base seed versionada do projeto
 - `npm run verify`: executa `format:check` + `lint` + `test:ci` + `build`
 - `npm run api`: inicia o `json-server` usando o arquivo `db.json`
 - `npm run docker:up`: sobe frontend + API mock via Docker Compose
@@ -167,15 +168,28 @@ npm run docker:down
 
 ## Dados mockados
 
-O arquivo `db.json` contém:
+O mock local agora possui dois arquivos com papéis diferentes:
+
+- `data/mock/db.seed.json`: base limpa e versionada usada como referência do projeto;
+- `db.json`: base viva usada pelo `json-server` durante o desenvolvimento local.
+
+O arquivo seed contém:
 
 - usuários para login/cadastro;
 - publicações usadas no feed;
 - dados de ranking consumidos pela área autenticada.
 
-O cadastro cria novos usuários diretamente nessa API fake enquanto o `json-server` estiver rodando.
+O cadastro cria novos usuários diretamente no `db.json` enquanto o `json-server` estiver rodando.
 
-Nos testes E2E, a suíte não usa o `db.json` principal do projeto. O Playwright sobe uma API mock separada com uma cópia temporária da base para permitir cadastro e navegação sem poluir os dados locais.
+Se quiser voltar a aplicação para o estado inicial da base mock, execute:
+
+```bash
+npm run api:reset
+```
+
+Esse fluxo evita edição manual do `db.json` e deixa o ambiente local mais previsível.
+
+Nos testes E2E, a suíte não usa o `db.json` principal do projeto. O Playwright sobe uma API mock separada com uma cópia temporária de `data/mock/db.seed.json` para permitir cadastro e navegação sem poluir os dados locais.
 
 ## Autenticação atual
 
@@ -233,6 +247,16 @@ O arquivo `playwright.config.js` sobe automaticamente:
 - o frontend React em modo de desenvolvimento.
 
 Isso reduz preparação manual e deixa a suíte mais próxima de um fluxo real de uso.
+
+## Fluxo recomendado para o mock local
+
+Quando precisar voltar para um estado conhecido da API fake:
+
+1. execute `npm run api:reset`
+2. suba a API com `npm run api`
+3. rode o frontend com `npm start`
+
+Esse ciclo reduz ruído causado por usuários cadastrados manualmente durante desenvolvimento e testes exploratórios.
 
 ## Formulários e validação
 

@@ -39,14 +39,6 @@
       "senha": "123456",
       "avatar": "https://avatars.githubusercontent.com/u/810438?v=4",
       "percentual": 59
-    },
-    {
-      "email": "smoke-1773857966399-283@email.com",
-      "name": "Smoke User 1773857966399-283",
-      "avatar": "https://avatars.githubusercontent.com/u/45184516?v=4",
-      "percentual": 0,
-      "senha": "123456",
-      "id": 6
     }
   ],
   "posts": [
@@ -55,11 +47,7 @@
       "userId": 1,
       "title": "Projeto para curso de HTML e CSS",
       "summary": "Projeto feito no curso de HTML e CSS no bootcamp da DIO do Global Avanade, com foco em estrutura semântica e componentes reutilizáveis.",
-      "tags": [
-        "HTML",
-        "CSS",
-        "JavaScript"
-      ],
+      "tags": ["HTML", "CSS", "JavaScript"],
       "likes": 10,
       "publishedAt": "Há 8 minutos"
     },
@@ -68,11 +56,7 @@
       "userId": 3,
       "title": "Refatorando formulário de login com react-hook-form",
       "summary": "Reorganizei o fluxo de validação para reduzir duplicação, melhorar mensagens de erro e deixar o form pronto para evoluir com schema.",
-      "tags": [
-        "React",
-        "react-hook-form",
-        "DX"
-      ],
+      "tags": ["React", "react-hook-form", "DX"],
       "likes": 24,
       "publishedAt": "Há 22 minutos"
     },
@@ -81,11 +65,7 @@
       "userId": 2,
       "title": "Consumindo API mock com axios e json-server",
       "summary": "Separei a camada de integração em serviços pequenos para manter as páginas focadas em renderização e fluxo do usuário.",
-      "tags": [
-        "Axios",
-        "API",
-        "json-server"
-      ],
+      "tags": ["Axios", "API", "json-server"],
       "likes": 18,
       "publishedAt": "Há 1 hora"
     },
@@ -94,11 +74,7 @@
       "userId": 4,
       "title": "Estruturando rotas privadas com React Router",
       "summary": "Implementei proteção mínima para rotas autenticadas e redirecionamento consistente para reduzir estados inválidos de navegação.",
-      "tags": [
-        "React Router",
-        "Auth",
-        "Frontend"
-      ],
+      "tags": ["React Router", "Auth", "Frontend"],
       "likes": 32,
       "publishedAt": "Há 2 horas"
     }

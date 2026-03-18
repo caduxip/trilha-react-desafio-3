@@ -3,10 +3,10 @@ const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 
-// Para os testes E2E, usamos uma cópia temporária do db.json.
+// Para os testes E2E, usamos uma cópia temporária do seed versionado.
 // Assim, o fluxo de cadastro pode criar usuários à vontade sem
-// poluir a base mock principal do projeto.
-const sourceDbPath = path.resolve(__dirname, '..', 'db.json');
+// depender do estado atual do db.json principal do projeto.
+const sourceDbPath = path.resolve(__dirname, '..', 'data', 'mock', 'db.seed.json');
 const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'trilha-react-e2e-'));
 const tempDbPath = path.join(tempDir, 'db.json');
 
