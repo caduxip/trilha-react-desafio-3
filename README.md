@@ -174,6 +174,9 @@ Observações importantes sobre o ambiente Docker:
 - `npm run format`: formata o projeto com Prettier
 - `npm run format:check`: valida a formatação do projeto com Prettier
 - `npm run tooling:update-browserslist`: atualiza o banco local do Browserslist e remove o aviso de `caniuse-lite` desatualizado
+- `npm run deps:outdated`: lista dependências desatualizadas para revisão controlada
+- `npm run deps:audit`: executa a auditoria completa de vulnerabilidades do npm
+- `npm run deps:audit:prod`: executa a auditoria focada em dependências de produção
 - `npm test -- --watchAll=false`: executa os testes uma vez
 - `npm run test:ci`: executa os testes em modo apropriado para pipeline
 - `npm run test:coverage`: executa os testes com geração de cobertura local e valida o piso mínimo de cobertura
@@ -487,6 +490,13 @@ Manutenção de tooling:
 
 - quando o projeto voltar a exibir aviso de `caniuse-lite` desatualizado, use `npm run tooling:update-browserslist`;
 - o wrapper `scripts/update-browserslist-db.cjs` existe para deixar esse fluxo explícito e reutilizável no time.
+
+Manutenção de dependências:
+
+- use `npm run deps:outdated` para revisar upgrades disponíveis antes de atualizar o projeto;
+- use `npm run deps:audit` ou `npm run deps:audit:prod` para acompanhar vulnerabilidades reportadas pelo npm;
+- a estratégia atual do projeto é aplicar primeiro upgrades diretos e de baixo risco, como `axios`, `react`, `react-dom` e libs de teste;
+- parte dos alertas restantes ainda vem da cadeia do `react-scripts`, então qualquer correção completa nessa frente tende a exigir uma modernização mais ampla do stack, e não apenas um `npm audit fix --force`.
 
 ## Qualidade e manutenção
 

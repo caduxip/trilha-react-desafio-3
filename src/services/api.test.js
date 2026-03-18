@@ -1,3 +1,30 @@
+// O teste do cliente HTTP precisa mockar o axios.
+// Assim validamos apenas nossa configuração de interceptors, sem depender
+// do formato interno do pacote ou do entry ESM que o Jest do CRA não transpila.
+jest.mock('axios', () => {
+  const requestHandlers = [];
+  const responseHandlers = [];
+
+  return {
+    create: jest.fn(() => ({
+      interceptors: {
+        request: {
+          handlers: requestHandlers,
+          use: jest.fn((fulfilled, rejected) => {
+            requestHandlers.push({ fulfilled, rejected });
+          }),
+        },
+        response: {
+          handlers: responseHandlers,
+          use: jest.fn((fulfilled, rejected) => {
+            responseHandlers.push({ fulfilled, rejected });
+          }),
+        },
+      },
+    })),
+  };
+});
+
 jest.mock('../lib/observability/logger', () => ({
   logger: {
     debug: jest.fn(),
