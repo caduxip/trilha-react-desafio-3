@@ -1,5 +1,7 @@
+import { ENV_CONFIG } from './env';
+
 const API_CONFIG = {
-  baseURL: process.env.REACT_APP_API_URL ?? 'http://localhost:8001',
+  baseURL: ENV_CONFIG.apiUrl,
   timeout: 5000,
 };
 

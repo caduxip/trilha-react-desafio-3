@@ -73,7 +73,26 @@ src/
 npm install
 ```
 
-### 2. Subir a API fake
+Recomendação de ambiente local:
+
+- Node.js `18`, alinhado com o arquivo `.nvmrc`;
+- `npm` como gerenciador padrão deste projeto.
+
+### 2. Configurar variáveis de ambiente
+
+Use o arquivo `.env.example` como referência:
+
+```bash
+cp .env.example .env
+```
+
+Variáveis disponíveis:
+
+- `REACT_APP_API_URL`: URL base da API consumida pelo frontend.
+
+Se não for definida, a aplicação usa `http://localhost:8001` por padrão.
+
+### 3. Subir a API fake
 
 ```bash
 npm run api
@@ -81,7 +100,7 @@ npm run api
 
 A API será exposta em `http://localhost:8001`.
 
-### 3. Subir o frontend
+### 4. Subir o frontend
 
 Em outro terminal:
 
@@ -96,6 +115,8 @@ O frontend será iniciado em `http://localhost:3000`.
 - `npm start`: inicia o frontend em modo de desenvolvimento
 - `npm run build`: gera a build de produção
 - `npm test -- --watchAll=false`: executa os testes uma vez
+- `npm run test:ci`: executa os testes em modo apropriado para pipeline
+- `npm run verify`: executa `test:ci` + `build`
 - `npm run api`: inicia o `json-server` usando o arquivo `db.json`
 
 ## Dados mockados
@@ -133,6 +154,7 @@ O projeto possui uma camada dedicada para rotas em `src/routes`, responsável po
 O projeto agora centraliza parte das definições transversais para reduzir duplicação e acoplamento:
 
 - `src/config/api.js`: configuração base de integração HTTP, como `baseURL` e `timeout`;
+- `src/config/env.js`: resolução e validação das variáveis de ambiente do frontend;
 - `src/constants/messages.js`: mensagens reutilizadas de autenticação e feed;
 - `src/constants/storage.js`: chaves persistidas no `localStorage`;
 - `src/features/auth/validation/schema.js`: schemas compartilhados de validação para os formulários de autenticação.
@@ -223,9 +245,19 @@ A cobertura atual do frontend foi ampliada para proteger os fluxos mais sensíve
 - testes de integração do app para login, cadastro, logout, redirecionamentos e estados do feed;
 - testes unitários de serviços para autenticação e camada de dados do feed;
 - testes unitários dos componentes base reutilizáveis;
-- testes dedicados para `AppErrorBoundary` e persistência de sessão em `localStorage`.
+- testes dedicados para `AppErrorBoundary`, persistência de sessão em `localStorage` e resolução de ambiente.
 
 Com isso, a aplicação ganha uma base mais segura para refatorações incrementais.
+
+## Ambientes e entrega
+
+O projeto agora possui uma base mínima para padronização de ambiente e entrega contínua:
+
+- `.env.example` como referência de configuração local;
+- `.nvmrc` fixando a versão principal de Node usada pelo projeto;
+- validação de `REACT_APP_API_URL` em tempo de bootstrap;
+- workflow de CI em `.github/workflows/frontend-ci.yml` executando `npm ci`, `npm run test:ci` e `npm run build`;
+- padronização do repositório em `npm`, evitando ambiguidade entre lockfiles.
 
 ## Qualidade e manutenção
 
@@ -245,12 +277,12 @@ O projeto já conta com:
 - melhorias de acessibilidade e responsividade no fluxo principal;
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
+- ambiente padronizado com `.env.example`, `.nvmrc` e workflow de CI;
 - testes cobrindo navegação, redirecionamentos, validação de login, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local e estados do feed.
 
 Melhorias futuras recomendadas:
 
 - documentar padrões de componentes;
-- ampliar a cobertura de testes para cenários de erro e integração;
 - refinar ainda mais a responsividade das páginas;
 - evoluir a camada de API para cenários além do mock;
 - revisar a base CRA em uma etapa posterior, sem migração precipitada.
