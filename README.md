@@ -265,7 +265,8 @@ O frontend passou a contar com uma camada mínima de resiliência para falhas de
 
 - `src/components/AppErrorBoundary`: fallback global para erros de render em nível de rota;
 - `src/components/AsyncState`: componente compartilhado para estados de carregamento, erro e vazio;
-- `src/lib/storage/session.js`: encapsulamento de leitura e escrita da sessão local.
+- `src/lib/storage/session.js`: encapsulamento de leitura e escrita da sessão local;
+- hooks de domínio preparados para ignorar respostas assíncronas antigas quando uma requisição mais nova termina antes.
 
 Com isso, a aplicação reduz lógica repetida e trata falhas de forma mais uniforme.
 

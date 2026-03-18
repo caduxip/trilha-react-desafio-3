@@ -38,6 +38,18 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
+const createDeferred = () => {
+  let resolve;
+  let reject;
+
+  const promise = new Promise((resolver, rejecter) => {
+    resolve = resolver;
+    reject = rejecter;
+  });
+
+  return { promise, reject, resolve };
+};
+
 test('entra automaticamente na sessao ao cadastrar com sucesso', async () => {
   authService.register.mockResolvedValue({
     id: 8,
@@ -82,4 +94,54 @@ test('expõe erro específico quando o email ja esta em uso', async () => {
     expect(result.current.apiError).toBe('Este e-mail já está em uso.');
   });
   expect(mockNavigate).not.toHaveBeenCalled();
+});
+
+test('ignora resposta antiga de cadastro quando uma tentativa mais nova falha', async () => {
+  const firstRegister = createDeferred();
+  const secondRegister = createDeferred();
+
+  authService.register
+    .mockReturnValueOnce(firstRegister.promise)
+    .mockReturnValueOnce(secondRegister.promise);
+
+  const { result } = renderHook(() => useRegister(), { wrapper });
+
+  let firstPromise;
+  let secondPromise;
+
+  await act(async () => {
+    firstPromise = result.current.submitRegister({
+      name: 'Primeira tentativa',
+      email: 'primeiro@email.com',
+      senha: '123456',
+    });
+    secondPromise = result.current.submitRegister({
+      name: 'Segunda tentativa',
+      email: 'segundo@email.com',
+      senha: '123456',
+    });
+  });
+
+  await act(async () => {
+    const duplicatedEmailError = new Error('EMAIL_IN_USE');
+
+    duplicatedEmailError.code = 'EMAIL_IN_USE';
+    secondRegister.reject(duplicatedEmailError);
+    await secondPromise;
+  });
+
+  await act(async () => {
+    firstRegister.resolve({
+      id: 8,
+      name: 'Primeira tentativa',
+      email: 'primeiro@email.com',
+      avatar: 'https://avatars.githubusercontent.com/u/45184516?v=4',
+      percentual: 0,
+    });
+    await firstPromise;
+  });
+
+  expect(result.current.apiError).toBe('Este e-mail já está em uso.');
+  expect(mockNavigate).not.toHaveBeenCalled();
+  expect(window.localStorage.getItem(STORAGE_KEYS.authUser)).toBeNull();
 });

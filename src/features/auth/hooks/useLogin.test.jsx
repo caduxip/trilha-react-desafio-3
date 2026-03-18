@@ -36,6 +36,16 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
+const createDeferred = () => {
+  let resolve;
+
+  const promise = new Promise((resolver) => {
+    resolve = resolver;
+  });
+
+  return { promise, resolve };
+};
+
 test('persiste a sessao e navega para o feed ao logar com sucesso', async () => {
   authService.login.mockResolvedValue({
     id: 1,
@@ -77,4 +87,49 @@ test('expõe mensagem amigável quando as credenciais sao invalidas', async () =
     expect(result.current.apiError).toBe('Usuário ou senha inválidos.');
   });
   expect(mockNavigate).not.toHaveBeenCalled();
+});
+
+test('ignora resultado de login antigo quando existe uma tentativa mais recente', async () => {
+  const firstLogin = createDeferred();
+  const secondLogin = createDeferred();
+
+  authService.login
+    .mockReturnValueOnce(firstLogin.promise)
+    .mockReturnValueOnce(secondLogin.promise);
+
+  const { result } = renderHook(() => useLogin(), { wrapper });
+
+  let firstPromise;
+  let secondPromise;
+
+  await act(async () => {
+    firstPromise = result.current.submitLogin({
+      email: 'primeiro@email.com',
+      senha: '123456',
+    });
+    secondPromise = result.current.submitLogin({
+      email: 'segundo@email.com',
+      senha: '123456',
+    });
+  });
+
+  await act(async () => {
+    secondLogin.resolve(null);
+    await secondPromise;
+  });
+
+  await act(async () => {
+    firstLogin.resolve({
+      id: 1,
+      name: 'Resposta antiga',
+      email: 'primeiro@email.com',
+      avatar: 'https://avatars.githubusercontent.com/u/45184516?v=4',
+      percentual: 92,
+    });
+    await firstPromise;
+  });
+
+  expect(result.current.apiError).toBe('Usuário ou senha inválidos.');
+  expect(mockNavigate).not.toHaveBeenCalled();
+  expect(window.localStorage.getItem(STORAGE_KEYS.authUser)).toBeNull();
 });

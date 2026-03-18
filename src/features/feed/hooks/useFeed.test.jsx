@@ -84,3 +84,41 @@ test('permite recarregar o feed via reloadFeed', async () => {
     expect(feedService.getFeedOverview).toHaveBeenCalledTimes(2);
   });
 });
+
+test('ignora resposta antiga quando um reload mais novo termina primeiro', async () => {
+  const firstFeed = createDeferred();
+  const secondFeed = createDeferred();
+
+  feedService.getFeedOverview
+    .mockReturnValueOnce(firstFeed.promise)
+    .mockReturnValueOnce(secondFeed.promise);
+
+  const { result } = renderHook(() => useFeed());
+
+  act(() => {
+    result.current.reloadFeed();
+  });
+
+  await act(async () => {
+    secondFeed.resolve({
+      posts: [{ id: 2, title: 'Feed mais recente' }],
+      ranking: [{ id: 2, nome: 'Ranking mais recente', percentual: 88 }],
+    });
+    await secondFeed.promise;
+  });
+
+  await act(async () => {
+    firstFeed.resolve({
+      posts: [{ id: 1, title: 'Feed antigo' }],
+      ranking: [{ id: 1, nome: 'Ranking antigo', percentual: 50 }],
+    });
+    await firstFeed.promise;
+  });
+
+  await waitFor(() => {
+    expect(result.current.isLoading).toBe(false);
+  });
+
+  expect(result.current.posts).toEqual([{ id: 2, title: 'Feed mais recente' }]);
+  expect(result.current.ranking).toEqual([{ id: 2, nome: 'Ranking mais recente', percentual: 88 }]);
+});
