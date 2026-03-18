@@ -41,6 +41,8 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - JSON Server
 - Create React App
 - Testing Library
+- Docker
+- Docker Compose
 
 ## Estrutura principal
 
@@ -110,6 +112,39 @@ npm start
 
 O frontend será iniciado em `http://localhost:3000`.
 
+## Como executar com Docker
+
+O projeto agora possui conteinerização para subir o frontend e a API mock juntos.
+
+### 1. Subir os containers
+
+```bash
+docker compose up --build
+```
+
+ou, se preferir via script:
+
+```bash
+npm run docker:up
+```
+
+### 2. Acessar os serviços
+
+- frontend: `http://localhost:3000`
+- API mock: `http://localhost:8001`
+
+### 3. Encerrar os containers
+
+```bash
+docker compose down
+```
+
+ou:
+
+```bash
+npm run docker:down
+```
+
 ## Scripts disponíveis
 
 - `npm start`: inicia o frontend em modo de desenvolvimento
@@ -118,6 +153,8 @@ O frontend será iniciado em `http://localhost:3000`.
 - `npm run test:ci`: executa os testes em modo apropriado para pipeline
 - `npm run verify`: executa `test:ci` + `build`
 - `npm run api`: inicia o `json-server` usando o arquivo `db.json`
+- `npm run docker:up`: sobe frontend + API mock via Docker Compose
+- `npm run docker:down`: encerra os containers do Docker Compose
 
 ## Dados mockados
 
@@ -255,6 +292,10 @@ O projeto agora possui uma base mínima para padronização de ambiente e entreg
 
 - `.env.example` como referência de configuração local;
 - `.nvmrc` fixando a versão principal de Node usada pelo projeto;
+- `.dockerignore` reduzindo o contexto de build dos containers;
+- `Dockerfile.frontend` para gerar a build React e servir via nginx;
+- `Dockerfile.api` para subir o `json-server` em container;
+- `docker-compose.yml` orquestrando frontend e API mock juntos;
 - validação de `REACT_APP_API_URL` em tempo de bootstrap;
 - workflow de CI em `.github/workflows/frontend-ci.yml` executando `npm ci`, `npm run test:ci` e `npm run build`;
 - padronização do repositório em `npm`, evitando ambiguidade entre lockfiles.
@@ -278,6 +319,7 @@ O projeto já conta com:
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
 - ambiente padronizado com `.env.example`, `.nvmrc` e workflow de CI;
+- conteinerização com Docker e Docker Compose para frontend + API mock;
 - testes cobrindo navegação, redirecionamentos, validação de login, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local e estados do feed.
 
 Melhorias futuras recomendadas:

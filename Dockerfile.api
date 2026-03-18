@@ -1,0 +1,13 @@
+# Container simples da API fake baseada em json-server.
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY db.json ./db.json
+
+EXPOSE 8001
+
+CMD ["npx", "json-server", "--watch", "db.json", "--host", "0.0.0.0", "-p", "8001"]
