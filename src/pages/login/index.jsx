@@ -1,67 +1,111 @@
-import { useNavigate  } from "react-router-dom";
+import { useState } from 'react';
 import { MdEmail, MdLock } from 'react-icons/md'
-import { Button } from '../../components/Button';
-import { Header } from '../../components/Header';
-import { Input } from '../../components/Input';
-import { api } from '../../services/api';
-
 import { useForm } from "react-hook-form";
+import { useNavigate  } from "react-router-dom";
 
-
-import { Container, Title, Column, TitleLogin, SubtitleLogin, EsqueciText, CriarText, Row, Wrapper } from './styles';
+import { AuthLayout } from '../../components/AuthLayout';
+import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
+import { useAuth } from '../../contexts/auth';
+import { authService } from '../../services/auth';
+import {
+  Form,
+  FormSubtitle,
+  FormTitle,
+  HelperLink,
+  HelperRow,
+  HelperText,
+  StatusText,
+} from '../auth/styles';
 
 const Login = () => {
-
     const navigate = useNavigate()
+    const { signIn } = useAuth();
+    const [apiError, setApiError] = useState('');
 
-    const { control, handleSubmit, formState: { errors  } } = useForm({
+    const {
+        control,
+        handleSubmit,
+        formState: { errors, isSubmitting  },
+    } = useForm({
+        defaultValues: {
+            email: '',
+            senha: '',
+        },
         reValidateMode: 'onChange',
-        mode: 'onChange',
+        mode: 'onBlur',
     });
 
     const onSubmit = async (formData) => {
+        setApiError('');
+
         try{
-            const {data} = await api.get(`/users?email=${formData.email}&senha=${formData.senha}`);
-            
-            if(data.length && data[0].id){
-                navigate('/feed') 
+            const user = await authService.login(formData);
+
+            if(user){
+                signIn(user);
+                navigate('/feed', { replace: true }) 
                 return
             }
 
-            alert('Usuário ou senha inválido')
+            setApiError('Usuário ou senha inválidos.')
         }catch(e){
-            //TODO: HOUVE UM ERRO
+            setApiError('Não foi possível acessar a API. Verifique o json-server e tente novamente.')
         }
     };
 
-    console.log('errors', errors);
+    return (
+        <AuthLayout>
+            <FormTitle>Faça seu login</FormTitle>
+            <FormSubtitle>Acesse sua conta e make the change._</FormSubtitle>
 
-    return (<>
-        <Header />
-        <Container>
-            <Column>
-                <Title>A plataforma para você aprender com experts, dominar as principais tecnologias
-                 e entrar mais rápido nas empresas mais desejadas.</Title>
-            </Column>
-            <Column>
-                <Wrapper>
-                <TitleLogin>Faça seu cadastro</TitleLogin>
-                <SubtitleLogin>Faça seu login e make the change._</SubtitleLogin>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Input placeholder="E-mail" leftIcon={<MdEmail />} name="email"  control={control} />
-                    {errors.email && <span>E-mail é obrigatório</span>}
-                    <Input type="password" placeholder="Senha" leftIcon={<MdLock />}  name="senha" control={control} />
-                    {errors.senha && <span>Senha é obrigatório</span>}
-                    <Button title="Entrar" variant="secondary" type="submit"/>
-                </form>
-                <Row>
-                    <EsqueciText>Esqueci minha senha</EsqueciText>
-                    <CriarText>Criar Conta</CriarText>
-                </Row>
-                </Wrapper>
-            </Column>
-        </Container>
-    </>)
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                    placeholder="E-mail"
+                    leftIcon={<MdEmail />}
+                    name="email"
+                    control={control}
+                    rules={{
+                        required: 'E-mail é obrigatório',
+                        pattern: {
+                            value: /\S+@\S+\.\S+/,
+                            message: 'Informe um e-mail válido',
+                        },
+                    }}
+                    errorMessage={errors.email?.message}
+                />
+                <Input
+                    type="password"
+                    placeholder="Password"
+                    leftIcon={<MdLock />}
+                    name="senha"
+                    control={control}
+                    rules={{
+                        required: 'Senha é obrigatória',
+                        minLength: {
+                            value: 6,
+                            message: 'A senha deve ter ao menos 6 caracteres',
+                        },
+                    }}
+                    errorMessage={errors.senha?.message}
+                />
+                <Button
+                    title={isSubmitting ? 'Entrando...' : 'Entrar'}
+                    variant="secondary"
+                    type="submit"
+                    fullWidth
+                    disabled={isSubmitting}
+                />
+
+                {apiError ? <StatusText $error>{apiError}</StatusText> : null}
+            </Form>
+
+            <HelperRow>
+                <HelperText>Esqueci minha senha</HelperText>
+                <HelperLink to="/cadastro">Criar conta</HelperLink>
+            </HelperRow>
+        </AuthLayout>
+    )
 }
 
 export { Login }
