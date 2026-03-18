@@ -3,20 +3,20 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 24px;
+  margin-bottom: ${({ theme }) => theme.spacing.xxl};
 `;
 
 export const UserPicture = styled.img`
   width: 32px;
   height: 32px;
-  border-radius: 22px;
-  border: 3px solid #ffffff;
-  margin-right: 12px;
+  border-radius: ${({ theme }) => theme.radius.pill};
+  border: 3px solid ${({ theme }) => theme.colors.text};
+  margin-right: ${({ theme }) => theme.spacing.md};
 `;
 
 export const NameText = styled.div`
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
@@ -26,8 +26,8 @@ export const NameText = styled.div`
 export const Progress = styled.div`
   width: 180px;
   height: 6px;
-  background-color: #ffffff;
-  border-radius: 3px;
+  background-color: ${({ theme }) => theme.colors.text};
+  border-radius: ${({ theme }) => theme.radius.sm};
   position: relative;
 
   &::after {
@@ -37,15 +37,15 @@ export const Progress = styled.div`
     left: 0;
     width: ${({ percentual }) => percentual}%;
     height: 6px;
-    border-radius: 3px;
-    background-color: #23dd7a;
+    border-radius: ${({ theme }) => theme.radius.sm};
+    background-color: ${({ theme }) => theme.colors.success};
   }
 `;
 
 export const PercentageText = styled.p`
-  margin-top: 8px;
-  color: #ffffff80;
-  font-family: 'Open Sans', sans-serif;
+  margin-top: ${({ theme }) => theme.spacing.sm};
+  color: ${({ theme }) => theme.colors.textMuted};
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 12px;
   font-style: normal;
   font-weight: 600;

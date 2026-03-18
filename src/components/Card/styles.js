@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const CardContainer = styled.div`
   width: 100%;
-  background-color: #3b4651;
-  border-radius: 8px;
+  background-color: ${({ theme }) => theme.colors.surfaceCard};
+  border-radius: ${({ theme }) => theme.radius.md};
   overflow: hidden;
   position: relative;
-  margin-bottom: 24px;
+  margin-bottom: ${({ theme }) => theme.spacing.xxl};
 `;
 
 export const ImageBackground = styled.div`
@@ -21,21 +21,21 @@ export const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 12px;
+  padding: ${({ theme }) => theme.spacing.md};
 `;
 
 export const UserInfo = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 12px;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 
   div {
-    margin-left: 12px;
+    margin-left: ${({ theme }) => theme.spacing.md};
   }
 
   h4 {
-    color: #ffffff;
-    font-family: 'Open Sans', sans-serif;
+    color: ${({ theme }) => theme.colors.text};
+    font-family: ${({ theme }) => theme.fonts.body};
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
@@ -43,8 +43,8 @@ export const UserInfo = styled.div`
   }
 
   p {
-    color: #ffffff;
-    font-family: 'Open Sans', sans-serif;
+    color: ${({ theme }) => theme.colors.text};
+    font-family: ${({ theme }) => theme.fonts.body};
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -55,16 +55,16 @@ export const UserInfo = styled.div`
 export const UserPicture = styled.img`
   width: 32px;
   height: 32px;
-  border-radius: 22px;
-  border: 3px solid #ffffff;
+  border-radius: ${({ theme }) => theme.radius.pill};
+  border: 3px solid ${({ theme }) => theme.colors.text};
 `;
 
 export const PostInfo = styled.div`
-  margin-bottom: 12px;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 
   h4 {
-    color: #ffffff;
-    font-family: 'Open Sans', sans-serif;
+    color: ${({ theme }) => theme.colors.text};
+    font-family: ${({ theme }) => theme.fonts.body};
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
@@ -72,7 +72,7 @@ export const PostInfo = styled.div`
   }
 
   p {
-    font-family: 'Open Sans', sans-serif;
+    font-family: ${({ theme }) => theme.fonts.body};
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -81,15 +81,15 @@ export const PostInfo = styled.div`
 `;
 
 export const MetaInfo = styled.div`
-  margin-top: 12px;
+  margin-top: ${({ theme }) => theme.spacing.md};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: ${({ theme }) => theme.spacing.md};
 
   h4 {
-    color: #ffffff80;
-    font-family: 'Open Sans', sans-serif;
+    color: ${({ theme }) => theme.colors.textMuted};
+    font-family: ${({ theme }) => theme.fonts.body};
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -100,7 +100,7 @@ export const MetaInfo = styled.div`
     display: flex;
     align-items: center;
     gap: 6px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: ${({ theme }) => theme.fonts.body};
     font-size: 16px;
     font-style: normal;
     font-weight: 700;

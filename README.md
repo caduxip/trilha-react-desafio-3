@@ -25,7 +25,8 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - feed carregado a partir do `json-server`;
 - ranking lateral carregado da API;
 - botão de logout no cabeçalho autenticado;
-- testes básicos de roteamento e fluxo público.
+- tema global com tokens compartilhados;
+- testes de navegação, login, cadastro e logout.
 
 ## Stack utilizada
 
@@ -46,8 +47,9 @@ src/
   components/        componentes reutilizáveis de UI e layout
   contexts/          contexto de autenticação
   pages/             páginas da aplicação
+  routes/            configuração de paths, guardas e composição de rotas
   services/          integração com API e regras de acesso a dados
-  styles/            estilos globais
+  styles/            estilos globais, tema e tokens visuais
 ```
 
 ## Rotas da aplicação
@@ -111,6 +113,30 @@ O fluxo de autenticação é local/mockado:
 
 Esse comportamento é intencional para fins de estudo e prototipação.
 
+## Arquitetura de navegação
+
+O projeto possui uma camada dedicada para rotas em `src/routes`, responsável por:
+
+- centralizar os paths da aplicação;
+- separar guardas de rota pública e privada;
+- compor as rotas principais do app;
+- aplicar `lazy loading` nas páginas para reduzir o bundle inicial.
+
+## Tema e sistema visual
+
+O projeto possui uma base de tema centralizada em `src/styles/theme.js`, usada via `ThemeProvider`.
+
+Essa camada concentra:
+
+- paleta de cores;
+- tipografia;
+- espaçamentos;
+- raios de borda;
+- breakpoints;
+- tamanhos reutilizáveis de layout e controles.
+
+Com isso, os estilos centrais deixaram de depender de valores visuais espalhados em múltiplos arquivos, o que reduz inconsistência e facilita manutenção.
+
 ## Qualidade e manutenção
 
 O projeto já conta com:
@@ -119,13 +145,16 @@ O projeto já conta com:
 - serviço dedicado para autenticação;
 - serviço dedicado para feed;
 - layout compartilhado para telas de autenticação;
-- testes iniciais de navegação.
+- tema global com tokens compartilhados;
+- rotas modularizadas com carregamento sob demanda;
+- testes cobrindo navegação, login, cadastro e logout;
+- melhorias básicas de responsividade no fluxo principal.
 
 Melhorias futuras recomendadas:
 
-- ampliar cobertura de testes;
 - documentar padrões de componentes;
-- melhorar responsividade das páginas;
+- ampliar a cobertura de testes para cenários de erro e integração;
+- refinar ainda mais a responsividade das páginas;
 - evoluir a camada de API para cenários além do mock;
 - revisar a base CRA em uma etapa posterior, sem migração precipitada.
 

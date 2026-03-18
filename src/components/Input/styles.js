@@ -1,43 +1,42 @@
 import styled from 'styled-components';
 
 export const InputContainer = styled.div`
-    width: 100%;
-    max-width: 275px;
-    height: 30px;
-    border-bottom: 1px solid ${({$hasError}) => ($hasError ? '#FF6B6B' : '#3B3450')};
-
-    display:flex;
-    align-items: center;
-    margin-bottom: 4px;
-`
+  width: 100%;
+  max-width: ${({ theme }) => theme.sizes.controlWidth};
+  height: ${({ theme }) => theme.sizes.inputHeight};
+  border-bottom: 1px solid
+    ${({ $hasError, theme }) => ($hasError ? theme.colors.danger : theme.colors.border)};
+  display: flex;
+  align-items: center;
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
+`;
 
 export const IconContainer = styled.div`
-    margin-right: 10px;
-`
+  margin-right: 10px;
+`;
 
 export const InputText = styled.input`
-    background-color: transparent;
-    color: #FFFFFF;
-    flex:1;
-    border: 0;
-    height: 30px;
-    outline: none;
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.text};
+  flex: 1;
+  border: 0;
+  height: ${({ theme }) => theme.sizes.inputHeight};
+  outline: none;
 
-    &::placeholder {
-        color: #FFFFFF80;
-    }
-    
-`
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.textMuted};
+  }
+`;
 
 export const ErrorText = styled.span`
-    display: block;
-    width: 100%;
-    max-width: 275px;
-    margin-bottom: 16px;
-    color: #FF6B6B;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 16px;
-`
+  display: block;
+  width: 100%;
+  max-width: ${({ theme }) => theme.sizes.controlWidth};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  color: ${({ theme }) => theme.colors.danger};
+  font-family: ${({ theme }) => theme.fonts.body};
+  font-size: ${({ theme }) => theme.typography.small.fontSize};
+  font-style: normal;
+  font-weight: 600;
+  line-height: ${({ theme }) => theme.typography.small.lineHeight};
+`;

@@ -9,13 +9,17 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   body {
-    background-color: #1E192C;
-    color: #FFFFFF;
-    font-family: 'Open Sans', sans-serif;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+    font-family: ${({ theme }) => theme.fonts.body};
   }
 
   button,
   input {
     font: inherit;
+  }
+
+  a {
+    color: inherit;
   }
 `

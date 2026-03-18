@@ -3,21 +3,21 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  max-width: 80%;
-  min-height: 47px;
+  max-width: ${({ theme }) => theme.sizes.containerWidth};
+  min-height: ${({ theme }) => theme.sizes.headerHeight};
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
 
-  @media (max-width: 960px) {
-    max-width: 90%;
-    padding: 12px 0;
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    max-width: ${({ theme }) => theme.sizes.containerWidthMobile};
+    padding: ${({ theme }) => `${theme.spacing.md} 0`};
     align-items: flex-start;
-    gap: 16px;
+    gap: ${({ theme }) => theme.spacing.lg};
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: column;
   }
 `;
@@ -26,18 +26,18 @@ export const Row = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: ${({ theme }) => theme.spacing.md};
 
-  @media (max-width: 720px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 100%;
     flex-wrap: wrap;
   }
 `;
 
 export const Wrapper = styled.div`
-  background-color: #151515;
+  background-color: ${({ theme }) => theme.colors.surface};
   width: 100%;
-  min-height: 47px;
+  min-height: ${({ theme }) => theme.sizes.headerHeight};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,19 +46,19 @@ export const Wrapper = styled.div`
 export const LogoLink = styled(Link)`
   display: flex;
   align-items: center;
-  margin-right: 24px;
+  margin-right: ${({ theme }) => theme.spacing.xxl};
 `;
 
 export const BuscarInputContainer = styled.div`
-  width: 275px;
-  height: 30px;
-  background: #2d2d37;
-  border-radius: 8px;
+  width: ${({ theme }) => theme.sizes.controlWidth};
+  height: ${({ theme }) => theme.sizes.inputHeight};
+  background: ${({ theme }) => theme.colors.surfaceAlt};
+  border-radius: ${({ theme }) => theme.radius.md};
   padding: 2px 5px;
-  margin: 0 12px;
+  margin: 0 ${({ theme }) => theme.spacing.md};
   display: flex;
 
-  @media (max-width: 720px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 100%;
     margin: 0;
     order: 3;
@@ -66,8 +66,8 @@ export const BuscarInputContainer = styled.div`
 `;
 
 export const MenuText = styled.span`
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
@@ -75,30 +75,30 @@ export const MenuText = styled.span`
 `;
 
 export const MenuLink = styled(Link)`
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 12px;
   font-style: normal;
   line-height: 25px;
-  margin-right: 12px;
+  margin-right: ${({ theme }) => theme.spacing.md};
   text-decoration: none;
 `;
 
 export const UserMenu = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: ${({ theme }) => theme.spacing.md};
 
   span {
-    color: #ffffff;
-    font-family: 'Open Sans', sans-serif;
+    color: ${({ theme }) => theme.colors.text};
+    font-family: ${({ theme }) => theme.fonts.body};
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
     line-height: 16px;
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     margin-left: auto;
   }
 `;
@@ -106,9 +106,9 @@ export const UserMenu = styled.div`
 export const LogoutButton = styled.button`
   background: transparent;
   border: 0;
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.text};
   cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
@@ -118,18 +118,18 @@ export const LogoutButton = styled.button`
 export const UserPicture = styled.img`
   width: 32px;
   height: 32px;
-  border-radius: 22px;
-  border: 3px solid #ffffff;
+  border-radius: ${({ theme }) => theme.radius.pill};
+  border: 3px solid ${({ theme }) => theme.colors.text};
 `;
 
 export const Input = styled.input`
   background: transparent;
   flex: 1;
   border: 0;
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.text};
   outline: none;
 
   &::placeholder {
-    color: #ffffff80;
+    color: ${({ theme }) => theme.colors.textMuted};
   }
 `;

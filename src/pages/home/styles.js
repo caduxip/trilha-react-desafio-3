@@ -2,16 +2,16 @@ import styled from 'styled-components';
 
 export const Container = styled.main`
   width: 100%;
-  max-width: 80%;
-  margin: 120px auto 0;
+  max-width: ${({ theme }) => theme.sizes.containerWidth};
+  margin: ${({ theme }) => `${theme.spacing.pageTop} auto 0`};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 48px;
+  gap: ${({ theme }) => theme.spacing.pageGap};
 
-  @media (max-width: 960px) {
-    max-width: 90%;
-    margin-top: 64px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    max-width: ${({ theme }) => theme.sizes.containerWidthMobile};
+    margin-top: ${({ theme }) => theme.spacing.pageTopMobile};
     flex-direction: column-reverse;
     align-items: flex-start;
   }
@@ -25,42 +25,42 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.h2`
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 32px;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.body};
+  font-size: ${({ theme }) => theme.typography.title.fontSize};
   font-style: normal;
   font-weight: 700;
   width: 100%;
-  margin-bottom: 20px;
-  line-height: 44px;
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  line-height: ${({ theme }) => theme.typography.title.lineHeight};
 
-  @media (max-width: 960px) {
-    font-size: 28px;
-    line-height: 38px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: ${({ theme }) => theme.typography.titleMobile.fontSize};
+    line-height: ${({ theme }) => theme.typography.titleMobile.lineHeight};
   }
 `;
 
 export const TitleHighlight = styled.span`
-  color: #e4105d;
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const TextContent = styled.p`
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.body};
+  font-size: ${({ theme }) => theme.typography.body.fontSize};
   font-style: normal;
   font-weight: 400;
-  line-height: 22px;
+  line-height: ${({ theme }) => theme.typography.body.lineHeight};
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
 `;
 
 export const Banner = styled.img`
   width: 100%;
-  max-width: 560px;
+  max-width: ${({ theme }) => theme.sizes.bannerWidth};
   height: auto;
 
-  @media (max-width: 960px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     max-width: 100%;
   }
 `;

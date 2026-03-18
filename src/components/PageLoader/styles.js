@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const LoaderContainer = styled.div`
   width: 100%;
-  min-height: calc(100vh - 47px);
+  min-height: calc(100vh - ${({ theme }) => theme.sizes.headerHeight});
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.body};
+  font-size: ${({ theme }) => theme.typography.body.fontSize};
   font-style: normal;
   font-weight: 600;
-  line-height: 22px;
+  line-height: ${({ theme }) => theme.typography.body.lineHeight};
 `;

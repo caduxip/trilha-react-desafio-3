@@ -7,39 +7,39 @@ export const Form = styled.form`
 `;
 
 export const FormTitle = styled.h2`
-  margin-bottom: 8px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 32px;
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  font-family: ${({ theme }) => theme.fonts.body};
+  font-size: ${({ theme }) => theme.typography.title.fontSize};
   font-style: normal;
   font-weight: 700;
-  line-height: 44px;
-  color: #ffffff;
+  line-height: ${({ theme }) => theme.typography.title.lineHeight};
+  color: ${({ theme }) => theme.colors.text};
 
-  @media (max-width: 960px) {
-    font-size: 28px;
-    line-height: 38px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: ${({ theme }) => theme.typography.titleMobile.fontSize};
+    line-height: ${({ theme }) => theme.typography.titleMobile.lineHeight};
   }
 `;
 
 export const FormSubtitle = styled.p`
   margin-bottom: 35px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
+  font-family: ${({ theme }) => theme.fonts.body};
+  font-size: ${({ theme }) => theme.typography.subtitle.fontSize};
   font-style: normal;
   font-weight: 400;
-  line-height: 25px;
-  color: #ffffff;
+  line-height: ${({ theme }) => theme.typography.subtitle.lineHeight};
+  color: ${({ theme }) => theme.colors.text};
 
-  @media (max-width: 960px) {
-    font-size: 16px;
-    line-height: 22px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    font-size: ${({ theme }) => theme.typography.subtitleMobile.fontSize};
+    line-height: ${({ theme }) => theme.typography.subtitleMobile.lineHeight};
   }
 `;
 
 export const StatusText = styled.p`
-  margin-top: 16px;
-  color: ${({ $error }) => ($error ? '#ff6b6b' : '#23dd7a')};
-  font-family: 'Open Sans', sans-serif;
+  margin-top: ${({ theme }) => theme.spacing.lg};
+  color: ${({ $error, theme }) => ($error ? theme.colors.danger : theme.colors.success)};
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -50,18 +50,18 @@ export const HelperRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-top: 20px;
+  gap: ${({ theme }) => theme.spacing.lg};
+  margin-top: ${({ theme }) => theme.spacing.xl};
 
-  @media (max-width: 640px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     flex-direction: column;
     align-items: flex-start;
   }
 `;
 
 export const HelperText = styled.span`
-  color: #e5e044;
-  font-family: 'Open Sans', sans-serif;
+  color: ${({ theme }) => theme.colors.warning};
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
@@ -69,8 +69,8 @@ export const HelperText = styled.span`
 `;
 
 export const HelperLink = styled(Link)`
-  color: #23dd7a;
-  font-family: 'Open Sans', sans-serif;
+  color: ${({ theme }) => theme.colors.success};
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
@@ -79,9 +79,9 @@ export const HelperLink = styled(Link)`
 `;
 
 export const LegalText = styled.p`
-  margin-top: 20px;
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
+  margin-top: ${({ theme }) => theme.spacing.xl};
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 11px;
   font-style: normal;
   font-weight: 400;
@@ -89,14 +89,14 @@ export const LegalText = styled.p`
 `;
 
 export const AccentText = styled.span`
-  color: #23dd7a;
+  color: ${({ theme }) => theme.colors.success};
   font-weight: 700;
 `;
 
 export const InlineText = styled.p`
-  margin-top: 12px;
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
+  margin-top: ${({ theme }) => theme.spacing.md};
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.body};
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -104,7 +104,7 @@ export const InlineText = styled.p`
 `;
 
 export const InlineLink = styled(Link)`
-  color: #23dd7a;
+  color: ${({ theme }) => theme.colors.success};
   font-weight: 700;
   text-decoration: none;
 `;
