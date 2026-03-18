@@ -80,3 +80,39 @@ jobs:
             playwright-report
             test-results
           if-no-files-found: ignore
+
+  e2e-visual:
+    runs-on: ubuntu-latest
+    needs: e2e-smoke
+    env:
+      CI: true
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar navegador do Playwright
+        run: npx playwright install --with-deps chromium
+
+      # A etapa visual compara screenshots versionados das telas principais.
+      - name: Executar regressao visual
+        run: npm run e2e:visual
+
+      - name: Publicar artefatos da regressao visual
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-visual-report
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore

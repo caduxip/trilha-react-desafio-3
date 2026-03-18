@@ -1,9 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-const defaultUser = {
-  email: 'pablo@email.com',
-  password: '123456',
-};
+const { defaultUser, loginWithDefaultUser } = require('./helpers/auth');
 
 const createUniqueUser = () => {
   const suffix = `${Date.now()}-${Math.round(Math.random() * 1000)}`;
@@ -27,12 +24,8 @@ test.describe('Smoke da aplicacao', () => {
   });
 
   test('permite autenticar um usuario existente e abrir o feed', async ({ page }) => {
-    await page.goto('/login');
-
     // Usamos um usuário seed da base mock para validar o caminho feliz de autenticação.
-    await page.getByLabel('E-mail').fill(defaultUser.email);
-    await page.getByLabel('Senha').fill(defaultUser.password);
-    await page.getByRole('button', { name: 'Entrar' }).click();
+    await loginWithDefaultUser(page);
 
     await expect(page.getByRole('heading', { name: 'Feed' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Atualizar' })).toBeVisible();

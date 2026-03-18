@@ -16,6 +16,11 @@ const useLogin = () => {
   const latestRequestRef = useRef(0);
 
   useEffect(() => {
+    // Em desenvolvimento, o StrictMode pode montar e desmontar o componente
+    // mais de uma vez para encontrar efeitos inseguros. Reativamos o ref aqui
+    // para que o hook continue aceitando updates válidos após esse remount.
+    isMountedRef.current = true;
+
     return () => {
       isMountedRef.current = false;
     };

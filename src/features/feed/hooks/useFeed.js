@@ -19,6 +19,11 @@ const useFeed = () => {
   }, []);
 
   useEffect(() => {
+    // Em desenvolvimento, o StrictMode pode montar e desmontar o componente
+    // mais de uma vez para validar efeitos colaterais. Este reset evita que
+    // a flag fique travada como `false` após o remount do React.
+    isMountedRef.current = true;
+
     return () => {
       // Mantém uma referência estável para impedir updates depois do unmount.
       isMountedRef.current = false;

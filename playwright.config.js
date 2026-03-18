@@ -21,7 +21,10 @@ module.exports = defineConfig({
       timeout: 30 * 1000,
     },
     {
-      command: 'HOST=127.0.0.1 PORT=3000 BROWSER=none npm start',
+      // Fixamos as variáveis do frontend para que a suíte E2E não dependa
+      // de um `.env` local que o desenvolvedor possa ter configurado.
+      command:
+        'HOST=127.0.0.1 PORT=3000 BROWSER=none REACT_APP_API_URL=http://127.0.0.1:8001 REACT_APP_ENABLE_SENTRY=false REACT_APP_ENABLE_WEB_VITALS=false REACT_APP_LOG_LEVEL=silent npm start',
       url: 'http://127.0.0.1:3000',
       reuseExistingServer: !process.env.CI,
       timeout: 90 * 1000,

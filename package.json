@@ -32,6 +32,8 @@
     "e2e": "playwright test",
     "e2e:headed": "playwright test --headed",
     "e2e:install": "playwright install chromium",
+    "e2e:visual": "playwright test tests/e2e/visual.spec.js",
+    "e2e:visual:update": "playwright test tests/e2e/visual.spec.js --update-snapshots",
     "api:reset": "node scripts/reset-mock-db.cjs",
     "verify": "npm run format:check && npm run lint && npm run test:ci && npm run build",
     "verify:ci": "npm run format:check && npm run lint && npm run test:coverage && npm run build",

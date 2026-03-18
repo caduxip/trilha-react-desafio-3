@@ -180,6 +180,8 @@ Observações importantes sobre o ambiente Docker:
 - `npm run e2e`: executa os smoke tests end-to-end com Playwright
 - `npm run e2e:headed`: executa os smoke tests com navegador visível
 - `npm run e2e:install`: instala o navegador Chromium usado pelos testes E2E
+- `npm run e2e:visual`: executa a suíte de regressão visual das telas principais
+- `npm run e2e:visual:update`: atualiza os snapshots versionados da regressão visual
 - `npm run api:reset`: restaura o `db.json` para a base seed versionada do projeto
 - `npm run verify`: executa `format:check` + `lint` + `test:ci` + `build`
 - `npm run verify:ci`: executa `format:check` + `lint` + `test:coverage` + `build`
@@ -305,6 +307,20 @@ O arquivo `playwright.config.js` sobe automaticamente:
 - o frontend React em modo de desenvolvimento.
 
 Isso reduz preparação manual e deixa a suíte mais próxima de um fluxo real de uso.
+
+## Regressao visual
+
+Além dos smoke tests funcionais, o projeto agora possui uma suíte dedicada de regressão visual com Playwright:
+
+- `tests/e2e/visual.spec.js`: cobre home pública, login, cadastro e feed autenticado;
+- snapshots versionados ao lado da suíte, usados como referência visual de layout;
+- viewport fixa e screenshots com animações desabilitadas para reduzir flutuação entre execuções.
+
+Quando uma mudança legítima alterar a interface, atualize os snapshots com:
+
+```bash
+npm run e2e:visual:update
+```
 
 ## Pipeline de CI
 
