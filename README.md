@@ -70,6 +70,7 @@ Documentação complementar:
 ## Rotas da aplicação
 
 - `/`: landing page pública
+- `/componentes`: vitrine interna dos componentes compartilhados
 - `/login`: acesso de usuário
 - `/cadastro`: criação de nova conta
 - `/feed`: área autenticada com publicações e ranking
@@ -257,6 +258,7 @@ Além do README, o repositório agora possui guias curtos voltados para onboardi
 
 - `docs/frontend-architecture.md`: explica a divisão entre `App`, rotas, features, componentes compartilhados e infraestrutura;
 - `docs/ui-components.md`: descreve o papel de `Button`, `Input`, `Header`, `AuthLayout`, `AsyncState` e outros componentes base;
+- a rota `/componentes`: mostra exemplos visuais reais da biblioteca interna com os contratos mais usados no dia a dia;
 - comentários no código em pontos de fluxo, como guardas, providers, hooks e helpers de teste, para facilitar leitura por pessoas em início de carreira.
 
 ## Camada HTTP

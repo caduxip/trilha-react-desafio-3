@@ -12,6 +12,12 @@ const Home = lazy(() =>
   })),
 );
 
+const UiCatalog = lazy(() =>
+  import('../pages/ui-catalog').then((module) => ({
+    default: module.UiCatalog,
+  })),
+);
+
 const Login = lazy(() =>
   import('../features/auth/pages/login').then((module) => ({
     default: module.Login,
@@ -36,6 +42,8 @@ const AppRoutes = () => {
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path={ROUTES.home} element={<Home />} />
+        {/* O catálogo é público porque serve como vitrine interna da UI base. */}
+        <Route path={ROUTES.uiCatalog} element={<UiCatalog />} />
         {/* Login e cadastro usam guarda pública: quem já tem sessão volta para o feed. */}
         <Route
           path={ROUTES.login}

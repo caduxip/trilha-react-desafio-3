@@ -76,6 +76,8 @@ const Header = ({ autenticado }) => {
           ) : (
             <>
               <MenuLink to={ROUTES.home}>Home</MenuLink>
+              {/* A vitrine ajuda o time a reutilizar a UI antes de criar novos componentes. */}
+              <MenuLink to={ROUTES.uiCatalog}>Componentes</MenuLink>
               <Button as={Link} to={ROUTES.login} title="Entrar" />
               <Button as={Link} to={ROUTES.register} title="Cadastrar" />
             </>

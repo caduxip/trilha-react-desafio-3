@@ -2,6 +2,8 @@
 
 Este guia descreve o contrato dos componentes reutilizáveis do projeto e como evoluí-los sem criar inconsistência.
 
+Além deste documento, o projeto agora possui uma vitrine interna em `/componentes` para mostrar exemplos reais de uso dos componentes base com o tema atual.
+
 ## Princípios
 
 Os componentes compartilhados devem:
@@ -131,3 +133,10 @@ Checklist recomendado:
 3. documentar o papel do componente com comentário curto no topo do arquivo;
 4. escrever pelo menos um teste unitário se o componente tiver comportamento relevante;
 5. adicionar ao guia quando ele passar a fazer parte da base comum do projeto.
+
+## Fluxo recomendado para quem vai evoluir a UI
+
+1. abrir a rota `/componentes` para verificar se já existe uma peça parecida;
+2. consultar este guia para entender o contrato atual do componente base;
+3. evoluir por variante, tamanho ou composição antes de criar um componente novo;
+4. atualizar a vitrine, o guia e os testes quando o contrato compartilhado mudar.

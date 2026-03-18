@@ -57,6 +57,13 @@ test('renders the registration screen at /cadastro', async () => {
   expect(screen.getByRole('button', { name: /criar minha conta/i })).toBeInTheDocument();
 });
 
+test('renders the component catalog screen at /componentes', async () => {
+  renderAtRoute(ROUTES.uiCatalog);
+
+  expect(await screen.findByText('Catálogo de componentes')).toBeInTheDocument();
+  expect(screen.getByText('Princípios da UI compartilhada')).toBeInTheDocument();
+});
+
 test('redirects authenticated users away from the public login route', async () => {
   authenticateUser();
 
