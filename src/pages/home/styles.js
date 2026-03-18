@@ -1,3 +1,4 @@
+// Estilos da home pública.
 import styled from 'styled-components';
 
 export const Container = styled.main.attrs({

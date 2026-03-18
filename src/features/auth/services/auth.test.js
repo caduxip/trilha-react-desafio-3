@@ -1,3 +1,4 @@
+// Testa o contrato do serviço de autenticação sem depender da UI.
 import { APP_ERROR_CODES } from '../../../lib/http/errors';
 import { api } from '../../../services/api';
 import { authService, EMAIL_IN_USE } from './auth';

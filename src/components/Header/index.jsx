@@ -1,3 +1,4 @@
+// Cabeçalho principal da aplicação.
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo-dio.png';
@@ -27,11 +28,13 @@ const Header = ({autenticado}) => {
   const isUserAuthenticated = autenticado ?? isAuthenticated;
 
   const handleSignOut = () => {
+    // Encerra a sessão e redireciona para a área pública.
     signOut();
     navigate(ROUTES.home, { replace: true });
   };
 
   const handleSearchSubmit = (event) => {
+    // A busca ainda é apenas visual, então impedimos submit tradicional.
     event.preventDefault();
   };
 

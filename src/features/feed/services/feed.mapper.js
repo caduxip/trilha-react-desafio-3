@@ -1,7 +1,10 @@
+// Mapeadores do feed.
+// Transformam o formato cru vindo da API em estruturas prontas para a UI.
 const DEFAULT_AVATAR = 'https://avatars.githubusercontent.com/u/45184516?v=4';
 const DEFAULT_AUTHOR_NAME = 'Usuário da comunidade';
 const DEFAULT_PUBLISHED_AT = 'Agora';
 
+// Cria um índice por id para buscar rapidamente o autor de cada post.
 const createUsersById = (users) =>
   users.reduce((accumulator, user) => {
     accumulator[user.id] = user;

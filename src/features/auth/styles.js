@@ -1,3 +1,4 @@
+// Estilos compartilhados entre login e cadastro.
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 

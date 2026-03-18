@@ -1,3 +1,4 @@
+// Estilos do loader de página.
 import styled from 'styled-components';
 
 export const LoaderContainer = styled.div`

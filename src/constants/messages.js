@@ -1,3 +1,5 @@
+// Textos reutilizados pela interface.
+// Centralizar mensagens facilita manutenção, testes e futura internacionalização.
 const MESSAGES = {
   app: {
     unexpectedError: 'Algo inesperado aconteceu nesta tela.',
@@ -5,9 +7,9 @@ const MESSAGES = {
   },
   auth: {
     invalidCredentials: 'Usuário ou senha inválidos.',
-    loginUnavailable: 'Não foi possível acessar a API. Verifique o json-server e tente novamente.',
+    loginUnavailable: 'Não foi possível acessar a API. Execute npm run api e tente novamente.',
     emailInUse: 'Este e-mail já está em uso.',
-    registerUnavailable: 'Não foi possível criar sua conta. Verifique a API e tente novamente.',
+    registerUnavailable: 'Não foi possível criar sua conta. Execute npm run api e tente novamente.',
   },
   feed: {
     loading: 'Carregando publicações...',

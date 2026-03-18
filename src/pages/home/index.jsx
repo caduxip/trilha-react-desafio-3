@@ -1,3 +1,4 @@
+// Landing page pública da aplicação.
 import { Link } from "react-router-dom";
 import bannerImage from '../../assets/banner.png'
 

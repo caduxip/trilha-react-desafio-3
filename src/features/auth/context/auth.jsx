@@ -1,17 +1,21 @@
+// Contexto responsável por expor a sessão autenticada para o restante da aplicação.
 import { createContext, useContext, useState } from 'react';
 import { authSession } from '../../../lib/storage/session';
 
 const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
+  // Ao iniciar, tentamos restaurar o usuário salvo no navegador.
   const [user, setUser] = useState(() => authSession.get());
 
   const signIn = (nextUser) => {
+    // Atualiza o estado em memória e persiste a sessão local.
     setUser(nextUser);
     authSession.set(nextUser);
   };
 
   const signOut = () => {
+    // Remove a sessão do estado e do localStorage.
     setUser(null);
     authSession.clear();
   };
@@ -33,6 +37,7 @@ const AuthProvider = ({ children }) => {
 const useAuth = () => {
   const context = useContext(AuthContext);
 
+  // Garante que o hook só seja usado dentro do provider.
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }

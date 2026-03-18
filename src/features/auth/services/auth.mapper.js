@@ -1,3 +1,5 @@
+// Mapeadores da feature de autenticação.
+// Eles transformam o formato cru da API em um formato mais estável para a UI.
 const DEFAULT_AVATAR = 'https://avatars.githubusercontent.com/u/45184516?v=4';
 
 const toAuthUser = (apiUser = {}) => ({
@@ -8,6 +10,7 @@ const toAuthUser = (apiUser = {}) => ({
   percentual: apiUser.percentual ?? 0,
 });
 
+// Payload padrão que enviamos ao json-server no cadastro.
 const toRegisterPayload = ({ email, name, senha }) => ({
   email,
   name,

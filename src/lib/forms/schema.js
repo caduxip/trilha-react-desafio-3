@@ -1,3 +1,4 @@
+// Mini infraestrutura de validação para integrar regras declarativas ao react-hook-form.
 const createFieldError = (message) => ({
   type: 'validation',
   message,
@@ -6,6 +7,7 @@ const createFieldError = (message) => ({
 const composeValidators =
   (...validators) =>
   (value, values) => {
+    // Executa as regras na ordem e para no primeiro erro encontrado.
     for (const validator of validators) {
       const errorMessage = validator(value, values);
 
@@ -50,6 +52,7 @@ const email =
 const createSchemaResolver = (schema) => async (values) => {
   const errors = {};
 
+  // O schema é um mapa `campo -> função validadora`.
   Object.entries(schema).forEach(([fieldName, validator]) => {
     const errorMessage = validator(values[fieldName], values);
 
@@ -59,6 +62,7 @@ const createSchemaResolver = (schema) => async (values) => {
   });
 
   return {
+    // Se houver erro, o react-hook-form ignora `values` e usa apenas `errors`.
     values: Object.keys(errors).length ? {} : values,
     errors,
   };

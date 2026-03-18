@@ -1,3 +1,5 @@
+// Página autenticada principal.
+// Busca os dados do feed, trata loading/erro/vazio e renderiza posts + ranking.
 import React, { useEffect, useState } from 'react';
 
 import { AsyncState } from '../../../../components/AsyncState';
@@ -24,9 +26,11 @@ const Feed = () => {
   const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
+    // Essa flag evita `setState` depois que o componente já saiu da tela.
     let isMounted = true;
 
     const loadFeed = async () => {
+      // A cada recarga, voltamos para estado de loading e limpamos erros anteriores.
       setIsLoading(true);
       setError('');
 
@@ -44,6 +48,7 @@ const Feed = () => {
           return;
         }
 
+        // Neste ponto preferimos mostrar uma mensagem amigável e estável para o usuário.
         setError(MESSAGES.feed.loadError);
       } finally {
         if (isMounted) {
@@ -55,6 +60,7 @@ const Feed = () => {
     loadFeed();
 
     return () => {
+      // Cleanup importante para evitar atualização de estado após unmount.
       isMounted = false;
     };
   }, [reloadKey]);
@@ -69,6 +75,7 @@ const Feed = () => {
             {!isLoading && !error ? (
               <Button
                 type="button"
+                // O reloadKey força o effect a executar novamente.
                 onClick={() => setReloadKey((current) => current + 1)}
                 title="Atualizar"
               />

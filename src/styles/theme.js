@@ -1,3 +1,4 @@
+// Tokens visuais centrais da aplicação.
 const theme = {
   fonts: {
     body: "'Open Sans', sans-serif",

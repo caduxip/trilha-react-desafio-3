@@ -1,3 +1,4 @@
+// Testes do bloco visual de ranking.
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 

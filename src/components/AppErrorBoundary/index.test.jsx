@@ -1,3 +1,4 @@
+// Testa o fallback exibido quando um componente lança erro em renderização.
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';

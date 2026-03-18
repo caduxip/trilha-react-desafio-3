@@ -1,3 +1,4 @@
+// Testa o contrato da camada de dados do feed sem depender dos componentes.
 import { APP_ERROR_CODES } from '../../../lib/http/errors';
 import { api } from '../../../services/api';
 import { feedService } from './feed';

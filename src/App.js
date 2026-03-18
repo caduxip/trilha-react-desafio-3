@@ -1,3 +1,4 @@
+// `App` organiza os providers globais que sustentam todo o fluxo da aplicação.
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
@@ -10,9 +11,12 @@ import { theme } from './styles/theme';
 function App() {
   return (
     <AuthProvider>
+      {/* Injeta os tokens visuais usados pelos styled-components. */}
       <ThemeProvider theme={theme}>
+        {/* Controla a navegação entre telas sem recarregar a página. */}
         <Router>
           <GlobalStyle />
+          {/* Evita tela branca total quando algum componente lança erro em renderização. */}
           <AppErrorBoundary>
             <AppRoutes />
           </AppErrorBoundary>

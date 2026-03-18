@@ -1,3 +1,4 @@
+// Componente usado no ranking lateral do feed.
 import React from 'react';
 
 import { Container, NameText, PercentageText, Progress, UserPicture } from './styles';
@@ -5,6 +6,7 @@ import { Container, NameText, PercentageText, Progress, UserPicture } from './st
 const UserInfo = ({ avatar, image, name, nome, percentage, percentual }) => {
   const displayName = name ?? nome;
   const displayAvatar = avatar ?? image;
+  // Garantimos que a barra de progresso sempre fique entre 0% e 100%.
   const normalizedPercentage = Math.max(0, Math.min(percentage ?? percentual, 100));
 
   return (

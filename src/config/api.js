@@ -1,3 +1,4 @@
+// Configuração enxuta do cliente HTTP.
 import { ENV_CONFIG } from './env';
 
 const API_CONFIG = {

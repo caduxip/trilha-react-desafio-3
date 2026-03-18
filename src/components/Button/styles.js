@@ -1,3 +1,4 @@
+// Estilos do botão base, com suporte a tamanhos e variantes.
 import styled, { css } from 'styled-components';
 
 const BUTTON_SIZES = {

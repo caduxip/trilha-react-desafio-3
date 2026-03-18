@@ -1,3 +1,4 @@
+// Estilos dos blocos de estado assíncrono.
 import styled from 'styled-components';
 
 export const Surface = styled.div`

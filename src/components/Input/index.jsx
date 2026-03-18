@@ -1,3 +1,4 @@
+// Input compartilhado integrado ao react-hook-form.
 import React from 'react'
 import { Controller } from "react-hook-form";
 
@@ -23,6 +24,7 @@ const Input = ({ leftIcon, label, name, control, errorMessage, ...rest }) => {
           name={name}
           control={control}
           render={({ field }) => (
+            // O Controller conecta este input visual ao estado interno do formulário.
             <InputText
               id={inputId}
               {...field}

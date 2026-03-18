@@ -1,3 +1,4 @@
+// Testes do contrato do botão reutilizável.
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 

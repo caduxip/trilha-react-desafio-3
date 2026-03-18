@@ -1,3 +1,4 @@
+// Estilos do fallback de erro global.
 import styled from 'styled-components';
 
 export const FallbackContainer = styled.main`

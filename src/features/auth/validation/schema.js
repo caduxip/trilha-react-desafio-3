@@ -1,3 +1,4 @@
+// Schemas declarativos usados pelos formulários de login e cadastro.
 import {
   composeValidators,
   createSchemaResolver,
@@ -25,11 +26,13 @@ const passwordValidator = composeValidators(
   minLength(6, AUTH_VALIDATION_MESSAGES.passwordMinLength),
 );
 
+// Resolver do login: valida apenas email e senha.
 const loginResolver = createSchemaResolver({
   email: emailValidator,
   senha: passwordValidator,
 });
 
+// Resolver do cadastro: acrescenta a validação do nome.
 const registerResolver = createSchemaResolver({
   name: composeValidators(
     required(AUTH_VALIDATION_MESSAGES.nameRequired),

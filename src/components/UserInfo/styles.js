@@ -1,3 +1,4 @@
+// Estilos do componente de ranking lateral.
 import styled from 'styled-components';
 
 export const Container = styled.div`

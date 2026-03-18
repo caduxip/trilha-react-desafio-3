@@ -1,3 +1,4 @@
+// Layout compartilhado entre login e cadastro.
 import React from 'react';
 
 import { Header } from '../Header';

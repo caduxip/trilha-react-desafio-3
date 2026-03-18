@@ -1,3 +1,4 @@
+// Botão base reutilizável da aplicação.
 import React from 'react'
 
 import { ButtonContainer } from './styles';
@@ -19,6 +20,7 @@ const Button = ({
       $fullWidth={fullWidth}
       $size={size}
       $variant={variant}
+      // Sinaliza tecnologias assistivas quando existe operação em andamento.
       aria-busy={isLoading}
       disabled={disabled || isLoading}
       {...rest}

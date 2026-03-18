@@ -1,3 +1,4 @@
+// Estilos globais mínimos aplicados a toda a aplicação.
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
@@ -31,6 +32,7 @@ export const GlobalStyle = createGlobalStyle`
   a,
   button,
   input {
+    // Foco visível melhora acessibilidade para navegação por teclado.
     &:focus-visible {
       outline: 2px solid ${({ theme }) => theme.colors.focus};
       outline-offset: 3px;

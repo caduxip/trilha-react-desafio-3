@@ -1,3 +1,4 @@
+// Boundary global de erro usada para evitar tela branca total.
 import { Component } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -22,6 +23,7 @@ class ErrorBoundaryRoot extends Component {
   }
 
   static getDerivedStateFromError() {
+    // Sinaliza ao React que a próxima renderização deve mostrar o fallback.
     return { hasError: true };
   }
 
@@ -32,6 +34,7 @@ class ErrorBoundaryRoot extends Component {
   }
 
   handleReload = () => {
+    // Força um reload completo como estratégia simples de recuperação.
     window.location.reload();
   };
 
@@ -62,6 +65,7 @@ class ErrorBoundaryRoot extends Component {
 const AppErrorBoundary = ({ children }) => {
   const location = useLocation();
 
+  // A cada troca de rota, a boundary é resetada.
   return <ErrorBoundaryRoot key={location.pathname}>{children}</ErrorBoundaryRoot>;
 };
 

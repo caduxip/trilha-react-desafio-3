@@ -1,3 +1,4 @@
+// Componente reutilizável para estados assíncronos como loading, erro e vazio.
 import { Button } from '../Button';
 
 import {

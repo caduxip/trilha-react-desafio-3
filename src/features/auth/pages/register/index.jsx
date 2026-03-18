@@ -1,3 +1,5 @@
+// Página de cadastro.
+// Valida os dados, tenta criar o usuário e, em caso de sucesso, inicia a sessão automaticamente.
 import { useState } from 'react';
 import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
@@ -44,14 +46,17 @@ const Register = () => {
   });
 
   const onSubmit = async (formData) => {
+    // Cada tentativa nova começa sem mensagem de erro antiga.
     setApiError('');
 
     try {
       const user = await authService.register(formData);
 
       signIn(user);
+      // Após cadastrar, o usuário já entra diretamente na área autenticada.
       navigate(ROUTES.feed, { replace: true });
     } catch (error) {
+      // Tratamos separadamente regra de negócio conhecida e erro genérico de integração.
       if (error.code === EMAIL_IN_USE) {
         setApiError(MESSAGES.auth.emailInUse);
         return;
@@ -99,6 +104,7 @@ const Register = () => {
         />
 
         <Button
+          // O label muda para reforçar que existe uma operação assíncrona em andamento.
           title={isSubmitting ? 'Criando conta...' : 'Criar minha conta'}
           variant="secondary"
           type="submit"

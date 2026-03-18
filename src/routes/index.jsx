@@ -1,3 +1,4 @@
+// Carregamento lazy das páginas para reduzir o bundle inicial.
 import React, { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
@@ -31,6 +32,7 @@ const Feed = lazy(() =>
 
 const AppRoutes = () => {
   return (
+    // Enquanto um chunk lazy carrega, mostramos um fallback simples.
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path={ROUTES.home} element={<Home />} />
@@ -58,6 +60,7 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+        {/* Qualquer rota inválida volta para a home. */}
         <Route path="*" element={<Navigate to={ROUTES.home} replace />} />
       </Routes>
     </Suspense>

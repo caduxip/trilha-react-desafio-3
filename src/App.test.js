@@ -1,3 +1,4 @@
+// Testes de integração do fluxo principal do app.
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -46,11 +47,13 @@ const createPost = () => ({
 });
 
 const renderAtRoute = (route) => {
+  // Simula a navegação do navegador antes de renderizar a aplicação.
   window.history.pushState({}, 'Test page', route);
   return render(<App />);
 };
 
 const authenticateUser = () => {
+  // Atalho para testes que precisam de um usuário já autenticado.
   window.localStorage.setItem(STORAGE_KEYS.authUser, JSON.stringify(createUser()));
 };
 

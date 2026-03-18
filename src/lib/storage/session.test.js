@@ -1,3 +1,4 @@
+// Garante que a sessão local seja persistida e lida com segurança.
 import { STORAGE_KEYS } from '../../constants/storage';
 import { authSession } from './session';
 

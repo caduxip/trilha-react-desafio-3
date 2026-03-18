@@ -1,3 +1,4 @@
+// Garante que a resolução de ambiente do frontend seja previsível.
 const ORIGINAL_ENV = process.env;
 
 describe('ENV_CONFIG', () => {
@@ -20,12 +21,12 @@ describe('ENV_CONFIG', () => {
   test('normalizes the configured API URL', () => {
     process.env = {
       ...ORIGINAL_ENV,
-      REACT_APP_API_URL: 'http://localhost:8001/',
+      REACT_APP_API_URL: 'http://127.0.0.1:8001/',
     };
 
     const { ENV_CONFIG } = require('./env');
 
-    expect(ENV_CONFIG.apiUrl).toBe('http://localhost:8001');
+    expect(ENV_CONFIG.apiUrl).toBe('http://127.0.0.1:8001');
   });
 
   test('throws when REACT_APP_API_URL is not a valid absolute URL', () => {

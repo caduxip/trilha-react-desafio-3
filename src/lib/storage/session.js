@@ -1,6 +1,8 @@
+// Encapsula a leitura e escrita da sessão autenticada no localStorage.
 import { STORAGE_KEYS } from '../../constants/storage';
 
 const getStorage = () => {
+  // Em ambientes sem `window`, apenas evita acessar o navegador diretamente.
   if (typeof window === 'undefined') {
     return null;
   }
@@ -22,6 +24,7 @@ const authSession = {
       return null;
     }
 
+    // Se o JSON estiver inválido, limpamos o valor persistido para não travar o app.
     try {
       return JSON.parse(storedUser);
     } catch (error) {

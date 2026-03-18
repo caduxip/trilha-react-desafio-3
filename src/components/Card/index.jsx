@@ -1,3 +1,4 @@
+// Card visual que representa uma publicação no feed.
 import React from 'react';
 import { FiThumbsUp } from 'react-icons/fi';
 
@@ -28,6 +29,7 @@ const Card = ({ post }) => {
   const tagsText = tags.map((tag) => `#${tag}`).join(' ');
 
   return (
+    // Usamos `article` porque cada post é uma unidade de conteúdo independente.
     <CardContainer as="article">
       <ImageBackground />
       <Content>

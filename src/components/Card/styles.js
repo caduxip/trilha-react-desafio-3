@@ -1,3 +1,4 @@
+// Estilos do card de publicação.
 import styled from 'styled-components';
 
 export const CardContainer = styled.div`

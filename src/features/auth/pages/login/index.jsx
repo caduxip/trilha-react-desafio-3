@@ -1,3 +1,5 @@
+// Página de login.
+// Responsável por validar os dados, acionar o serviço de auth e iniciar a sessão.
 import { useState } from 'react';
 import { MdEmail, MdLock } from 'react-icons/md'
 import { useForm } from "react-hook-form";
@@ -22,84 +24,86 @@ import {
 } from '../../styles';
 
 const Login = () => {
-    const navigate = useNavigate()
-    const { signIn } = useAuth();
-    const [apiError, setApiError] = useState('');
+  const navigate = useNavigate()
+  const { signIn } = useAuth();
+  const [apiError, setApiError] = useState('');
 
-    const {
-        control,
-        handleSubmit,
-        formState: { errors, isSubmitting  },
-    } = useForm({
-        defaultValues: {
-            email: '',
-            senha: '',
-        },
-        resolver: loginResolver,
-        reValidateMode: 'onChange',
-        mode: 'onBlur',
-    });
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting  },
+  } = useForm({
+    defaultValues: {
+      email: '',
+      senha: '',
+    },
+    resolver: loginResolver,
+    reValidateMode: 'onChange',
+    mode: 'onBlur',
+  });
 
-    const onSubmit = async (formData) => {
-        setApiError('');
+  const onSubmit = async (formData) => {
+    // Limpa erros antigos antes de tentar novo login.
+    setApiError('');
 
-        try{
-            const user = await authService.login(formData);
+    try{
+      const user = await authService.login(formData);
 
-            if(user){
-                signIn(user);
-                navigate(ROUTES.feed, { replace: true }) 
-                return
-            }
+      if(user){
+        signIn(user);
+        navigate(ROUTES.feed, { replace: true }) 
+        return
+      }
 
-            setApiError(MESSAGES.auth.invalidCredentials)
-        }catch(e){
-            setApiError(MESSAGES.auth.loginUnavailable)
-        }
-    };
+      setApiError(MESSAGES.auth.invalidCredentials)
+    }catch(e){
+      setApiError(MESSAGES.auth.loginUnavailable)
+    }
+  };
 
-    return (
-        <AuthLayout>
-            <FormTitle>Faça seu login</FormTitle>
-            <FormSubtitle>Acesse sua conta e make the change._</FormSubtitle>
+  return (
+    <AuthLayout>
+      <FormTitle>Faça seu login</FormTitle>
+      <FormSubtitle>Acesse sua conta e make the change._</FormSubtitle>
 
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                <Input
-                    autoComplete="email"
-                    label="E-mail"
-                    placeholder="E-mail"
-                    leftIcon={<MdEmail />}
-                    name="email"
-                    control={control}
-                    errorMessage={errors.email?.message}
-                />
-                <Input
-                    autoComplete="current-password"
-                    label="Senha"
-                    type="password"
-                    placeholder="Password"
-                    leftIcon={<MdLock />}
-                    name="senha"
-                    control={control}
-                    errorMessage={errors.senha?.message}
-                />
-                <Button
-                    title={isSubmitting ? 'Entrando...' : 'Entrar'}
-                    variant="secondary"
-                    type="submit"
-                    fullWidth
-                    disabled={isSubmitting}
-                />
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          autoComplete="email"
+          label="E-mail"
+          placeholder="E-mail"
+          leftIcon={<MdEmail />}
+          name="email"
+          control={control}
+          errorMessage={errors.email?.message}
+        />
+        <Input
+          autoComplete="current-password"
+          label="Senha"
+          type="password"
+          placeholder="Password"
+          leftIcon={<MdLock />}
+          name="senha"
+          control={control}
+          errorMessage={errors.senha?.message}
+        />
+        <Button
+          // Enquanto o submit acontece, o botão muda para reforçar o estado assíncrono.
+          title={isSubmitting ? 'Entrando...' : 'Entrar'}
+          variant="secondary"
+          type="submit"
+          fullWidth
+          disabled={isSubmitting}
+        />
 
-                {apiError ? <StatusText $error>{apiError}</StatusText> : null}
-            </Form>
+        {apiError ? <StatusText $error>{apiError}</StatusText> : null}
+      </Form>
 
-            <HelperRow>
-                <HelperText>Esqueci minha senha</HelperText>
-                <HelperLink to={ROUTES.register}>Criar conta</HelperLink>
-            </HelperRow>
-        </AuthLayout>
-    )
+      <HelperRow>
+        <HelperText>Esqueci minha senha</HelperText>
+        <HelperLink to={ROUTES.register}>Criar conta</HelperLink>
+      </HelperRow>
+    </AuthLayout>
+  )
 }
 
 export { Login }
