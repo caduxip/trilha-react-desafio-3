@@ -29,7 +29,7 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - camada de dados com mapeamento e normalização de erro;
 - componentes base com contratos mais consistentes;
 - landmarks e navegação por teclado refinados;
-- testes de navegação, login, cadastro e logout.
+- testes automatizados ampliados para fluxos críticos e utilitários.
 
 ## Stack utilizada
 
@@ -216,6 +216,17 @@ O fluxo principal recebeu uma camada extra de refinamento para uso real:
 
 Isso melhora a navegação por teclado e reduz fragilidade da interface em cenários mobile.
 
+## Testes automatizados
+
+A cobertura atual do frontend foi ampliada para proteger os fluxos mais sensíveis:
+
+- testes de integração do app para login, cadastro, logout, redirecionamentos e estados do feed;
+- testes unitários de serviços para autenticação e camada de dados do feed;
+- testes unitários dos componentes base reutilizáveis;
+- testes dedicados para `AppErrorBoundary` e persistência de sessão em `localStorage`.
+
+Com isso, a aplicação ganha uma base mais segura para refatorações incrementais.
+
 ## Qualidade e manutenção
 
 O projeto já conta com:
@@ -234,7 +245,7 @@ O projeto já conta com:
 - melhorias de acessibilidade e responsividade no fluxo principal;
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
-- testes cobrindo navegação, validação de login, serviços, componentes base, cadastro, logout, skip navigation e estados do feed.
+- testes cobrindo navegação, redirecionamentos, validação de login, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local e estados do feed.
 
 Melhorias futuras recomendadas:
 

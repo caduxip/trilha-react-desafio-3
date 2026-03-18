@@ -84,6 +84,15 @@ test('renders the registration screen at /cadastro', async () => {
   expect(screen.getByRole('button', { name: /criar minha conta/i })).toBeInTheDocument();
 });
 
+test('redirects authenticated users away from the public login route', async () => {
+  authenticateUser();
+
+  renderAtRoute(ROUTES.login);
+
+  expect(await screen.findByText('Projeto para curso de HTML e CSS')).toBeInTheDocument();
+  expect(screen.getByText('# RANKING 5 TOP DA SEMANA')).toBeInTheDocument();
+});
+
 test('renders skip navigation and a primary heading on the home page', async () => {
   renderAtRoute(ROUTES.home);
 
@@ -144,6 +153,24 @@ test('shows duplicated email feedback in the registration flow', async () => {
   userEvent.click(screen.getByRole('button', { name: /criar minha conta/i }));
 
   expect(await screen.findByText(MESSAGES.auth.emailInUse)).toBeInTheDocument();
+});
+
+test('allows the user to register and access the authenticated feed', async () => {
+  mockedAuthService.register.mockResolvedValue(createUser());
+
+  renderAtRoute(ROUTES.register);
+
+  userEvent.type(screen.getByPlaceholderText('Nome completo'), 'Novo Usuario');
+  userEvent.type(screen.getByPlaceholderText('E-mail'), 'novo@email.com');
+  userEvent.type(screen.getByPlaceholderText('Password'), '123456');
+  userEvent.click(screen.getByRole('button', { name: /criar minha conta/i }));
+
+  expect(await screen.findByText('Projeto para curso de HTML e CSS')).toBeInTheDocument();
+
+  await waitFor(() => {
+    expect(mockedAuthService.register).toHaveBeenCalledTimes(1);
+    expect(mockedFeedService.getFeedOverview).toHaveBeenCalledTimes(1);
+  });
 });
 
 test('allows the authenticated user to log out from the feed', async () => {
