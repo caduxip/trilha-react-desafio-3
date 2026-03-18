@@ -12,7 +12,8 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Container>
+      {/* A home é o conteúdo principal da rota pública, então expomos uma landmark `main`. */}
+      <Container as="main" id="page-content">
         <Content>
           <Title>
             <TitleHighlight>

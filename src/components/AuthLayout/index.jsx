@@ -12,12 +12,15 @@ const AuthLayout = ({ children, heroTitle = DEFAULT_HERO_TITLE }) => {
   return (
     <>
       <Header />
-      <Container>
+      {/* O id abaixo é o alvo do skip link do Header para levar o foco direto ao conteúdo principal. */}
+      <Container as="main" id="page-content">
         <Column>
           <HeroTitle>{heroTitle}</HeroTitle>
         </Column>
         <Column>
-          <FormWrapper aria-label="Área de autenticação">{children}</FormWrapper>
+          <FormWrapper as="section" aria-label="Área de autenticação">
+            {children}
+          </FormWrapper>
         </Column>
       </Container>
     </>

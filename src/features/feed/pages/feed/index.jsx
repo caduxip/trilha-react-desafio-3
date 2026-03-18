@@ -64,7 +64,8 @@ const Feed = () => {
   return (
     <>
       <Header />
-      <Container>
+      {/* O feed representa a área principal da rota autenticada. */}
+      <Container as="main" id="page-content">
         <Column as="section" aria-labelledby="feed-title" flex={3}>
           <SectionHeader>
             <Title id="feed-title">Feed</Title>

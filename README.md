@@ -29,7 +29,7 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - camada de dados com mapeamento e normalização de erro;
 - componentes base com contratos mais consistentes;
 - landmarks e navegação por teclado refinados;
-- testes automatizados ampliados para fluxos críticos, utilitários e smoke E2E.
+- testes automatizados ampliados para fluxos críticos, utilitários, smoke E2E e acessibilidade básica.
 
 ## Stack utilizada
 
@@ -253,6 +253,16 @@ O arquivo `playwright.config.js` sobe automaticamente:
 - o frontend React em modo de desenvolvimento.
 
 Isso reduz preparação manual e deixa a suíte mais próxima de um fluxo real de uso.
+
+## Testes de acessibilidade
+
+Além dos testes funcionais, o projeto agora executa checagens automáticas básicas de acessibilidade com `jest-axe` sobre rotas importantes:
+
+- home pública;
+- login;
+- feed autenticado.
+
+Esses testes ajudam a detectar regressões em landmarks, semântica e estrutura do DOM antes que o problema chegue à revisão manual.
 
 ## Fluxo recomendado para o mock local
 
