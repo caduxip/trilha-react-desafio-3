@@ -1,88 +1,176 @@
 # Trilha React Desafio 3
 
-Aplicação frontend em React que simula uma plataforma de aprendizagem com fluxo público e autenticado. O projeto foi estruturado para exercitar navegação, autenticação mockada, formulários com validação, consumo de API via `json-server` e organização incremental de componentes e serviços.
+Frontend em React que simula uma plataforma de aprendizagem com área pública, autenticação mockada, cadastro, feed autenticado e ranking lateral. O projeto foi evoluído com foco em arquitetura de cliente, qualidade de código, testabilidade, documentação e preparo para uma futura troca do backend fake por uma API real.
 
-## Objetivo da aplicação
+![React](https://img.shields.io/badge/React-18.3.1-61DAFB?logo=react&logoColor=black)
+![React Router](https://img.shields.io/badge/React_Router-6.3-CA4245?logo=reactrouter&logoColor=white)
+![Styled Components](https://img.shields.io/badge/Styled_Components-5.3.5-DB7093?logo=styledcomponents&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-1.13.6-5A29E4?logo=axios&logoColor=white)
+![Testing Library](https://img.shields.io/badge/Testing_Library-enabled-E33332?logo=testinglibrary&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?logo=playwright&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)
+![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white)
 
-O projeto representa uma interface de comunidade/estudo com:
+## ✨ Visão geral
 
-- página inicial institucional;
+O projeto entrega hoje:
+
+- home pública com CTA principal;
 - login com validação;
-- cadastro de novos usuários;
-- área autenticada com feed e ranking;
-- backend fake para suportar autenticação e listagem de conteúdo.
+- cadastro com verificação de e-mail já existente;
+- feed autenticado com ranking;
+- sessão local no frontend;
+- API mock via `json-server`;
+- camada HTTP com interceptores, logging e normalização de erro;
+- testes unitários, integração, acessibilidade, smoke E2E e regressão visual;
+- Docker, CI e workflow de release;
+- documentação técnica de arquitetura, UI, ADRs e plano de saída do CRA.
 
-O objetivo atual não é implementar autenticação real de produção, e sim consolidar uma base frontend clara, evolutiva e segura para continuidade do desenvolvimento.
+Importante: este repositório **não possui backend corporativo real** neste estágio. O uso de `json-server` é intencional e serve para simular autenticação, cadastro e carregamento do feed enquanto o frontend amadurece.
 
-## Funcionalidades disponíveis
+## 🧭 Sumário
 
-- navegação entre rotas públicas e privadas;
-- proteção da rota `/feed`;
-- persistência local da sessão do usuário;
-- formulário de login com `react-hook-form` e validação por schema;
-- formulário de cadastro com validação por schema e verificação de e-mail já cadastrado;
-- integração com API mockada via `axios`;
-- feed carregado a partir do `json-server`;
-- ranking lateral carregado da API;
-- botão de logout no cabeçalho autenticado;
-- tema global com tokens compartilhados;
-- camada de dados com mapeamento e normalização de erro;
-- cliente HTTP com interceptores e classificação mais explícita de erro;
-- componentes base com contratos mais consistentes;
-- landmarks e navegação por teclado refinados;
-- testes automatizados ampliados para fluxos críticos, utilitários, smoke E2E e acessibilidade básica.
+- [Objetivo](#-objetivo)
+- [Stack](#-stack)
+- [Arquitetura](#-arquitetura)
+- [Rotas](#-rotas)
+- [Estrutura de pastas](#-estrutura-de-pastas)
+- [Execução local](#-execução-local)
+- [Execução com Docker](#-execução-com-docker)
+- [Scripts disponíveis](#-scripts-disponíveis)
+- [Qualidade e testes](#-qualidade-e-testes)
+- [Observabilidade](#-observabilidade)
+- [Mock de dados](#-mock-de-dados)
+- [Documentação técnica](#-documentação-técnica)
+- [Limitações conhecidas](#-limitações-conhecidas)
 
-## Stack utilizada
+## 🎯 Objetivo
+
+O objetivo atual do projeto não é simular uma stack completa de produção no servidor. O foco está em consolidar um frontend profissional, com:
+
+- organização clara por domínio;
+- separação entre UI, rotas, serviços e utilitários;
+- base consistente para evolução incremental;
+- baixo acoplamento com o formato bruto da API mockada;
+- preparo para futura integração com backend real sem colapso arquitetural.
+
+## 🧱 Stack
+
+### Aplicação
 
 - React 18
 - React Router DOM 6
 - Styled Components
 - React Hook Form
 - Axios
+- React Icons
+- Web Vitals
+
+### Mock e ambiente
+
 - JSON Server
-- Create React App
-- Testing Library
 - Docker
 - Docker Compose
 
-Observação de stack:
+### Qualidade e testes
 
-- o projeto ainda usa `Create React App` como bundler atual;
-- existe um plano documentado de saída do CRA em `docs/cra-exit-plan.md`, mas a migração ainda não foi iniciada.
+- ESLint
+- Prettier
+- Testing Library
+- Jest Axe
+- Playwright
 
-## Estrutura principal
+### Build atual
+
+- Create React App (`react-scripts`)
+
+Observação:
+
+- o projeto ainda usa CRA como bundler atual;
+- existe um plano documentado para sair do `react-scripts` em [docs/cra-exit-plan.md](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/docs/cra-exit-plan.md);
+- a migração ainda **não** foi iniciada e está tratada como iniciativa separada de tooling.
+
+## 🏗️ Arquitetura
+
+O frontend foi estruturado para manter responsabilidades separadas:
+
+- `src/features`: domínios da aplicação, como `auth` e `feed`
+- `src/components`: componentes compartilhados de UI e layout
+- `src/routes`: paths, guardas e composição de rotas
+- `src/config`: resolução e validação de ambiente
+- `src/services`: infraestrutura HTTP
+- `src/lib`: utilitários transversais, observabilidade, sessão e helpers
+- `src/styles`: tema e estilos globais
+
+### Decisões arquiteturais já consolidadas
+
+- organização por feature;
+- sessão atual controlada no frontend via contexto;
+- cliente HTTP central com interceptores;
+- mapeadores entre API mock e UI;
+- tratamento padronizado de `loading`, `error` e `empty`;
+- documentação por ADR para decisões estruturais.
+
+### Fluxo de bootstrap
+
+Em [src/App.js](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/src/App.js), a aplicação é montada nesta ordem:
+
+1. `AuthProvider`
+2. `ThemeProvider`
+3. `BrowserRouter`
+4. `AppErrorBoundary`
+5. `AppRoutes`
+
+Essa ordem é importante porque sessão, tema, roteamento e fallback global precisam estar disponíveis para toda a árvore.
+
+## 🛣️ Rotas
+
+Rotas atuais:
+
+- `/` → home pública
+- `/componentes` → vitrine interna dos componentes compartilhados
+- `/login` → login
+- `/cadastro` → cadastro
+- `/feed` → área autenticada com feed e ranking
+
+Regras de navegação:
+
+- rotas públicas de autenticação redirecionam usuário autenticado para `/feed`;
+- a rota `/feed` exige sessão local válida;
+- rotas inválidas voltam para a home.
+
+## 🗂️ Estrutura de pastas
 
 ```text
-docs/               documentação complementar de arquitetura e UI compartilhada
+docs/
+  adr/               ADRs com decisões arquiteturais
+  cra-exit-plan.md   plano incremental de saída do CRA
+  frontend-architecture.md
+  ui-components.md
+
 src/
-  assets/            imagens e recursos estáticos
-  components/        componentes reutilizáveis de UI e layout
-  config/            configuração compartilhada da aplicação
-  constants/         mensagens, chaves e regras reutilizáveis
-  features/          módulos por domínio, com páginas, hooks e serviços de cada fluxo
-  lib/               utilitários compartilhados, como sessão local e schemas de formulário
-  pages/             páginas globais fora dos domínios, como a home
-  routes/            configuração de paths, guardas e composição de rotas
-  services/          infraestrutura compartilhada, como cliente HTTP
-  styles/            estilos globais, tema e tokens visuais
+  assets/            recursos estáticos
+  components/        UI compartilhada
+  config/            ambiente e configuração
+  constants/         mensagens e chaves reutilizáveis
+  features/          domínios da aplicação
+  lib/               utilitários transversais
+  pages/             páginas fora de feature, como a home
+  routes/            rotas, paths e guardas
+  services/          infraestrutura HTTP
+  styles/            tema e estilos globais
+  test/              helpers e fixtures de teste
+
+tests/
+  e2e/               smoke e regressão visual com Playwright
 ```
 
-Documentação complementar:
+## 🚀 Execução local
 
-- `docs/frontend-architecture.md`: visão de camadas, fluxo de autenticação, feed e organização por feature;
-- `docs/ui-components.md`: contrato dos componentes compartilhados e regras práticas para evolução da UI base.
-- `docs/adr/`: decisões arquiteturais curtas que explicam por que a estrutura atual foi escolhida.
-- `docs/cra-exit-plan.md`: plano incremental para sair do `react-scripts` sem reescrever o frontend.
+### Pré-requisitos
 
-## Rotas da aplicação
-
-- `/`: landing page pública
-- `/componentes`: vitrine interna dos componentes compartilhados
-- `/login`: acesso de usuário
-- `/cadastro`: criação de nova conta
-- `/feed`: área autenticada com publicações e ranking
-
-## Como executar o projeto
+- Node.js `18` alinhado com [.nvmrc](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/.nvmrc)
+- `npm` como gerenciador padrão
 
 ### 1. Instalar dependências
 
@@ -90,42 +178,36 @@ Documentação complementar:
 npm install
 ```
 
-Recomendação de ambiente local:
+### 2. Configurar ambiente
 
-- Node.js `18`, alinhado com o arquivo `.nvmrc`;
-- `npm` como gerenciador padrão deste projeto.
-- `.editorconfig` para manter indentação, quebra de linha e newline final consistentes.
-- `.prettierrc.json` para padronizar a formatação automática do repositório.
-
-### 2. Configurar variáveis de ambiente
-
-Use o arquivo `.env.example` como referência:
+Use [.env.example](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/.env.example) como base:
 
 ```bash
 cp .env.example .env
 ```
 
-Variáveis disponíveis:
+Principais variáveis:
 
-- `REACT_APP_API_URL`: URL base da API consumida pelo frontend.
-- `REACT_APP_ENABLE_WEB_VITALS`: habilita coleta opcional de métricas de performance no cliente.
-- `REACT_APP_ENABLE_SENTRY`: liga ou desliga o envio de erros para o monitor externo.
-- `REACT_APP_LOG_LEVEL`: define o nível mínimo de log do frontend (`debug`, `info`, `warn`, `error`, `silent`).
-- `REACT_APP_SENTRY_DSN`: DSN do projeto Sentry, quando a observabilidade externa estiver habilitada.
-- `REACT_APP_SENTRY_ENVIRONMENT`: nome do ambiente reportado ao Sentry, como `development`, `staging` ou `production`.
-- `TRILHA_API_PORT`: porta publicada do container da API mock no host local.
-- `TRILHA_FRONTEND_PORT`: porta publicada do container do frontend no host local.
-- `TRILHA_API_IMAGE` e `TRILHA_FRONTEND_IMAGE`: nomes/tags locais usados pelo Docker Compose.
+- `REACT_APP_API_URL`
+- `REACT_APP_ENABLE_WEB_VITALS`
+- `REACT_APP_ENABLE_SENTRY`
+- `REACT_APP_LOG_LEVEL`
+- `REACT_APP_SENTRY_DSN`
+- `REACT_APP_SENTRY_ENVIRONMENT`
+- `TRILHA_API_PORT`
+- `TRILHA_FRONTEND_PORT`
+- `TRILHA_API_IMAGE`
+- `TRILHA_FRONTEND_IMAGE`
 
-Se não for definida, a aplicação usa `http://127.0.0.1:8001` por padrão.
+Sem configuração explícita, o frontend usa `http://127.0.0.1:8001` como base da API mock.
 
-### 3. Subir a API fake
+### 3. Subir a API mock
 
 ```bash
 npm run api
 ```
 
-A API será exposta em `http://127.0.0.1:8001`.
+API disponível em `http://127.0.0.1:8001`.
 
 ### 4. Subir o frontend
 
@@ -135,30 +217,40 @@ Em outro terminal:
 npm start
 ```
 
-O frontend será iniciado em `http://localhost:3000`.
+Frontend disponível em `http://localhost:3000`.
 
-## Como executar com Docker
+### Fluxo recomendado de reset da base mock
 
-O projeto agora possui conteinerização para subir o frontend e a API mock juntos.
+Quando precisar voltar a um estado limpo:
 
-### 1. Subir os containers
+```bash
+npm run api:reset
+```
+
+Isso restaura [db.json](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/db.json) a partir de [data/mock/db.seed.json](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/data/mock/db.seed.json).
+
+## 🐳 Execução com Docker
+
+O projeto pode subir frontend e API mock juntos.
+
+### Subir containers
 
 ```bash
 docker compose up --build
 ```
 
-ou, se preferir via script:
+ou:
 
 ```bash
 npm run docker:up
 ```
 
-### 2. Acessar os serviços
+### Acessos padrão
 
-- frontend: `http://localhost:3000`
-- API mock: `http://localhost:8001`
+- frontend → `http://localhost:3000`
+- API mock → `http://localhost:8001`
 
-### 3. Encerrar os containers
+### Encerrar containers
 
 ```bash
 docker compose down
@@ -170,395 +262,134 @@ ou:
 npm run docker:down
 ```
 
-Observações importantes sobre o ambiente Docker:
+### O que já foi endurecido no ambiente Docker
 
-- o `frontend` espera a `api` ficar saudável antes de subir;
-- ambos os serviços possuem `healthcheck` no `docker-compose.yml`;
-- ambos os Dockerfiles também declaram `healthcheck`, o que ajuda em `docker run` e validações fora do Compose;
-- o build do frontend usa `REACT_APP_API_URL=http://127.0.0.1:8001` por padrão, porque a aplicação roda no navegador do host, não dentro do container nginx;
-- o runtime do frontend usa `nginx` em modo não-root e expõe a porta interna `8080`, enquanto o host continua usando `3000` por padrão;
-- a API mock roda com o usuário `node`, evitando privilégios desnecessários no container.
+- frontend com `nginx` unprivileged;
+- API mock rodando como usuário `node`;
+- `healthcheck` no Compose e nos Dockerfiles;
+- portas e nomes de imagem parametrizáveis por ambiente;
+- workflow de release preparado para publicar imagem do frontend.
 
-## Scripts disponíveis
+## 🧪 Scripts disponíveis
 
-- `npm start`: inicia o frontend em modo de desenvolvimento
-- `npm run build`: gera a build de produção
-- `npm run lint`: executa o ESLint no código-fonte do frontend
-- `npm run lint:fix`: aplica correções automáticas suportadas pelo ESLint
-- `npm run format`: formata o projeto com Prettier
-- `npm run format:check`: valida a formatação do projeto com Prettier
-- `npm run tooling:update-browserslist`: atualiza o banco local do Browserslist e remove o aviso de `caniuse-lite` desatualizado
-- `npm run deps:outdated`: lista dependências desatualizadas para revisão controlada
-- `npm run deps:audit`: executa a auditoria completa de vulnerabilidades do npm
-- `npm run deps:audit:prod`: executa a auditoria focada em dependências de produção
-- `npm test -- --watchAll=false`: executa os testes uma vez
-- `npm run test:ci`: executa os testes em modo apropriado para pipeline
-- `npm run test:coverage`: executa os testes com geração de cobertura local e valida o piso mínimo de cobertura
-- `npm run e2e`: executa os smoke tests end-to-end com Playwright
-- `npm run e2e:headed`: executa os smoke tests com navegador visível
-- `npm run e2e:install`: instala o navegador Chromium usado pelos testes E2E
-- `npm run e2e:visual`: executa a suíte de regressão visual das telas principais
-- `npm run e2e:visual:update`: atualiza os snapshots versionados da regressão visual
-- `npm run api:reset`: restaura o `db.json` para a base seed versionada do projeto
-- `npm run verify`: executa `format:check` + `lint` + `test:ci` + `build`
-- `npm run verify:ci`: executa `format:check` + `lint` + `test:coverage` + `build`
-- `npm run api`: inicia o `json-server` usando o arquivo `db.json`
-- `npm run docker:up`: sobe frontend + API mock via Docker Compose
-- `npm run docker:down`: encerra os containers do Docker Compose
-- `npm run docker:build:frontend`: gera localmente a imagem de produção do frontend
+### Desenvolvimento
 
-## Dados mockados
+- `npm start` → sobe o frontend em desenvolvimento
+- `npm run api` → sobe o `json-server`
+- `npm run api:reset` → restaura a base mock
 
-O mock local agora possui dois arquivos com papéis diferentes:
+### Build
 
-- `data/mock/db.seed.json`: base limpa e versionada usada como referência do projeto;
-- `db.json`: base viva usada pelo `json-server` durante o desenvolvimento local.
+- `npm run build` → gera a build de produção
+- `npm run docker:build:frontend` → build local da imagem do frontend
 
-O arquivo seed contém:
+### Qualidade
 
-- usuários para login/cadastro;
-- publicações usadas no feed;
-- dados de ranking consumidos pela área autenticada.
+- `npm run lint`
+- `npm run lint:fix`
+- `npm run format`
+- `npm run format:check`
+- `npm run verify`
+- `npm run verify:ci`
 
-O cadastro cria novos usuários diretamente no `db.json` enquanto o `json-server` estiver rodando.
+### Dependências e tooling
 
-Se quiser voltar a aplicação para o estado inicial da base mock, execute:
+- `npm run tooling:update-browserslist`
+- `npm run deps:outdated`
+- `npm run deps:audit`
+- `npm run deps:audit:prod`
 
-```bash
-npm run api:reset
-```
+### Testes
 
-Esse fluxo evita edição manual do `db.json` e deixa o ambiente local mais previsível.
+- `npm test -- --watchAll=false`
+- `npm run test:ci`
+- `npm run test:coverage`
+- `npm run e2e`
+- `npm run e2e:headed`
+- `npm run e2e:install`
+- `npm run e2e:visual`
+- `npm run e2e:visual:update`
 
-Nos testes E2E, a suíte não usa o `db.json` principal do projeto. O Playwright sobe uma API mock separada com uma cópia temporária de `data/mock/db.seed.json` para permitir cadastro e navegação sem poluir os dados locais.
+## ✅ Qualidade e testes
 
-## Autenticação atual
+O projeto já possui uma cobertura de qualidade acima do básico:
 
-O fluxo de autenticação é local/mockado:
+- testes de integração do app;
+- testes unitários de componentes e serviços;
+- testes de acessibilidade com `jest-axe`;
+- smoke E2E com Playwright;
+- regressão visual com snapshots;
+- piso mínimo de cobertura global no Jest.
 
-- login consulta o usuário no `json-server`;
-- a sessão é persistida em `localStorage` via utilitário dedicado em `src/lib/storage/session.js`;
-- rotas privadas são protegidas no frontend;
-- logout remove a sessão local.
+Cobertura mínima configurada:
 
-Esse comportamento é intencional para fins de estudo e prototipação.
+- `90%` de statements
+- `70%` de branches
+- `90%` de functions
+- `90%` de lines
 
-## Arquitetura de navegação
+## 📡 Observabilidade
 
-O projeto possui uma camada dedicada para rotas em `src/routes`, responsável por:
+O frontend possui uma camada inicial de observabilidade:
 
-- centralizar os paths da aplicação;
-- centralizar as future flags adotadas do React Router para reduzir ruído de migração;
-- separar guardas de rota pública e privada;
-- compor as rotas principais do app;
-- aplicar `lazy loading` nas páginas para reduzir o bundle inicial.
+- logger central em `src/lib/observability/logger.js`
+- integração opcional com Sentry
+- Web Vitals opcionais
+- `AppErrorBoundary` integrada ao fluxo de monitoramento
 
-## Configuração compartilhada
+Isso permite observabilidade gradual sem espalhar código do provedor por toda a aplicação.
 
-O projeto agora centraliza parte das definições transversais para reduzir duplicação e acoplamento:
+## 🧪 Mock de dados
 
-- `src/config/api.js`: configuração base de integração HTTP, como `baseURL` e `timeout`;
-- `src/config/env.js`: resolução e validação das variáveis de ambiente do frontend;
-- `src/constants/messages.js`: mensagens reutilizadas de autenticação e feed;
-- `src/constants/storage.js`: chaves persistidas no `localStorage`;
-- `src/features/auth/validation/schema.js`: schemas compartilhados de validação para os formulários de autenticação.
+O backend atual é um mock simples com `json-server`.
 
-Essa organização ajuda a evitar strings e regras espalhadas por páginas e testes.
+Arquivos principais:
 
-## Guias internos
+- [data/mock/db.seed.json](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/data/mock/db.seed.json) → base limpa de referência
+- [db.json](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/db.json) → base viva usada no desenvolvimento
 
-Além do README, o repositório agora possui guias curtos voltados para onboarding:
+Recursos mockados:
 
-- `docs/frontend-architecture.md`: explica a divisão entre `App`, rotas, features, componentes compartilhados e infraestrutura;
-- `docs/ui-components.md`: descreve o papel de `Button`, `Input`, `Header`, `AuthLayout`, `AsyncState` e outros componentes base;
-- `docs/adr/`: registra decisões arquiteturais importantes, como organização por feature, sessão local no frontend e cliente HTTP central;
-- `docs/cra-exit-plan.md`: descreve quando, por que e como executar a saída do CRA em fases, sem misturar tooling com mudança de produto;
-- a rota `/componentes`: mostra exemplos visuais reais da biblioteca interna com os contratos mais usados no dia a dia;
-- comentários no código em pontos de fluxo, como guardas, providers, hooks e helpers de teste, para facilitar leitura por pessoas em início de carreira.
+- `/users`
+- `/posts`
 
-## Camada HTTP
+Esse mock existe para suportar:
 
-O cliente HTTP do frontend passou a ter uma infraestrutura mais explícita:
+- login
+- cadastro
+- carregamento do feed
+- ranking lateral
 
-- `src/services/api.js`: instância única do `axios` com interceptores de request/response;
-- `src/lib/http/errors.js`: normalização de timeout, falha de rede e erro HTTP para códigos estáveis;
-- `src/services/api.test.js` e `src/lib/http/errors.test.js`: testes cobrindo interceptores e classificação de erro.
+## 📚 Documentação técnica
 
-Com isso, as features continuam simples, mas a base fica mais preparada para uma API real com falhas mais variadas do que o `json-server`.
+Além deste README, o projeto mantém documentação complementar:
 
-## Resiliência de interface
+- [docs/frontend-architecture.md](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/docs/frontend-architecture.md) → visão de arquitetura e fluxo do frontend
+- [docs/ui-components.md](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/docs/ui-components.md) → contrato dos componentes compartilhados
+- [docs/adr/README.md](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/docs/adr/README.md) → decisões arquiteturais registradas
+- [docs/cra-exit-plan.md](/home/cognsys/Documentos/projetos/projetosReact/trilha-react-desafio-3/docs/cra-exit-plan.md) → plano de saída do CRA
 
-O frontend passou a contar com uma camada mínima de resiliência para falhas de UI e estados assíncronos:
+Também existe uma vitrine visual interna dos componentes em:
 
-- `src/components/AppErrorBoundary`: fallback global para erros de render em nível de rota;
-- `src/components/AsyncState`: componente compartilhado para estados de carregamento, erro e vazio;
-- `src/lib/storage/session.js`: encapsulamento de leitura e escrita da sessão local;
-- hooks de domínio preparados para ignorar respostas assíncronas antigas quando uma requisição mais nova termina antes.
+- `/componentes`
 
-Com isso, a aplicação reduz lógica repetida e trata falhas de forma mais uniforme.
+## ⚠️ Limitações conhecidas
 
-## Observabilidade frontend
+Estas limitações são conhecidas e compatíveis com o escopo atual:
 
-O projeto agora possui uma camada leve de observabilidade no cliente:
+- não há backend corporativo real;
+- autenticação e sessão continuam mockadas no frontend;
+- a persistência de dados da API fake acontece em arquivo JSON local;
+- boa parte dos alertas restantes de dependência ainda vem da cadeia do `react-scripts`;
+- a migração para um bundler mais moderno foi planejada, mas ainda não executada.
 
-- `src/lib/observability/logger.js`: logger central com nível configurável por ambiente;
-- `src/lib/observability/monitor.js`: adapter opcional para integração com Sentry;
-- `src/reportWebVitals.js`: coleta opcional de métricas de performance usando `web-vitals`;
-- `src/components/AppErrorBoundary`: integração da captura de erros de render com o logger central.
+## 🧩 Estado atual do projeto
 
-Quando `REACT_APP_ENABLE_SENTRY=true` e `REACT_APP_SENTRY_DSN` está configurado:
+Dentro do escopo atual, o projeto já se posiciona como:
 
-- o bootstrap inicializa o Sentry no início da aplicação;
-- erros de runtime capturados pela `AppErrorBoundary` passam a ser enviados ao monitor externo;
-- logs de erro do frontend também podem ser encaminhados para observabilidade, sem substituir o console local.
+- frontend organizado por domínio;
+- base profissional de cliente para continuar crescendo;
+- aplicação preparada para futura integração com backend real;
+- repositório com qualidade técnica acima de um simples desafio de código.
 
-Essa estrutura mantém o frontend simples em ambiente local, mas já oferece um caminho profissional para capturar erros reais de produção sem espalhar chamadas do provedor externo pelo código.
-
-## Testes end-to-end
-
-Os smoke tests E2E vivem em `tests/e2e` e validam os fluxos mais críticos do ponto de vista do usuário:
-
-- navegação pública da home para login;
-- autenticação com usuário já existente;
-- cadastro de novo usuário com entrada automática no feed.
-
-O arquivo `playwright.config.js` sobe automaticamente:
-
-- uma API mock isolada, baseada em cópia temporária do `db.json`;
-- o frontend React em modo de desenvolvimento.
-
-Isso reduz preparação manual e deixa a suíte mais próxima de um fluxo real de uso.
-
-## Regressao visual
-
-Além dos smoke tests funcionais, o projeto agora possui uma suíte dedicada de regressão visual com Playwright:
-
-- `tests/e2e/visual.spec.js`: cobre home pública, login, cadastro e feed autenticado;
-- snapshots versionados ao lado da suíte, usados como referência visual de layout;
-- viewport fixa e screenshots com animações desabilitadas para reduzir flutuação entre execuções.
-
-Quando uma mudança legítima alterar a interface, atualize os snapshots com:
-
-```bash
-npm run e2e:visual:update
-```
-
-## Pipeline de CI
-
-O workflow em `.github/workflows/frontend-ci.yml` agora está dividido em duas etapas:
-
-1. `verify`
-   - roda formatação, lint, testes com cobertura e build;
-   - publica artefatos de `coverage` e da `build` gerada.
-
-2. `e2e-smoke`
-   - roda os smoke tests com Playwright depois que a verificação principal passa;
-   - publica `playwright-report` e `test-results` para facilitar diagnóstico quando algo falha.
-
-Esse desenho deixa o pipeline mais útil para revisão técnica, porque não só acusa a falha como também preserva evidências da execução.
-
-## Release do frontend
-
-O repositório agora possui uma workflow separada em `.github/workflows/frontend-release.yml` para entrega do frontend:
-
-- dispara manualmente via `workflow_dispatch`;
-- dispara automaticamente quando uma tag `v*` é publicada;
-- gera a build estática e publica o artefato `frontend-release-build`;
-- publica a imagem do frontend no GHCR usando o `Dockerfile.frontend`.
-
-Isso cria um caminho de entrega mais próximo de produção sem acoplar o projeto a uma plataforma específica de hospedagem.
-
-## Testes de acessibilidade
-
-Além dos testes funcionais, o projeto agora executa checagens automáticas básicas de acessibilidade com `jest-axe` sobre rotas importantes:
-
-- home pública;
-- login;
-- feed autenticado.
-
-Esses testes ajudam a detectar regressões em landmarks, semântica e estrutura do DOM antes que o problema chegue à revisão manual.
-
-## Fluxo recomendado para o mock local
-
-Quando precisar voltar para um estado conhecido da API fake:
-
-1. execute `npm run api:reset`
-2. suba a API com `npm run api`
-3. rode o frontend com `npm start`
-
-Esse ciclo reduz ruído causado por usuários cadastrados manualmente durante desenvolvimento e testes exploratórios.
-
-## Formulários e validação
-
-Os formulários de autenticação agora usam uma estratégia baseada em schema dentro do próprio projeto:
-
-- `src/lib/forms/schema.js`: utilitários genéricos para composição de validadores e criação de `resolver`;
-- `src/features/auth/validation/schema.js`: schemas de login e cadastro usados pelo `react-hook-form`;
-- `src/components/Input`: suporte melhorado a `label`, `id`, `aria-invalid`, `aria-describedby` e `autocomplete`.
-
-Esse modelo mantém a validação declarativa e preparada para crescer sem depender de validações inline espalhadas pelas páginas.
-
-## Organização por feature
-
-Os domínios principais da aplicação foram agrupados em `src/features`:
-
-- `src/features/auth`: contexto, páginas, hooks, validação, mapeadores e serviço de autenticação;
-- `src/features/feed`: página, hook, mapeadores e serviço do feed autenticado.
-
-Essa organização aproxima UI, regras e integração de cada domínio, reduzindo dependências cruzadas entre pastas genéricas.
-
-## Hooks de domínio
-
-As features agora concentram parte do fluxo assíncrono em hooks próprios:
-
-- `src/features/auth/hooks/useLogin.js`: controla login, mensagem de erro e redirecionamento;
-- `src/features/auth/hooks/useRegister.js`: controla cadastro, erro de duplicidade e entrada automática na sessão;
-- `src/features/feed/hooks/useFeed.js`: controla carregamento, retry e estados do feed.
-
-Com isso, as páginas ficam mais enxutas e focadas em renderizar a interface, enquanto os hooks concentram o caso de uso do lado cliente.
-
-## Camada de dados frontend
-
-Os serviços da aplicação passaram a trabalhar com uma camada mais explícita de dados:
-
-- `src/features/auth/services/auth.mapper.js`: normalização do usuário autenticado e payload de cadastro;
-- `src/features/feed/services/feed.mapper.js`: transformação de posts e ranking para o formato da UI;
-- `src/lib/http/errors.js`: criação e normalização de erros de integração;
-- `src/features/feed/services/feed.js`: método consolidado `getFeedOverview()` para entregar o domínio pronto para a tela.
-
-Com isso, a UI fica menos acoplada ao formato bruto do `json-server` e mais preparada para troca futura de backend.
-
-## Tema e sistema visual
-
-O projeto possui uma base de tema centralizada em `src/styles/theme.js`, usada via `ThemeProvider`.
-
-Essa camada concentra:
-
-- paleta de cores;
-- tipografia;
-- espaçamentos;
-- raios de borda;
-- breakpoints;
-- tamanhos reutilizáveis de layout e controles.
-
-Com isso, os estilos centrais deixaram de depender de valores visuais espalhados em múltiplos arquivos, o que reduz inconsistência e facilita manutenção.
-
-## Componentes reutilizáveis
-
-Os componentes base da interface foram fortalecidos para servir como biblioteca interna mínima:
-
-- `src/components/Button`: suporta variantes, tamanhos, estado de carregamento e ícones decorativos;
-- `src/components/Card`: estrutura de conteúdo mais estável para posts e metadados;
-- `src/components/UserInfo`: contrato compatível com props legadas e normalizadas, com semântica de progresso.
-
-Essa camada reduz improviso nas telas e melhora a previsibilidade para evolução visual futura.
-
-## Acessibilidade e responsividade
-
-O fluxo principal recebeu uma camada extra de refinamento para uso real:
-
-- `skip link` no cabeçalho para acesso rápido ao conteúdo principal;
-- landmarks semânticos em `header`, `main`, `section` e `aside`;
-- foco visível em links, botões e inputs;
-- semântica melhorada em heading principal, busca e barra de progresso;
-- ajustes de layout para navegação e conteúdo em telas menores.
-
-Isso melhora a navegação por teclado e reduz fragilidade da interface em cenários mobile.
-
-## Testes automatizados
-
-A cobertura atual do frontend foi ampliada para proteger os fluxos mais sensíveis:
-
-- testes de integração do app para login, cadastro, logout, redirecionamentos e estados do feed;
-- testes unitários de serviços para autenticação e camada de dados do feed;
-- testes unitários dos componentes base reutilizáveis;
-- testes dedicados para `AppErrorBoundary`, persistência de sessão em `localStorage` e resolução de ambiente;
-- utilitários compartilhados em `src/test/`, com providers reutilizáveis de renderização e fixtures comuns para reduzir duplicação entre cenários.
-
-Com isso, a aplicação ganha uma base mais segura para refatorações incrementais.
-
-O projeto agora também falha a etapa de cobertura quando o resultado global fica abaixo destes pisos:
-
-- `90%` de statements;
-- `70%` de branches;
-- `90%` de functions;
-- `90%` de lines.
-
-Esse critério torna a cobertura um contrato real de qualidade, em vez de um relatório apenas informativo.
-
-## Ambientes e entrega
-
-O projeto agora possui uma base mínima para padronização de ambiente e entrega contínua:
-
-- `.env.example` como referência de configuração local;
-- `.nvmrc` fixando a versão principal de Node usada pelo projeto;
-- `.editorconfig` definindo regras básicas de consistência entre editores;
-- `.prettierrc.json` e `.prettierignore` padronizando a formatação automática do repositório;
-- `.dockerignore` reduzindo o contexto de build dos containers;
-- `Dockerfile.frontend` para gerar a build React e servir via nginx;
-- `Dockerfile.api` para subir o `json-server` em container;
-- `docker-compose.yml` orquestrando frontend e API mock juntos, com `healthcheck` e dependência saudável entre serviços;
-- validação de `REACT_APP_API_URL` em tempo de bootstrap;
-- workflow de CI em `.github/workflows/frontend-ci.yml` executando verificação de código e uma etapa separada de smoke E2E com Playwright;
-- workflow de CI em `.github/workflows/frontend-ci.yml` publicando artefatos de cobertura, build e Playwright;
-- padronização do repositório em `npm`, evitando ambiguidade entre lockfiles.
-
-Manutenção de tooling:
-
-- quando o projeto voltar a exibir aviso de `caniuse-lite` desatualizado, use `npm run tooling:update-browserslist`;
-- o wrapper `scripts/update-browserslist-db.cjs` existe para deixar esse fluxo explícito e reutilizável no time.
-
-Manutenção de dependências:
-
-- use `npm run deps:outdated` para revisar upgrades disponíveis antes de atualizar o projeto;
-- use `npm run deps:audit` ou `npm run deps:audit:prod` para acompanhar vulnerabilidades reportadas pelo npm;
-- a estratégia atual do projeto é aplicar primeiro upgrades diretos e de baixo risco, como `axios`, `react`, `react-dom` e libs de teste;
-- parte dos alertas restantes ainda vem da cadeia do `react-scripts`, então qualquer correção completa nessa frente tende a exigir uma modernização mais ampla do stack, e não apenas um `npm audit fix --force`.
-
-## Hardening do ambiente Docker
-
-O ambiente de containers agora aplica alguns cuidados adicionais sem mudar o fluxo básico de uso:
-
-- frontend servido por imagem unprivileged do `nginx`, evitando processo root no runtime final;
-- API mock rodando com o usuário `node`;
-- `healthcheck` tanto no `docker-compose.yml` quanto nos Dockerfiles;
-- portas e nomes de imagem parametrizáveis por `.env`, o que ajuda em máquinas onde `3000` ou `8001` já estão ocupadas.
-
-## Qualidade e manutenção
-
-O projeto já conta com:
-
-- organização por feature para `auth` e `feed`;
-- separação entre componentes globais, domínio e infraestrutura compartilhada;
-- serviço dedicado para autenticação;
-- serviço dedicado para feed;
-- layout compartilhado para telas de autenticação;
-- configuração e constantes reutilizáveis centralizadas;
-- boundary de erro em nível de aplicação;
-- padrão compartilhado para estados de loading, erro e vazio;
-- validação de formulários baseada em schema interno;
-- camada de dados desacoplada com mapeadores e erros normalizados;
-- cliente HTTP com interceptores e erros de integração mais explícitos;
-- componentes reutilizáveis com contratos e testes dedicados;
-- melhorias de acessibilidade e responsividade no fluxo principal;
-- tema global com tokens compartilhados;
-- rotas modularizadas com carregamento sob demanda;
-- ambiente padronizado com `.env.example`, `.nvmrc` e workflow de CI;
-- lint automatizado via ESLint integrados ao fluxo do projeto;
-- formatação automática com Prettier integrada ao fluxo do projeto;
-- observabilidade frontend leve com logger central e captura opcional de Web Vitals;
-- conteinerização com Docker e Docker Compose para frontend + API mock;
-- testes cobrindo navegação, redirecionamentos, validação de login, hooks de domínio, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local, estados do feed e smoke E2E com navegador real.
-
-Melhorias futuras recomendadas:
-
-- documentar padrões de componentes;
-- refinar ainda mais a responsividade das páginas;
-- evoluir a camada de API para cenários além do mock;
-- revisar a base CRA em uma etapa posterior, sem migração precipitada.
-
-## Observações
-
-- o projeto utiliza `Create React App`, portanto depende do ecossistema do `react-scripts`;
-- para o fluxo completo funcionar, o frontend e o `json-server` devem estar rodando ao mesmo tempo;
-- se a API fake não estiver ativa, login, cadastro e feed autenticado não carregarão dados.
+Se o próximo passo for evoluir para um backend real, o frontend já está razoavelmente preparado para isso sem exigir reescrita total.
