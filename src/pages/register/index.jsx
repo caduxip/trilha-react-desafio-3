@@ -7,6 +7,7 @@ import { AuthLayout } from '../../components/AuthLayout';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { useAuth } from '../../contexts/auth';
+import { ROUTES } from '../../routes/paths';
 import { authService, EMAIL_IN_USE } from '../../services/auth';
 
 import {
@@ -62,7 +63,7 @@ const Register = () => {
       const user = await authService.register(formData);
 
       signIn(user);
-      navigate('/feed', { replace: true });
+      navigate(ROUTES.feed, { replace: true });
     } catch (error) {
       if (error.code === EMAIL_IN_USE) {
         setApiError('Este e-mail já está em uso.');
@@ -130,7 +131,7 @@ const Register = () => {
       </LegalText>
 
       <InlineText>
-        Já tenho conta. <InlineLink to="/login">Fazer login</InlineLink>
+        Já tenho conta. <InlineLink to={ROUTES.login}>Fazer login</InlineLink>
       </InlineText>
     </AuthLayout>
   );

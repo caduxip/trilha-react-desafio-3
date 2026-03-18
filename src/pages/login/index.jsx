@@ -7,6 +7,7 @@ import { AuthLayout } from '../../components/AuthLayout';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { useAuth } from '../../contexts/auth';
+import { ROUTES } from '../../routes/paths';
 import { authService } from '../../services/auth';
 import {
   Form,
@@ -44,7 +45,7 @@ const Login = () => {
 
             if(user){
                 signIn(user);
-                navigate('/feed', { replace: true }) 
+                navigate(ROUTES.feed, { replace: true }) 
                 return
             }
 
@@ -102,7 +103,7 @@ const Login = () => {
 
             <HelperRow>
                 <HelperText>Esqueci minha senha</HelperText>
-                <HelperLink to="/cadastro">Criar conta</HelperLink>
+                <HelperLink to={ROUTES.register}>Criar conta</HelperLink>
             </HelperRow>
         </AuthLayout>
     )

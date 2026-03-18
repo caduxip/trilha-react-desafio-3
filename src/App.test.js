@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import App from './App';
+import { ROUTES } from './routes/paths';
 import { authService } from './services/auth';
 import { feedService } from './services/feed';
 
@@ -63,13 +64,13 @@ beforeEach(() => {
 });
 
 test('redirects unauthenticated users from feed to login', async () => {
-  renderAtRoute('/feed');
+  renderAtRoute(ROUTES.feed);
 
   expect(await screen.findByText('Faça seu login')).toBeInTheDocument();
 });
 
 test('renders the registration screen at /cadastro', async () => {
-  renderAtRoute('/cadastro');
+  renderAtRoute(ROUTES.register);
 
   expect(await screen.findByText('Comece agora grátis')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /criar minha conta/i })).toBeInTheDocument();
@@ -78,7 +79,7 @@ test('renders the registration screen at /cadastro', async () => {
 test('allows the user to log in and load the authenticated feed', async () => {
   mockedAuthService.login.mockResolvedValue(createUser());
 
-  renderAtRoute('/login');
+  renderAtRoute(ROUTES.login);
 
   userEvent.type(screen.getByPlaceholderText('E-mail'), 'pablo@email.com');
   userEvent.type(screen.getByPlaceholderText('Password'), '123456');
@@ -100,7 +101,7 @@ test('shows duplicated email feedback in the registration flow', async () => {
   duplicatedEmailError.code = 'EMAIL_IN_USE';
   mockedAuthService.register.mockRejectedValue(duplicatedEmailError);
 
-  renderAtRoute('/cadastro');
+  renderAtRoute(ROUTES.register);
 
   userEvent.type(screen.getByPlaceholderText('Nome completo'), 'Novo Usuario');
   userEvent.type(screen.getByPlaceholderText('E-mail'), 'novo@email.com');
@@ -113,7 +114,7 @@ test('shows duplicated email feedback in the registration flow', async () => {
 test('allows the authenticated user to log out from the feed', async () => {
   window.localStorage.setItem('@dio:user', JSON.stringify(createUser()));
 
-  renderAtRoute('/feed');
+  renderAtRoute(ROUTES.feed);
 
   expect(await screen.findByText('Projeto para curso de HTML e CSS')).toBeInTheDocument();
 

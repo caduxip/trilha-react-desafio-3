@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo-dio.png';
 
 import { useAuth } from '../../contexts/auth';
+import { ROUTES } from '../../routes/paths';
 import { Button } from '../Button';
 
 import {
@@ -26,14 +27,14 @@ const Header = ({autenticado}) => {
 
   const handleSignOut = () => {
     signOut();
-    navigate('/', { replace: true });
+    navigate(ROUTES.home, { replace: true });
   };
 
   return (
     <Wrapper>
       <Container>
           <Row>
-            <LogoLink to="/">
+            <LogoLink to={ROUTES.home}>
               <img src={logo} alt="Logo da dio"/>
             </LogoLink>
             {isUserAuthenticated ? (
@@ -60,9 +61,9 @@ const Header = ({autenticado}) => {
                 </UserMenu>
               ) : (
               <>
-                <MenuLink to="/">Home</MenuLink>
-                <Button as={Link} to="/login" title="Entrar" />
-                <Button as={Link} to="/cadastro" title="Cadastrar" />
+                <MenuLink to={ROUTES.home}>Home</MenuLink>
+                <Button as={Link} to={ROUTES.login} title="Entrar" />
+                <Button as={Link} to={ROUTES.register} title="Cadastrar" />
               </>)}
           </Row>
       </Container>
