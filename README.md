@@ -27,6 +27,7 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - botão de logout no cabeçalho autenticado;
 - tema global com tokens compartilhados;
 - camada de dados com mapeamento e normalização de erro;
+- cliente HTTP com interceptores e classificação mais explícita de erro;
 - componentes base com contratos mais consistentes;
 - landmarks e navegação por teclado refinados;
 - testes automatizados ampliados para fluxos críticos, utilitários, smoke E2E e acessibilidade básica.
@@ -233,6 +234,16 @@ O projeto agora centraliza parte das definições transversais para reduzir dupl
 
 Essa organização ajuda a evitar strings e regras espalhadas por páginas e testes.
 
+## Camada HTTP
+
+O cliente HTTP do frontend passou a ter uma infraestrutura mais explícita:
+
+- `src/services/api.js`: instância única do `axios` com interceptores de request/response;
+- `src/lib/http/errors.js`: normalização de timeout, falha de rede e erro HTTP para códigos estáveis;
+- `src/services/api.test.js` e `src/lib/http/errors.test.js`: testes cobrindo interceptores e classificação de erro.
+
+Com isso, as features continuam simples, mas a base fica mais preparada para uma API real com falhas mais variadas do que o `json-server`.
+
 ## Resiliência de interface
 
 O frontend passou a contar com uma camada mínima de resiliência para falhas de UI e estados assíncronos:
@@ -421,6 +432,7 @@ O projeto já conta com:
 - padrão compartilhado para estados de loading, erro e vazio;
 - validação de formulários baseada em schema interno;
 - camada de dados desacoplada com mapeadores e erros normalizados;
+- cliente HTTP com interceptores e erros de integração mais explícitos;
 - componentes reutilizáveis com contratos e testes dedicados;
 - melhorias de acessibilidade e responsividade no fluxo principal;
 - tema global com tokens compartilhados;

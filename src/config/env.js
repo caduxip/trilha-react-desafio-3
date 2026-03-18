@@ -24,7 +24,16 @@ const resolveLogLevel = () => {
   const customLogLevel = process.env.REACT_APP_LOG_LEVEL?.trim().toLowerCase();
 
   if (!customLogLevel) {
-    return process.env.NODE_ENV === 'production' ? 'warn' : 'debug';
+    if (process.env.NODE_ENV === 'production') {
+      return 'warn';
+    }
+
+    // Em teste preferimos silêncio por padrão para não poluir a saída do Jest.
+    if (process.env.NODE_ENV === 'test') {
+      return 'silent';
+    }
+
+    return 'debug';
   }
 
   if (!LOG_LEVELS.includes(customLogLevel)) {

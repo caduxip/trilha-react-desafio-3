@@ -64,7 +64,8 @@ describe('authService', () => {
     await expect(
       authService.login({ email: 'pablo@email.com', senha: '123456' }),
     ).rejects.toMatchObject({
-      code: APP_ERROR_CODES.requestFailed,
+      // Sem resposta HTTP, agora tratamos explicitamente como indisponibilidade de rede.
+      code: APP_ERROR_CODES.network,
       message: 'Falha ao buscar o usuário de autenticação.',
     });
   });
