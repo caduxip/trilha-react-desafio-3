@@ -165,11 +165,13 @@ Observações importantes sobre o ambiente Docker:
 - `npm run format:check`: valida a formatação do projeto com Prettier
 - `npm test -- --watchAll=false`: executa os testes uma vez
 - `npm run test:ci`: executa os testes em modo apropriado para pipeline
+- `npm run test:coverage`: executa os testes com geração de cobertura local
 - `npm run e2e`: executa os smoke tests end-to-end com Playwright
 - `npm run e2e:headed`: executa os smoke tests com navegador visível
 - `npm run e2e:install`: instala o navegador Chromium usado pelos testes E2E
 - `npm run api:reset`: restaura o `db.json` para a base seed versionada do projeto
 - `npm run verify`: executa `format:check` + `lint` + `test:ci` + `build`
+- `npm run verify:ci`: executa `format:check` + `lint` + `test:coverage` + `build`
 - `npm run api`: inicia o `json-server` usando o arquivo `db.json`
 - `npm run docker:up`: sobe frontend + API mock via Docker Compose
 - `npm run docker:down`: encerra os containers do Docker Compose
@@ -265,6 +267,20 @@ O arquivo `playwright.config.js` sobe automaticamente:
 - o frontend React em modo de desenvolvimento.
 
 Isso reduz preparação manual e deixa a suíte mais próxima de um fluxo real de uso.
+
+## Pipeline de CI
+
+O workflow em `.github/workflows/frontend-ci.yml` agora está dividido em duas etapas:
+
+1. `verify`
+   - roda formatação, lint, testes com cobertura e build;
+   - publica artefatos de `coverage` e da `build` gerada.
+
+2. `e2e-smoke`
+   - roda os smoke tests com Playwright depois que a verificação principal passa;
+   - publica `playwright-report` e `test-results` para facilitar diagnóstico quando algo falha.
+
+Esse desenho deixa o pipeline mais útil para revisão técnica, porque não só acusa a falha como também preserva evidências da execução.
 
 ## Testes de acessibilidade
 
@@ -388,6 +404,7 @@ O projeto agora possui uma base mínima para padronização de ambiente e entreg
 - `docker-compose.yml` orquestrando frontend e API mock juntos, com `healthcheck` e dependência saudável entre serviços;
 - validação de `REACT_APP_API_URL` em tempo de bootstrap;
 - workflow de CI em `.github/workflows/frontend-ci.yml` executando verificação de código e uma etapa separada de smoke E2E com Playwright;
+- workflow de CI em `.github/workflows/frontend-ci.yml` publicando artefatos de cobertura, build e Playwright;
 - padronização do repositório em `npm`, evitando ambiguidade entre lockfiles.
 
 ## Qualidade e manutenção
