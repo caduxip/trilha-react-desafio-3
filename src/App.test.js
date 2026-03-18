@@ -169,9 +169,9 @@ test('allows the user to register and access the authenticated feed', async () =
   userEvent.click(screen.getByRole('button', { name: /criar minha conta/i }));
 
   expect(await screen.findByText('Projeto para curso de HTML e CSS')).toBeInTheDocument();
+  expect(mockedAuthService.register).toHaveBeenCalledTimes(1);
 
   await waitFor(() => {
-    expect(mockedAuthService.register).toHaveBeenCalledTimes(1);
     expect(mockedFeedService.getFeedOverview).toHaveBeenCalledTimes(1);
   });
 });

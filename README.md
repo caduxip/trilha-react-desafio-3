@@ -79,6 +79,7 @@ Recomendação de ambiente local:
 
 - Node.js `18`, alinhado com o arquivo `.nvmrc`;
 - `npm` como gerenciador padrão deste projeto.
+- `.editorconfig` para manter indentação, quebra de linha e newline final consistentes.
 
 ### 2. Configurar variáveis de ambiente
 
@@ -149,9 +150,13 @@ npm run docker:down
 
 - `npm start`: inicia o frontend em modo de desenvolvimento
 - `npm run build`: gera a build de produção
+- `npm run lint`: executa o ESLint no código-fonte do frontend
+- `npm run lint:fix`: aplica correções automáticas suportadas pelo ESLint
+- `npm run format`: alias pragmático para `lint:fix`, usado como padronização automatizada atual
+- `npm run format:check`: valida o padrão atual de código via ESLint
 - `npm test -- --watchAll=false`: executa os testes uma vez
 - `npm run test:ci`: executa os testes em modo apropriado para pipeline
-- `npm run verify`: executa `test:ci` + `build`
+- `npm run verify`: executa `lint` + `test:ci` + `build`
 - `npm run api`: inicia o `json-server` usando o arquivo `db.json`
 - `npm run docker:up`: sobe frontend + API mock via Docker Compose
 - `npm run docker:down`: encerra os containers do Docker Compose
@@ -292,12 +297,13 @@ O projeto agora possui uma base mínima para padronização de ambiente e entreg
 
 - `.env.example` como referência de configuração local;
 - `.nvmrc` fixando a versão principal de Node usada pelo projeto;
+- `.editorconfig` definindo regras básicas de consistência entre editores;
 - `.dockerignore` reduzindo o contexto de build dos containers;
 - `Dockerfile.frontend` para gerar a build React e servir via nginx;
 - `Dockerfile.api` para subir o `json-server` em container;
 - `docker-compose.yml` orquestrando frontend e API mock juntos;
 - validação de `REACT_APP_API_URL` em tempo de bootstrap;
-- workflow de CI em `.github/workflows/frontend-ci.yml` executando `npm ci`, `npm run test:ci` e `npm run build`;
+- workflow de CI em `.github/workflows/frontend-ci.yml` executando `npm ci`, `npm run lint`, `npm run test:ci` e `npm run build`;
 - padronização do repositório em `npm`, evitando ambiguidade entre lockfiles.
 
 ## Qualidade e manutenção
@@ -319,6 +325,7 @@ O projeto já conta com:
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
 - ambiente padronizado com `.env.example`, `.nvmrc` e workflow de CI;
+- lint automatizado e autofix via ESLint integrados ao fluxo do projeto;
 - conteinerização com Docker e Docker Compose para frontend + API mock;
 - testes cobrindo navegação, redirecionamentos, validação de login, serviços, componentes base, cadastro, logout, skip navigation, boundary de erro, sessão local e estados do feed.
 
