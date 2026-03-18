@@ -66,6 +66,7 @@ Documentação complementar:
 
 - `docs/frontend-architecture.md`: visão de camadas, fluxo de autenticação, feed e organização por feature;
 - `docs/ui-components.md`: contrato dos componentes compartilhados e regras práticas para evolução da UI base.
+- `docs/adr/`: decisões arquiteturais curtas que explicam por que a estrutura atual foi escolhida.
 
 ## Rotas da aplicação
 
@@ -264,6 +265,7 @@ Além do README, o repositório agora possui guias curtos voltados para onboardi
 
 - `docs/frontend-architecture.md`: explica a divisão entre `App`, rotas, features, componentes compartilhados e infraestrutura;
 - `docs/ui-components.md`: descreve o papel de `Button`, `Input`, `Header`, `AuthLayout`, `AsyncState` e outros componentes base;
+- `docs/adr/`: registra decisões arquiteturais importantes, como organização por feature, sessão local no frontend e cliente HTTP central;
 - a rota `/componentes`: mostra exemplos visuais reais da biblioteca interna com os contratos mais usados no dia a dia;
 - comentários no código em pontos de fluxo, como guardas, providers, hooks e helpers de teste, para facilitar leitura por pessoas em início de carreira.
 

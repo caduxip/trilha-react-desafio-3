@@ -14,6 +14,7 @@ const api = axios.create({
 let requestSequence = 0;
 
 api.interceptors.request.use((config) => {
+  // Cada request recebe um identificador simples para ligar logs de início e fim.
   const requestId = `req-${(requestSequence += 1)}`;
   const metadata = {
     requestId,

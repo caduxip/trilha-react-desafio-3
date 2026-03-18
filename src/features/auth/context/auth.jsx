@@ -6,6 +6,7 @@ const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   // Ao iniciar, tentamos restaurar o usuário salvo no navegador.
+  // Enquanto o backend segue mockado, esta é a fonte prática da sessão do app.
   const [user, setUser] = useState(() => authSession.get());
 
   const signIn = (nextUser) => {

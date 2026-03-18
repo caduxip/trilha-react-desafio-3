@@ -13,6 +13,8 @@ O projeto é uma SPA em React com quatro fluxos principais:
 
 Mesmo usando `json-server` como backend mock, a aplicação já separa navegação, sessão, componentes compartilhados, serviços HTTP e domínio por feature.
 
+Para decisões pontuais que sustentam essa estrutura, consulte também `docs/adr/`.
+
 ## Camadas principais
 
 ### `src/App.js`

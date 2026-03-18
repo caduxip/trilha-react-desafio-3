@@ -13,6 +13,7 @@ function App() {
   return (
     // O provider de autenticação fica no topo para que rotas, header e hooks
     // de domínio enxerguem a mesma fonte de verdade da sessão local.
+    // Essa ordem também foi registrada nas ADRs e na documentação de arquitetura.
     <AuthProvider>
       {/* Injeta os tokens visuais usados pelos styled-components. */}
       <ThemeProvider theme={theme}>
