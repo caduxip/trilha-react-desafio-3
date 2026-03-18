@@ -188,6 +188,7 @@ Observações importantes sobre o ambiente Docker:
 - `npm run api`: inicia o `json-server` usando o arquivo `db.json`
 - `npm run docker:up`: sobe frontend + API mock via Docker Compose
 - `npm run docker:down`: encerra os containers do Docker Compose
+- `npm run docker:build:frontend`: gera localmente a imagem de produção do frontend
 
 ## Dados mockados
 
@@ -335,6 +336,17 @@ O workflow em `.github/workflows/frontend-ci.yml` agora está dividido em duas e
    - publica `playwright-report` e `test-results` para facilitar diagnóstico quando algo falha.
 
 Esse desenho deixa o pipeline mais útil para revisão técnica, porque não só acusa a falha como também preserva evidências da execução.
+
+## Release do frontend
+
+O repositório agora possui uma workflow separada em `.github/workflows/frontend-release.yml` para entrega do frontend:
+
+- dispara manualmente via `workflow_dispatch`;
+- dispara automaticamente quando uma tag `v*` é publicada;
+- gera a build estática e publica o artefato `frontend-release-build`;
+- publica a imagem do frontend no GHCR usando o `Dockerfile.frontend`.
+
+Isso cria um caminho de entrega mais próximo de produção sem acoplar o projeto a uma plataforma específica de hospedagem.
 
 ## Testes de acessibilidade
 
