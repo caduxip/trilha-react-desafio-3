@@ -14,6 +14,11 @@ export const FormTitle = styled.h2`
   font-weight: 700;
   line-height: 44px;
   color: #ffffff;
+
+  @media (max-width: 960px) {
+    font-size: 28px;
+    line-height: 38px;
+  }
 `;
 
 export const FormSubtitle = styled.p`
@@ -24,6 +29,11 @@ export const FormSubtitle = styled.p`
   font-weight: 400;
   line-height: 25px;
   color: #ffffff;
+
+  @media (max-width: 960px) {
+    font-size: 16px;
+    line-height: 22px;
+  }
 `;
 
 export const StatusText = styled.p`
@@ -42,6 +52,11 @@ export const HelperRow = styled.div`
   justify-content: space-between;
   gap: 16px;
   margin-top: 20px;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const HelperText = styled.span`

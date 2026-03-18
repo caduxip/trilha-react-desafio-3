@@ -50,6 +50,11 @@ export const SectionHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const StatusCard = styled.div`

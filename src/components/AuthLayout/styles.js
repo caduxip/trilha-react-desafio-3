@@ -26,6 +26,7 @@ export const FormWrapper = styled.div`
   margin-left: auto;
 
   @media (max-width: 960px) {
+    max-width: 100%;
     margin-left: 0;
   }
 `;
@@ -41,5 +42,7 @@ export const HeroTitle = styled.h2`
 
   @media (max-width: 960px) {
     max-width: 100%;
+    font-size: 28px;
+    line-height: 38px;
   }
 `;

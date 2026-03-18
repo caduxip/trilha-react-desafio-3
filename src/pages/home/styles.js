@@ -1,43 +1,66 @@
 import styled from 'styled-components';
 
 export const Container = styled.main`
-    width: 100%;
-    max-width: 80%;
-    margin: 0 auto;
-    margin-top: 120px;
+  width: 100%;
+  max-width: 80%;
+  margin: 120px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-`
+  @media (max-width: 960px) {
+    max-width: 90%;
+    margin-top: 64px;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+`;
 
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 420px;
+`;
 
 export const Title = styled.h2`
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    width: 320px;
-    margin-bottom: 20px;
-    line-height: 44px;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 20px;
+  line-height: 44px;
 
-    color: #FFFFFF;
-`
+  @media (max-width: 960px) {
+    font-size: 28px;
+    line-height: 38px;
+  }
+`;
 
 export const TitleHighlight = styled.span`
-    color: #E4105D;;
-`
+  color: #e4105d;
+`;
 
 export const TextContent = styled.p`
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-    width: 420px;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  width: 100%;
+  margin-bottom: 20px;
+`;
 
-    margin-bottom: 20px;
+export const Banner = styled.img`
+  width: 100%;
+  max-width: 560px;
+  height: auto;
 
-    color: #FFFFFF;
-`
+  @media (max-width: 960px) {
+    max-width: 100%;
+  }
+`;
