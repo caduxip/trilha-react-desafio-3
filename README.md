@@ -172,7 +172,7 @@ Observações importantes sobre o ambiente Docker:
 - `npm run format:check`: valida a formatação do projeto com Prettier
 - `npm test -- --watchAll=false`: executa os testes uma vez
 - `npm run test:ci`: executa os testes em modo apropriado para pipeline
-- `npm run test:coverage`: executa os testes com geração de cobertura local
+- `npm run test:coverage`: executa os testes com geração de cobertura local e valida o piso mínimo de cobertura
 - `npm run e2e`: executa os smoke tests end-to-end com Playwright
 - `npm run e2e:headed`: executa os smoke tests com navegador visível
 - `npm run e2e:install`: instala o navegador Chromium usado pelos testes E2E
@@ -415,6 +415,15 @@ A cobertura atual do frontend foi ampliada para proteger os fluxos mais sensíve
 - utilitários compartilhados em `src/test/`, com providers reutilizáveis de renderização e fixtures comuns para reduzir duplicação entre cenários.
 
 Com isso, a aplicação ganha uma base mais segura para refatorações incrementais.
+
+O projeto agora também falha a etapa de cobertura quando o resultado global fica abaixo destes pisos:
+
+- `90%` de statements;
+- `70%` de branches;
+- `90%` de functions;
+- `90%` de lines.
+
+Esse critério torna a cobertura um contrato real de qualidade, em vez de um relatório apenas informativo.
 
 ## Ambientes e entrega
 

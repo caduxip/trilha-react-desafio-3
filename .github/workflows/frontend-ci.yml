@@ -26,6 +26,8 @@ jobs:
         run: npm ci
 
       # O verify:ci consolida formatacao, lint, testes com cobertura e build.
+      # Se a cobertura global cair abaixo do piso configurado no Jest,
+      # esta etapa falha e bloqueia a pipeline.
       - name: Executar verificacoes do frontend
         run: npm run verify:ci
 
