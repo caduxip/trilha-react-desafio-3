@@ -45,6 +45,11 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - Docker
 - Docker Compose
 
+Observação de stack:
+
+- o projeto ainda usa `Create React App` como bundler atual;
+- existe um plano documentado de saída do CRA em `docs/cra-exit-plan.md`, mas a migração ainda não foi iniciada.
+
 ## Estrutura principal
 
 ```text
@@ -67,6 +72,7 @@ Documentação complementar:
 - `docs/frontend-architecture.md`: visão de camadas, fluxo de autenticação, feed e organização por feature;
 - `docs/ui-components.md`: contrato dos componentes compartilhados e regras práticas para evolução da UI base.
 - `docs/adr/`: decisões arquiteturais curtas que explicam por que a estrutura atual foi escolhida.
+- `docs/cra-exit-plan.md`: plano incremental para sair do `react-scripts` sem reescrever o frontend.
 
 ## Rotas da aplicação
 
@@ -266,6 +272,7 @@ Além do README, o repositório agora possui guias curtos voltados para onboardi
 - `docs/frontend-architecture.md`: explica a divisão entre `App`, rotas, features, componentes compartilhados e infraestrutura;
 - `docs/ui-components.md`: descreve o papel de `Button`, `Input`, `Header`, `AuthLayout`, `AsyncState` e outros componentes base;
 - `docs/adr/`: registra decisões arquiteturais importantes, como organização por feature, sessão local no frontend e cliente HTTP central;
+- `docs/cra-exit-plan.md`: descreve quando, por que e como executar a saída do CRA em fases, sem misturar tooling com mudança de produto;
 - a rota `/componentes`: mostra exemplos visuais reais da biblioteca interna com os contratos mais usados no dia a dia;
 - comentários no código em pontos de fluxo, como guardas, providers, hooks e helpers de teste, para facilitar leitura por pessoas em início de carreira.
 

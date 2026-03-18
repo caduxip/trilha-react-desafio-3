@@ -162,3 +162,9 @@ Se uma mudança for visual e reutilizável, ela tende a ficar em `src/components
 Se a mudança depende de regra de domínio, integração ou fluxo de usuário, ela tende a ficar em `src/features`.
 
 Se a mudança for transversal, como ambiente, logger ou sessão, ela tende a ficar em `src/config`, `src/constants`, `src/lib` ou `src/services`.
+
+## Observação sobre o bundler atual
+
+O projeto ainda usa CRA, mas o bootstrap e a estrutura foram mantidos relativamente desacoplados do `react-scripts`.
+
+Para o plano detalhado de saída do CRA, consulte `docs/cra-exit-plan.md`.

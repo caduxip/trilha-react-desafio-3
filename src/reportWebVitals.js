@@ -3,6 +3,8 @@ import { ENV_CONFIG } from './config/env';
 const reportWebVitals = (onPerfEntry) => {
   // As métricas são opcionais para não poluir o console local por padrão.
   // Quando a flag estiver ligada, começamos a capturar desempenho de navegação.
+  // O carregamento dinâmico ajuda a manter esta integração mais portátil
+  // caso o projeto troque de bundler no futuro.
   if (!ENV_CONFIG.enableWebVitals || typeof onPerfEntry !== 'function') {
     return;
   }
