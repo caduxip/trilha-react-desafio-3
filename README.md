@@ -19,8 +19,8 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - navegação entre rotas públicas e privadas;
 - proteção da rota `/feed`;
 - persistência local da sessão do usuário;
-- formulário de login com `react-hook-form`;
-- formulário de cadastro com validação e verificação de e-mail já cadastrado;
+- formulário de login com `react-hook-form` e validação por schema;
+- formulário de cadastro com validação por schema e verificação de e-mail já cadastrado;
 - integração com API mockada via `axios`;
 - feed carregado a partir do `json-server`;
 - ranking lateral carregado da API;
@@ -48,7 +48,7 @@ src/
   config/            configuração compartilhada da aplicação
   constants/         mensagens, chaves e regras reutilizáveis
   features/          módulos por domínio, como auth e feed
-  lib/               utilitários de infraestrutura, como sessão local
+  lib/               utilitários compartilhados, como sessão local e schemas de formulário
   pages/             páginas globais fora dos domínios, como a home
   routes/            configuração de paths, guardas e composição de rotas
   services/          infraestrutura compartilhada, como cliente HTTP
@@ -132,7 +132,7 @@ O projeto agora centraliza parte das definições transversais para reduzir dupl
 - `src/config/api.js`: configuração base de integração HTTP, como `baseURL` e `timeout`;
 - `src/constants/messages.js`: mensagens reutilizadas de autenticação e feed;
 - `src/constants/storage.js`: chaves persistidas no `localStorage`;
-- `src/constants/validation.js`: regras compartilhadas de validação para os formulários.
+- `src/features/auth/validation/schema.js`: schemas compartilhados de validação para os formulários de autenticação.
 
 Essa organização ajuda a evitar strings e regras espalhadas por páginas e testes.
 
@@ -145,6 +145,16 @@ O frontend passou a contar com uma camada mínima de resiliência para falhas de
 - `src/lib/storage/session.js`: encapsulamento de leitura e escrita da sessão local.
 
 Com isso, a aplicação reduz lógica repetida e trata falhas de forma mais uniforme.
+
+## Formulários e validação
+
+Os formulários de autenticação agora usam uma estratégia baseada em schema dentro do próprio projeto:
+
+- `src/lib/forms/schema.js`: utilitários genéricos para composição de validadores e criação de `resolver`;
+- `src/features/auth/validation/schema.js`: schemas de login e cadastro usados pelo `react-hook-form`;
+- `src/components/Input`: suporte melhorado a `label`, `id`, `aria-invalid`, `aria-describedby` e `autocomplete`.
+
+Esse modelo mantém a validação declarativa e preparada para crescer sem depender de validações inline espalhadas pelas páginas.
 
 ## Organização por feature
 
@@ -182,9 +192,10 @@ O projeto já conta com:
 - configuração e constantes reutilizáveis centralizadas;
 - boundary de erro em nível de aplicação;
 - padrão compartilhado para estados de loading, erro e vazio;
+- validação de formulários baseada em schema interno;
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
-- testes cobrindo navegação, login, cadastro, logout e estados do feed;
+- testes cobrindo navegação, validação de login, cadastro, logout e estados do feed;
 - melhorias básicas de responsividade no fluxo principal.
 
 Melhorias futuras recomendadas:

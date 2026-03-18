@@ -1,22 +1,44 @@
 import React from 'react'
 import { Controller } from "react-hook-form";
 
-import {ErrorText, InputContainer, InputText, IconContainer } from './styles';
+import {
+  ErrorText,
+  FieldLabel,
+  FieldWrapper,
+  InputContainer,
+  InputText,
+  IconContainer,
+} from './styles';
 
-const Input = ({leftIcon, name, control, errorMessage, rules, ...rest}) => {
+const Input = ({ leftIcon, label, name, control, errorMessage, ...rest }) => {
+  const inputId = `field-${name}`;
+  const errorId = `${inputId}-error`;
+
   return (
-    <>
+    <FieldWrapper>
+      {label ? <FieldLabel htmlFor={inputId}>{label}</FieldLabel> : null}
       <InputContainer $hasError={Boolean(errorMessage)}>
-          {leftIcon ? (<IconContainer>{leftIcon}</IconContainer>) : null}
-          <Controller
+        {leftIcon ? <IconContainer>{leftIcon}</IconContainer> : null}
+        <Controller
           name={name}
           control={control}
-          rules={rules}
-          render={({ field }) =>  <InputText {...field} {...rest} aria-invalid={Boolean(errorMessage)} />}
+          render={({ field }) => (
+            <InputText
+              id={inputId}
+              {...field}
+              {...rest}
+              aria-describedby={errorMessage ? errorId : undefined}
+              aria-invalid={Boolean(errorMessage)}
+            />
+          )}
         />
       </InputContainer>
-      {errorMessage ? <ErrorText role="alert">{errorMessage}</ErrorText> : null}
-    </>
+      {errorMessage ? (
+        <ErrorText id={errorId} role="alert">
+          {errorMessage}
+        </ErrorText>
+      ) : null}
+    </FieldWrapper>
   )
 }
 

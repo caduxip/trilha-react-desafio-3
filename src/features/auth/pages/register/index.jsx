@@ -7,10 +7,10 @@ import { AuthLayout } from '../../../../components/AuthLayout';
 import { Button } from '../../../../components/Button';
 import { Input } from '../../../../components/Input';
 import { MESSAGES } from '../../../../constants/messages';
-import { authValidationRules } from '../../../../constants/validation';
 import { ROUTES } from '../../../../routes/paths';
 import { useAuth } from '../../context/auth';
 import { authService, EMAIL_IN_USE } from '../../services/auth';
+import { registerResolver } from '../../validation/schema';
 
 import {
   AccentText,
@@ -38,6 +38,7 @@ const Register = () => {
       name: '',
       senha: '',
     },
+    resolver: registerResolver,
     mode: 'onBlur',
     reValidateMode: 'onChange',
   });
@@ -67,30 +68,33 @@ const Register = () => {
 
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
+          autoComplete="name"
+          label="Nome completo"
           placeholder="Nome completo"
           leftIcon={<MdPerson />}
           name="name"
           control={control}
-          rules={authValidationRules.name}
           errorMessage={errors.name?.message}
         />
 
         <Input
+          autoComplete="email"
+          label="E-mail"
           placeholder="E-mail"
           leftIcon={<MdEmail />}
           name="email"
           control={control}
-          rules={authValidationRules.email}
           errorMessage={errors.email?.message}
         />
 
         <Input
+          autoComplete="new-password"
+          label="Senha"
           type="password"
           placeholder="Password"
           leftIcon={<MdLock />}
           name="senha"
           control={control}
-          rules={authValidationRules.password}
           errorMessage={errors.senha?.message}
         />
 

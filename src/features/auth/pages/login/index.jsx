@@ -7,10 +7,10 @@ import { AuthLayout } from '../../../../components/AuthLayout';
 import { Button } from '../../../../components/Button';
 import { Input } from '../../../../components/Input';
 import { MESSAGES } from '../../../../constants/messages';
-import { authValidationRules } from '../../../../constants/validation';
 import { ROUTES } from '../../../../routes/paths';
 import { useAuth } from '../../context/auth';
 import { authService } from '../../services/auth';
+import { loginResolver } from '../../validation/schema';
 import {
   Form,
   FormSubtitle,
@@ -35,6 +35,7 @@ const Login = () => {
             email: '',
             senha: '',
         },
+        resolver: loginResolver,
         reValidateMode: 'onChange',
         mode: 'onBlur',
     });
@@ -64,20 +65,22 @@ const Login = () => {
 
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Input
+                    autoComplete="email"
+                    label="E-mail"
                     placeholder="E-mail"
                     leftIcon={<MdEmail />}
                     name="email"
                     control={control}
-                    rules={authValidationRules.email}
                     errorMessage={errors.email?.message}
                 />
                 <Input
+                    autoComplete="current-password"
+                    label="Senha"
                     type="password"
                     placeholder="Password"
                     leftIcon={<MdLock />}
                     name="senha"
                     control={control}
-                    rules={authValidationRules.password}
                     errorMessage={errors.senha?.message}
                 />
                 <Button

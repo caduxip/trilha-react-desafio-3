@@ -5,6 +5,7 @@ import App from './App';
 import { MESSAGES } from './constants/messages';
 import { STORAGE_KEYS } from './constants/storage';
 import { authService } from './features/auth/services/auth';
+import { AUTH_VALIDATION_MESSAGES } from './features/auth/validation/schema';
 import { feedService } from './features/feed/services/feed';
 import { ROUTES } from './routes/paths';
 
@@ -80,6 +81,18 @@ test('renders the registration screen at /cadastro', async () => {
 
   expect(await screen.findByText('Comece agora grátis')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /criar minha conta/i })).toBeInTheDocument();
+});
+
+test('blocks login submit when the form data is invalid', async () => {
+  renderAtRoute(ROUTES.login);
+
+  userEvent.type(screen.getByPlaceholderText('E-mail'), 'email-invalido');
+  userEvent.type(screen.getByPlaceholderText('Password'), '123');
+  userEvent.click(screen.getByRole('button', { name: /entrar/i }));
+
+  expect(await screen.findByText(AUTH_VALIDATION_MESSAGES.emailInvalid)).toBeInTheDocument();
+  expect(screen.getByText(AUTH_VALIDATION_MESSAGES.passwordMinLength)).toBeInTheDocument();
+  expect(mockedAuthService.login).not.toHaveBeenCalled();
 });
 
 test('allows the user to log in and load the authenticated feed', async () => {
