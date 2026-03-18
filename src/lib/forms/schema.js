@@ -19,40 +19,35 @@ const composeValidators =
     return null;
   };
 
-const required =
-  (message) =>
-  (value) => {
-    if (typeof value === 'string') {
-      return value.trim() ? null : message;
-    }
+const required = (message) => (value) => {
+  if (typeof value === 'string') {
+    return value.trim() ? null : message;
+  }
 
-    return value ? null : message;
-  };
+  return value ? null : message;
+};
 
-const minLength =
-  (length, message) =>
-  (value) => {
-    if (typeof value !== 'string') {
-      return message;
-    }
+const minLength = (length, message) => (value) => {
+  if (typeof value !== 'string') {
+    return message;
+  }
 
-    return value.trim().length >= length ? null : message;
-  };
+  return value.trim().length >= length ? null : message;
+};
 
-const email =
-  (message) =>
-  (value) => {
-    if (typeof value !== 'string') {
-      return message;
-    }
+const email = (message) => (value) => {
+  if (typeof value !== 'string') {
+    return message;
+  }
 
-    return /\S+@\S+\.\S+/.test(value.trim()) ? null : message;
-  };
+  return /\S+@\S+\.\S+/.test(value.trim()) ? null : message;
+};
 
 const createSchemaResolver = (schema) => async (values) => {
   const errors = {};
 
   // O schema é um mapa `campo -> função validadora`.
+  // Esse formato nos deixa próximos de libs como yup/zod sem adicionar dependência agora.
   Object.entries(schema).forEach(([fieldName, validator]) => {
     const errorMessage = validator(values[fieldName], values);
 
@@ -68,10 +63,4 @@ const createSchemaResolver = (schema) => async (values) => {
   };
 };
 
-export {
-  composeValidators,
-  createSchemaResolver,
-  email,
-  minLength,
-  required,
-};
+export { composeValidators, createSchemaResolver, email, minLength, required };

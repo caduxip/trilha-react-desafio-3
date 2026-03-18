@@ -39,8 +39,4 @@ const normalizeRequestError = (error, fallbackMessage) => {
   });
 };
 
-export {
-  APP_ERROR_CODES,
-  createAppError,
-  normalizeRequestError,
-};
+export { APP_ERROR_CODES, createAppError, normalizeRequestError };

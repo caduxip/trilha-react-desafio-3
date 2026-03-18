@@ -24,6 +24,7 @@ const authService = {
       }
 
       // Antes de devolver para a UI, normalizamos o formato do usuário.
+      // Isso reduz o impacto de futuras mudanças no contrato da API real.
       return toAuthUser(data[0]);
     } catch (error) {
       throw normalizeRequestError(error, 'Falha ao buscar o usuário de autenticação.');
@@ -40,6 +41,7 @@ const authService = {
       });
 
       if (existingUsers.length) {
+        // Mantemos esse erro padronizado para que a tela decida a mensagem amigável.
         throw createAppError({
           code: EMAIL_IN_USE,
           message: EMAIL_IN_USE,

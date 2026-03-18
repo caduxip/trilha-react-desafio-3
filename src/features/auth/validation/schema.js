@@ -42,8 +42,4 @@ const registerResolver = createSchemaResolver({
   senha: passwordValidator,
 });
 
-export {
-  AUTH_VALIDATION_MESSAGES,
-  loginResolver,
-  registerResolver,
-};
+export { AUTH_VALIDATION_MESSAGES, loginResolver, registerResolver };

@@ -73,7 +73,6 @@ export const PostInfo = styled.div`
     font-weight: 700;
     line-height: 25px;
   }
-
 `;
 
 export const PostSummary = styled.p`

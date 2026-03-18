@@ -1,9 +1,9 @@
 // Página de login.
 // Responsável por validar os dados, acionar o serviço de auth e iniciar a sessão.
 import { useState } from 'react';
-import { MdEmail, MdLock } from 'react-icons/md'
-import { useForm } from "react-hook-form";
-import { useNavigate  } from "react-router-dom";
+import { MdEmail, MdLock } from 'react-icons/md';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { AuthLayout } from '../../../../components/AuthLayout';
 import { Button } from '../../../../components/Button';
@@ -24,15 +24,16 @@ import {
 } from '../../styles';
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { signIn } = useAuth();
   const [apiError, setApiError] = useState('');
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting  },
+    formState: { errors, isSubmitting },
   } = useForm({
+    // O formulário começa vazio e o resolver decide se cada campo está válido.
     defaultValues: {
       email: '',
       senha: '',
@@ -46,18 +47,23 @@ const Login = () => {
     // Limpa erros antigos antes de tentar novo login.
     setApiError('');
 
-    try{
+    try {
+      // A página conhece só o caso de uso "fazer login".
+      // Os detalhes de HTTP ficam encapsulados no serviço.
       const user = await authService.login(formData);
 
-      if(user){
+      if (user) {
+        // Sessão válida encontrada: salvamos no contexto e seguimos para a área privada.
         signIn(user);
-        navigate(ROUTES.feed, { replace: true }) 
-        return
+        navigate(ROUTES.feed, { replace: true });
+        return;
       }
 
-      setApiError(MESSAGES.auth.invalidCredentials)
-    }catch(e){
-      setApiError(MESSAGES.auth.loginUnavailable)
+      // Quando o serviço não encontra o usuário, tratamos como credenciais inválidas.
+      setApiError(MESSAGES.auth.invalidCredentials);
+    } catch (e) {
+      // Erro de rede, indisponibilidade da API mock ou falha inesperada.
+      setApiError(MESSAGES.auth.loginUnavailable);
     }
   };
 
@@ -103,7 +109,7 @@ const Login = () => {
         <HelperLink to={ROUTES.register}>Criar conta</HelperLink>
       </HelperRow>
     </AuthLayout>
-  )
-}
+  );
+};
 
-export { Login }
+export { Login };

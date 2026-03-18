@@ -33,8 +33,4 @@ const toRankingEntry = (user) => ({
   percentual: user.percentual ?? 0,
 });
 
-export {
-  createUsersById,
-  toFeedPost,
-  toRankingEntry,
-};
+export { createUsersById, toFeedPost, toRankingEntry };

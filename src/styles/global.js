@@ -1,5 +1,5 @@
 // Estilos globais mínimos aplicados a toda a aplicação.
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   *{
@@ -38,4 +38,4 @@ export const GlobalStyle = createGlobalStyle`
       outline-offset: 3px;
     }
   }
-`
+`;

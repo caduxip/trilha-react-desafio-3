@@ -7,6 +7,8 @@ import { ROUTES } from './paths';
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
+  // A guarda privada deixa a regra de acesso concentrada em um único lugar.
+  // Assim, cada página não precisa repetir a verificação de sessão.
   // Usuário sem sessão válida volta para login.
   if (!isAuthenticated) {
     return <Navigate to={ROUTES.login} replace />;
@@ -18,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
 const PublicRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
-  // Usuário autenticado não precisa ver login/cadastro novamente.
+  // A guarda pública evita que quem já entrou volte manualmente para login/cadastro.
   if (isAuthenticated) {
     return <Navigate to={ROUTES.feed} replace />;
   }

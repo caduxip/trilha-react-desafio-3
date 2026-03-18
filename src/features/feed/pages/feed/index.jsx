@@ -10,15 +10,10 @@ import { Header } from '../../../../components/Header';
 import { MESSAGES } from '../../../../constants/messages';
 import { feedService } from '../../services/feed';
 
-import {
-  Container,
-  Column,
-  SectionHeader,
-  Title,
-  TitleHighlight,
-} from './styles';
+import { Container, Column, SectionHeader, Title, TitleHighlight } from './styles';
 
 const Feed = () => {
+  // Mantemos posts e ranking separados porque a UI consome essas listas em regiões diferentes.
   const [posts, setPosts] = useState([]);
   const [ranking, setRanking] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +30,7 @@ const Feed = () => {
       setError('');
 
       try {
+        // O serviço já devolve os dados no formato que a tela precisa renderizar.
         const { posts: nextPosts, ranking: nextRanking } = await feedService.getFeedOverview();
 
         if (!isMounted) {
@@ -82,7 +78,9 @@ const Feed = () => {
             ) : null}
           </SectionHeader>
 
-          {isLoading ? <AsyncState title="Carregando feed" description={MESSAGES.feed.loading} /> : null}
+          {isLoading ? (
+            <AsyncState title="Carregando feed" description={MESSAGES.feed.loading} />
+          ) : null}
 
           {!isLoading && error ? (
             <AsyncState
@@ -102,6 +100,7 @@ const Feed = () => {
 
         <Column as="aside" aria-labelledby="ranking-title" flex={1}>
           <TitleHighlight id="ranking-title"># RANKING 5 TOP DA SEMANA</TitleHighlight>
+          {/* O ranking já chega ordenado pelo serviço; aqui a tela só apresenta os dados. */}
           {ranking.map((user) => (
             <UserInfo
               key={user.id}

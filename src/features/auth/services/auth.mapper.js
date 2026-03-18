@@ -19,8 +19,4 @@ const toRegisterPayload = ({ email, name, senha }) => ({
   senha,
 });
 
-export {
-  DEFAULT_AVATAR,
-  toAuthUser,
-  toRegisterPayload,
-};
+export { DEFAULT_AVATAR, toAuthUser, toRegisterPayload };

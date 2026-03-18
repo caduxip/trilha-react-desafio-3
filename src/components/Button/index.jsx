@@ -1,5 +1,5 @@
 // Botão base reutilizável da aplicação.
-import React from 'react'
+import React from 'react';
 
 import { ButtonContainer } from './styles';
 
@@ -29,7 +29,7 @@ const Button = ({
       {children ?? title}
       {iconRight ? <span aria-hidden="true">{iconRight}</span> : null}
     </ButtonContainer>
-  )
-}
+  );
+};
 
-export { Button }
+export { Button };

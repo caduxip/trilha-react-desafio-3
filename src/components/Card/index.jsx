@@ -17,15 +17,7 @@ import {
 } from './styles';
 
 const Card = ({ post }) => {
-  const {
-    authorAvatar,
-    authorName,
-    likes = 0,
-    publishedAt,
-    summary,
-    tags = [],
-    title,
-  } = post;
+  const { authorAvatar, authorName, likes = 0, publishedAt, summary, tags = [], title } = post;
   const tagsText = tags.map((tag) => `#${tag}`).join(' ');
 
   return (

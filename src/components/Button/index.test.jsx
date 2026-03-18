@@ -5,7 +5,8 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from '../../styles/theme';
 import { Button } from './index';
 
-const renderWithTheme = (component) => render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
+const renderWithTheme = (component) =>
+  render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
 
 test('renders the button in loading state and disables interaction', () => {
   renderWithTheme(<Button title="Salvar" isLoading />);

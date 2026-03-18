@@ -6,12 +6,7 @@ import { MESSAGES } from '../../constants/messages';
 import { ROUTES } from '../../routes/paths';
 import { Button } from '../Button';
 
-import {
-  Actions,
-  Description,
-  FallbackContainer,
-  Title,
-} from './styles';
+import { Actions, Description, FallbackContainer, Title } from './styles';
 
 class ErrorBoundaryRoot extends Component {
   constructor(props) {

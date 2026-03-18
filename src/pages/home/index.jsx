@@ -1,6 +1,6 @@
 // Landing page pública da aplicação.
-import { Link } from "react-router-dom";
-import bannerImage from '../../assets/banner.png'
+import { Link } from 'react-router-dom';
+import bannerImage from '../../assets/banner.png';
 
 import { Button } from '../../components/Button';
 import { Header } from '../../components/Header';
@@ -21,10 +21,16 @@ const Home = () => {
             o seu futuro global agora!
           </Title>
           <TextContent>
-            Domine as tecnologias utilizadas pelas empresas mais inovadoras do mundo e encare seu novo
-            desafio profissional, evoluindo em comunidade com os melhores experts.
+            Domine as tecnologias utilizadas pelas empresas mais inovadoras do mundo e encare seu
+            novo desafio profissional, evoluindo em comunidade com os melhores experts.
           </TextContent>
-          <Button as={Link} size="lg" to={ROUTES.register} title="Começar agora" variant="secondary" />
+          <Button
+            as={Link}
+            size="lg"
+            to={ROUTES.register}
+            title="Começar agora"
+            variant="secondary"
+          />
         </Content>
 
         <Banner
@@ -36,4 +42,4 @@ const Home = () => {
   );
 };
 
-export { Home }
+export { Home };

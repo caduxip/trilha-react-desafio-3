@@ -5,6 +5,7 @@ const resolveApiUrl = () => {
   const customApiUrl = process.env.REACT_APP_API_URL?.trim();
 
   // Sem valor customizado, usamos a API mock local.
+  // Isso deixa o setup local simples, mas ainda permite apontar para outros ambientes.
   if (!customApiUrl) {
     return DEFAULT_API_URL;
   }

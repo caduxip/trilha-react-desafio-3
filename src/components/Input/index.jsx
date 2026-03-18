@@ -1,6 +1,6 @@
 // Input compartilhado integrado ao react-hook-form.
-import React from 'react'
-import { Controller } from "react-hook-form";
+import React from 'react';
+import { Controller } from 'react-hook-form';
 
 import {
   ErrorText,
@@ -41,7 +41,7 @@ const Input = ({ leftIcon, label, name, control, errorMessage, ...rest }) => {
         </ErrorText>
       ) : null}
     </FieldWrapper>
-  )
-}
+  );
+};
 
-export { Input }; 
+export { Input };

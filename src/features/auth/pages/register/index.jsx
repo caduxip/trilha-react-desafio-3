@@ -35,6 +35,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
+    // Os campos começam vazios e o resolver concentra toda a validação declarativa.
     defaultValues: {
       email: '',
       name: '',
@@ -50,6 +51,7 @@ const Register = () => {
     setApiError('');
 
     try {
+      // O serviço cuida da verificação de duplicidade e da criação no mock.
       const user = await authService.register(formData);
 
       signIn(user);
@@ -62,6 +64,7 @@ const Register = () => {
         return;
       }
 
+      // Qualquer outro erro é comunicado de forma genérica e amigável.
       setApiError(MESSAGES.auth.registerUnavailable);
     }
   };
@@ -117,7 +120,8 @@ const Register = () => {
 
       <LegalText>
         Ao clicar em &quot;criar minha conta grátis&quot;, declaro que aceito as{' '}
-        <AccentText>Políticas de Privacidade</AccentText> e <AccentText>Termos de Uso da DIO</AccentText>.
+        <AccentText>Políticas de Privacidade</AccentText> e{' '}
+        <AccentText>Termos de Uso da DIO</AccentText>.
       </LegalText>
 
       <InlineText>

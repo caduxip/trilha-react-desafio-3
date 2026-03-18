@@ -26,6 +26,9 @@ jobs:
       - name: Executar lint
         run: npm run lint
 
+      - name: Validar formatacao
+        run: npm run format:check
+
       - name: Executar testes
         run: npm run test:ci
 

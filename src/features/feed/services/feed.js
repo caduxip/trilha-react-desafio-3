@@ -29,6 +29,7 @@ const feedService = {
       const usersById = createUsersById(users);
 
       // Com o ranking e os autores em mãos, devolvemos o domínio já normalizado.
+      // A tela deixa de saber como cruzar `post.userId` com `user.id`.
       return {
         posts: posts.map((post) => toFeedPost(post, usersById)),
         ranking: users.slice(0, 5).map((user) => toRankingEntry(user)),

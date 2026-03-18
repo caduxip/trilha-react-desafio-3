@@ -29,13 +29,15 @@ describe('authService', () => {
       ],
     });
 
-    await expect(authService.login({ email: 'pablo@email.com', senha: '123456' })).resolves.toEqual({
-      id: 1,
-      name: 'Pablo Henrique',
-      email: 'pablo@email.com',
-      avatar: 'https://avatars.githubusercontent.com/u/45184516?v=4',
-      percentual: 0,
-    });
+    await expect(authService.login({ email: 'pablo@email.com', senha: '123456' })).resolves.toEqual(
+      {
+        id: 1,
+        name: 'Pablo Henrique',
+        email: 'pablo@email.com',
+        avatar: 'https://avatars.githubusercontent.com/u/45184516?v=4',
+        percentual: 0,
+      },
+    );
   });
 
   test('throws a domain error when the e-mail is already in use', async () => {
@@ -59,7 +61,9 @@ describe('authService', () => {
       request: {},
     });
 
-    await expect(authService.login({ email: 'pablo@email.com', senha: '123456' })).rejects.toMatchObject({
+    await expect(
+      authService.login({ email: 'pablo@email.com', senha: '123456' }),
+    ).rejects.toMatchObject({
       code: APP_ERROR_CODES.requestFailed,
       message: 'Falha ao buscar o usuário de autenticação.',
     });

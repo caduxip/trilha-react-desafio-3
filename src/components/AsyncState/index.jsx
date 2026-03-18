@@ -1,12 +1,7 @@
 // Componente reutilizável para estados assíncronos como loading, erro e vazio.
 import { Button } from '../Button';
 
-import {
-  ActionRow,
-  Description,
-  Surface,
-  Title,
-} from './styles';
+import { ActionRow, Description, Surface, Title } from './styles';
 
 const AsyncState = ({ actionLabel, description, onAction, title }) => {
   return (
