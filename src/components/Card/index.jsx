@@ -2,9 +2,13 @@ import React from 'react';
 import { FiThumbsUp } from 'react-icons/fi';
 
 import {
+  AuthorMeta,
   CardContainer,
   ImageBackground,
   Content,
+  LikeCount,
+  MetaLeft,
+  PostSummary,
   UserInfo,
   UserPicture,
   PostInfo,
@@ -12,32 +16,41 @@ import {
 } from './styles';
 
 const Card = ({ post }) => {
-  const tagsText = post.tags.map((tag) => `#${tag}`).join(' ');
+  const {
+    authorAvatar,
+    authorName,
+    likes = 0,
+    publishedAt,
+    summary,
+    tags = [],
+    title,
+  } = post;
+  const tagsText = tags.map((tag) => `#${tag}`).join(' ');
 
   return (
-    <CardContainer>
+    <CardContainer as="article">
       <ImageBackground />
       <Content>
         <UserInfo>
-          <UserPicture src={post.authorAvatar} alt={`Avatar de ${post.authorName}`} />
-          <div>
-            <h4>{post.authorName}</h4>
-            <p>{post.publishedAt}</p>
-          </div>
+          <UserPicture src={authorAvatar} alt={`Avatar de ${authorName}`} />
+          <AuthorMeta>
+            <h4>{authorName}</h4>
+            <p>{publishedAt}</p>
+          </AuthorMeta>
         </UserInfo>
 
         <PostInfo>
-          <h4>{post.title}</h4>
-          <p>
-            {post.summary} <strong>Saiba mais</strong>
-          </p>
+          <h4>{title}</h4>
+          <PostSummary>
+            {summary} <strong>Saiba mais</strong>
+          </PostSummary>
         </PostInfo>
 
         <MetaInfo>
-          <h4>{tagsText}</h4>
-          <p>
-            <FiThumbsUp /> {post.likes}
-          </p>
+          <MetaLeft>{tagsText || 'Sem tags'}</MetaLeft>
+          <LikeCount>
+            <FiThumbsUp /> {likes}
+          </LikeCount>
         </MetaInfo>
       </Content>
     </CardContainer>

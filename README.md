@@ -27,6 +27,7 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - botão de logout no cabeçalho autenticado;
 - tema global com tokens compartilhados;
 - camada de dados com mapeamento e normalização de erro;
+- componentes base com contratos mais consistentes;
 - testes de navegação, login, cadastro e logout.
 
 ## Stack utilizada
@@ -192,6 +193,16 @@ Essa camada concentra:
 
 Com isso, os estilos centrais deixaram de depender de valores visuais espalhados em múltiplos arquivos, o que reduz inconsistência e facilita manutenção.
 
+## Componentes reutilizáveis
+
+Os componentes base da interface foram fortalecidos para servir como biblioteca interna mínima:
+
+- `src/components/Button`: suporta variantes, tamanhos, estado de carregamento e ícones decorativos;
+- `src/components/Card`: estrutura de conteúdo mais estável para posts e metadados;
+- `src/components/UserInfo`: contrato compatível com props legadas e normalizadas, com semântica de progresso.
+
+Essa camada reduz improviso nas telas e melhora a previsibilidade para evolução visual futura.
+
 ## Qualidade e manutenção
 
 O projeto já conta com:
@@ -206,9 +217,10 @@ O projeto já conta com:
 - padrão compartilhado para estados de loading, erro e vazio;
 - validação de formulários baseada em schema interno;
 - camada de dados desacoplada com mapeadores e erros normalizados;
+- componentes reutilizáveis com contratos e testes dedicados;
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
-- testes cobrindo navegação, validação de login, serviços, cadastro, logout e estados do feed;
+- testes cobrindo navegação, validação de login, serviços, componentes base, cadastro, logout e estados do feed;
 - melhorias básicas de responsividade no fluxo principal.
 
 Melhorias futuras recomendadas:

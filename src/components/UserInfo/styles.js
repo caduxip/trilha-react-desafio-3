@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
+  align-items: flex-start;
   flex-direction: row;
+  gap: ${({ theme }) => theme.spacing.md};
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
 `;
 
@@ -11,7 +13,7 @@ export const UserPicture = styled.img`
   height: 32px;
   border-radius: ${({ theme }) => theme.radius.pill};
   border: 3px solid ${({ theme }) => theme.colors.text};
-  margin-right: ${({ theme }) => theme.spacing.md};
+  flex-shrink: 0;
 `;
 
 export const NameText = styled.div`
@@ -24,7 +26,7 @@ export const NameText = styled.div`
 `;
 
 export const Progress = styled.div`
-  width: 180px;
+  width: min(180px, 100%);
   height: 6px;
   background-color: ${({ theme }) => theme.colors.text};
   border-radius: ${({ theme }) => theme.radius.sm};

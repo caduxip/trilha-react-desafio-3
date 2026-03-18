@@ -7,15 +7,18 @@ const theme = {
     surface: '#151515',
     surfaceAlt: '#2d2d37',
     surfaceCard: '#3b4651',
+    surfaceMuted: '#24212f',
     border: '#3b3450',
     buttonNeutral: '#565656',
     text: '#ffffff',
     textMuted: '#ffffff80',
     textSubtle: '#ffffff70',
     primary: '#e4105d',
+    primaryHover: '#f1206d',
     success: '#23dd7a',
     warning: '#e5e044',
     danger: '#ff6b6b',
+    focus: '#ffffff99',
   },
   spacing: {
     xs: '4px',
@@ -73,6 +76,13 @@ const theme = {
     sm: '640px',
     md: '720px',
     lg: '960px',
+  },
+  shadows: {
+    focus: '0 0 0 3px rgba(255, 255, 255, 0.2)',
+    card: '0 18px 32px rgba(0, 0, 0, 0.18)',
+  },
+  motion: {
+    fast: '0.2s ease',
   },
 };
 
