@@ -101,7 +101,10 @@ Variáveis disponíveis:
 
 - `REACT_APP_API_URL`: URL base da API consumida pelo frontend.
 - `REACT_APP_ENABLE_WEB_VITALS`: habilita coleta opcional de métricas de performance no cliente.
+- `REACT_APP_ENABLE_SENTRY`: liga ou desliga o envio de erros para o monitor externo.
 - `REACT_APP_LOG_LEVEL`: define o nível mínimo de log do frontend (`debug`, `info`, `warn`, `error`, `silent`).
+- `REACT_APP_SENTRY_DSN`: DSN do projeto Sentry, quando a observabilidade externa estiver habilitada.
+- `REACT_APP_SENTRY_ENVIRONMENT`: nome do ambiente reportado ao Sentry, como `development`, `staging` ou `production`.
 
 Se não for definida, a aplicação usa `http://127.0.0.1:8001` por padrão.
 
@@ -276,10 +279,17 @@ Com isso, a aplicação reduz lógica repetida e trata falhas de forma mais unif
 O projeto agora possui uma camada leve de observabilidade no cliente:
 
 - `src/lib/observability/logger.js`: logger central com nível configurável por ambiente;
+- `src/lib/observability/monitor.js`: adapter opcional para integração com Sentry;
 - `src/reportWebVitals.js`: coleta opcional de métricas de performance usando `web-vitals`;
 - `src/components/AppErrorBoundary`: integração da captura de erros de render com o logger central.
 
-Essa estrutura ainda é simples, mas deixa o frontend pronto para evoluir depois para integrações com ferramentas externas sem espalhar `console.*` pelo código.
+Quando `REACT_APP_ENABLE_SENTRY=true` e `REACT_APP_SENTRY_DSN` está configurado:
+
+- o bootstrap inicializa o Sentry no início da aplicação;
+- erros de runtime capturados pela `AppErrorBoundary` passam a ser enviados ao monitor externo;
+- logs de erro do frontend também podem ser encaminhados para observabilidade, sem substituir o console local.
+
+Essa estrutura mantém o frontend simples em ambiente local, mas já oferece um caminho profissional para capturar erros reais de produção sem espalhar chamadas do provedor externo pelo código.
 
 ## Testes end-to-end
 

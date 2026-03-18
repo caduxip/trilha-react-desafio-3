@@ -1,4 +1,5 @@
 import { ENV_CONFIG } from '../../config/env';
+import { monitoring } from './monitor';
 
 const LOG_LEVEL_PRIORITY = {
   debug: 10,
@@ -43,16 +44,25 @@ const logger = {
 
   error(message, metadata) {
     writeLog('error', message, metadata);
+    // Logs de erro seguem indo para o console local e, quando configurado,
+    // também são encaminhados para o provedor externo de observabilidade.
+    if (metadata?.skipExternalMonitoring) {
+      return;
+    }
+
+    monitoring.captureMessage(message, metadata);
   },
 
   reportRuntimeError(error, context = {}) {
     // A boundary e outros pontos críticos usam este helper para
     // deixar o formato do erro consistente e pronto para futura
     // integração com ferramentas externas como Sentry.
+    monitoring.captureError(error, context);
     this.error('Frontend runtime error captured.', {
       ...context,
       errorMessage: error?.message,
       errorName: error?.name,
+      skipExternalMonitoring: true,
       stack: error?.stack,
     });
   },

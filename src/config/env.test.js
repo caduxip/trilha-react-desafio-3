@@ -60,6 +60,39 @@ describe('ENV_CONFIG', () => {
     expect(ENV_CONFIG.logLevel).toBe('info');
   });
 
+  test('uses false as the default for sentry flag', () => {
+    process.env = {
+      ...ORIGINAL_ENV,
+    };
+    delete process.env.REACT_APP_ENABLE_SENTRY;
+
+    const { ENV_CONFIG } = require('./env');
+
+    expect(ENV_CONFIG.enableSentry).toBe(false);
+  });
+
+  test('normalizes the configured sentry dsn', () => {
+    process.env = {
+      ...ORIGINAL_ENV,
+      REACT_APP_SENTRY_DSN: 'https://public@example.ingest.sentry.io/1',
+    };
+
+    const { ENV_CONFIG } = require('./env');
+
+    expect(ENV_CONFIG.sentryDsn).toBe('https://public@example.ingest.sentry.io/1');
+  });
+
+  test('throws when REACT_APP_SENTRY_DSN is not a valid absolute URL', () => {
+    process.env = {
+      ...ORIGINAL_ENV,
+      REACT_APP_SENTRY_DSN: 'dsn-invalida',
+    };
+
+    expect(() => require('./env')).toThrow(
+      'REACT_APP_SENTRY_DSN deve ser uma URL absoluta válida.',
+    );
+  });
+
   test('throws when REACT_APP_LOG_LEVEL is invalid', () => {
     process.env = {
       ...ORIGINAL_ENV,

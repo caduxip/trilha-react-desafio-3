@@ -2,6 +2,18 @@
 const DEFAULT_API_URL = 'http://127.0.0.1:8001';
 const LOG_LEVELS = ['debug', 'info', 'warn', 'error', 'silent'];
 
+const resolveOptionalUrl = (value, envName) => {
+  if (!value?.trim()) {
+    return '';
+  }
+
+  try {
+    return new URL(value.trim()).toString();
+  } catch (error) {
+    throw new Error(`${envName} deve ser uma URL absoluta válida.`);
+  }
+};
+
 const resolveBooleanFlag = (value, defaultValue = false) => {
   if (typeof value !== 'string') {
     return defaultValue;
@@ -60,12 +72,25 @@ const resolveApiUrl = () => {
   }
 };
 
+const resolveSentryEnvironment = () => {
+  const customEnvironment = process.env.REACT_APP_SENTRY_ENVIRONMENT?.trim();
+
+  if (!customEnvironment) {
+    return process.env.NODE_ENV ?? 'development';
+  }
+
+  return customEnvironment;
+};
+
 // Objeto congelado para evitar mutações acidentais em runtime.
 const ENV_CONFIG = Object.freeze({
   apiUrl: resolveApiUrl(),
   enableWebVitals: resolveBooleanFlag(process.env.REACT_APP_ENABLE_WEB_VITALS, false),
+  enableSentry: resolveBooleanFlag(process.env.REACT_APP_ENABLE_SENTRY, false),
   logLevel: resolveLogLevel(),
   nodeEnv: process.env.NODE_ENV ?? 'development',
+  sentryDsn: resolveOptionalUrl(process.env.REACT_APP_SENTRY_DSN, 'REACT_APP_SENTRY_DSN'),
+  sentryEnvironment: resolveSentryEnvironment(),
 });
 
 export { DEFAULT_API_URL, ENV_CONFIG, LOG_LEVELS };
