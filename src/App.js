@@ -10,6 +10,8 @@ import { theme } from './styles/theme';
 
 function App() {
   return (
+    // O provider de autenticação fica no topo para que rotas, header e hooks
+    // de domínio enxerguem a mesma fonte de verdade da sessão local.
     <AuthProvider>
       {/* Injeta os tokens visuais usados pelos styled-components. */}
       <ThemeProvider theme={theme}>

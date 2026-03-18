@@ -25,6 +25,7 @@ const Button = ({
       disabled={disabled || isLoading}
       {...rest}
     >
+      {/* `children` tem prioridade porque permite composições mais flexíveis. */}
       {iconLeft ? <span aria-hidden="true">{iconLeft}</span> : null}
       {children ?? title}
       {iconRight ? <span aria-hidden="true">{iconRight}</span> : null}

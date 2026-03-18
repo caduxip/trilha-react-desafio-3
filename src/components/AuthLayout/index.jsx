@@ -18,6 +18,8 @@ const AuthLayout = ({ children, heroTitle = DEFAULT_HERO_TITLE }) => {
           <HeroTitle>{heroTitle}</HeroTitle>
         </Column>
         <Column>
+          {/* O conteúdo do formulário é injetado por login/cadastro,
+              então este layout cuida só da moldura compartilhada. */}
           <FormWrapper as="section" aria-label="Área de autenticação">
             {children}
           </FormWrapper>

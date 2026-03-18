@@ -36,6 +36,7 @@ const AppRoutes = () => {
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path={ROUTES.home} element={<Home />} />
+        {/* Login e cadastro usam guarda pública: quem já tem sessão volta para o feed. */}
         <Route
           path={ROUTES.login}
           element={
@@ -52,6 +53,7 @@ const AppRoutes = () => {
             </PublicRoute>
           }
         />
+        {/* Feed usa guarda privada: acesso só com sessão restaurada no AuthContext. */}
         <Route
           path={ROUTES.feed}
           element={

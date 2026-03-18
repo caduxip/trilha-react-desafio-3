@@ -21,6 +21,7 @@ const PublicRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   // A guarda pública evita que quem já entrou volte manualmente para login/cadastro.
+  // Isso simplifica a experiência e reduz estados estranhos na navegação.
   if (isAuthenticated) {
     return <Navigate to={ROUTES.feed} replace />;
   }

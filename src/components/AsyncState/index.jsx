@@ -5,6 +5,7 @@ import { ActionRow, Description, Surface, Title } from './styles';
 
 const AsyncState = ({ actionLabel, description, onAction, title }) => {
   return (
+    // `aria-live` ajuda leitores de tela a perceberem mudanças de estado dinâmicas.
     <Surface aria-live="polite" role={actionLabel ? 'alert' : 'status'}>
       {title ? <Title>{title}</Title> : null}
       {description ? <Description>{description}</Description> : null}

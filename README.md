@@ -48,6 +48,7 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 ## Estrutura principal
 
 ```text
+docs/               documentação complementar de arquitetura e UI compartilhada
 src/
   assets/            imagens e recursos estáticos
   components/        componentes reutilizáveis de UI e layout
@@ -60,6 +61,11 @@ src/
   services/          infraestrutura compartilhada, como cliente HTTP
   styles/            estilos globais, tema e tokens visuais
 ```
+
+Documentação complementar:
+
+- `docs/frontend-architecture.md`: visão de camadas, fluxo de autenticação, feed e organização por feature;
+- `docs/ui-components.md`: contrato dos componentes compartilhados e regras práticas para evolução da UI base.
 
 ## Rotas da aplicação
 
@@ -233,6 +239,14 @@ O projeto agora centraliza parte das definições transversais para reduzir dupl
 - `src/features/auth/validation/schema.js`: schemas compartilhados de validação para os formulários de autenticação.
 
 Essa organização ajuda a evitar strings e regras espalhadas por páginas e testes.
+
+## Guias internos
+
+Além do README, o repositório agora possui guias curtos voltados para onboarding:
+
+- `docs/frontend-architecture.md`: explica a divisão entre `App`, rotas, features, componentes compartilhados e infraestrutura;
+- `docs/ui-components.md`: descreve o papel de `Button`, `Input`, `Header`, `AuthLayout`, `AsyncState` e outros componentes base;
+- comentários no código em pontos de fluxo, como guardas, providers, hooks e helpers de teste, para facilitar leitura por pessoas em início de carreira.
 
 ## Camada HTTP
 

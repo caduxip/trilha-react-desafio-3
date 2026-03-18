@@ -17,6 +17,8 @@ const Input = ({ leftIcon, label, name, control, errorMessage, ...rest }) => {
 
   return (
     <FieldWrapper>
+      {/* O label continua opcional para preservar flexibilidade do componente,
+          mas os formulários do projeto usam esse texto para melhorar semântica. */}
       {label ? <FieldLabel htmlFor={inputId}>{label}</FieldLabel> : null}
       <InputContainer $hasError={Boolean(errorMessage)}>
         {leftIcon ? <IconContainer>{leftIcon}</IconContainer> : null}

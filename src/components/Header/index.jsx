@@ -25,6 +25,7 @@ import {
 const Header = ({ autenticado }) => {
   const navigate = useNavigate();
   const { isAuthenticated, signOut, user } = useAuth();
+  // Mantemos a prop `autenticado` por compatibilidade, mas o contexto é a fonte principal.
   const isUserAuthenticated = autenticado ?? isAuthenticated;
 
   const handleSignOut = () => {
@@ -62,6 +63,7 @@ const Header = ({ autenticado }) => {
         >
           {isUserAuthenticated ? (
             <UserMenu>
+              {/* O cabeçalho autenticado vira um ponto rápido de contexto de sessão. */}
               <span>{user?.name ?? 'Usuário'}</span>
               <LogoutButton type="button" onClick={handleSignOut}>
                 Sair
