@@ -397,7 +397,8 @@ A cobertura atual do frontend foi ampliada para proteger os fluxos mais sensíve
 - testes de integração do app para login, cadastro, logout, redirecionamentos e estados do feed;
 - testes unitários de serviços para autenticação e camada de dados do feed;
 - testes unitários dos componentes base reutilizáveis;
-- testes dedicados para `AppErrorBoundary`, persistência de sessão em `localStorage` e resolução de ambiente.
+- testes dedicados para `AppErrorBoundary`, persistência de sessão em `localStorage` e resolução de ambiente;
+- utilitários compartilhados em `src/test/`, com providers reutilizáveis de renderização e fixtures comuns para reduzir duplicação entre cenários.
 
 Com isso, a aplicação ganha uma base mais segura para refatorações incrementais.
 

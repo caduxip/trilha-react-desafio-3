@@ -1,12 +1,8 @@
 // Testes do contrato do botão reutilizável.
-import { render, screen } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { screen } from '@testing-library/react';
 
-import { theme } from '../../styles/theme';
+import { renderWithTheme } from '../../test/renderWithProviders';
 import { Button } from './index';
-
-const renderWithTheme = (component) =>
-  render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
 
 test('renders the button in loading state and disables interaction', () => {
   renderWithTheme(<Button title="Salvar" isLoading />);

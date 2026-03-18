@@ -1,12 +1,8 @@
 // Testes do bloco visual de ranking.
-import { render, screen } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { screen } from '@testing-library/react';
 
-import { theme } from '../../styles/theme';
+import { renderWithTheme } from '../../test/renderWithProviders';
 import { UserInfo } from './index';
-
-const renderWithTheme = (component) =>
-  render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
 
 test('supports the normalized user info contract with english props', () => {
   renderWithTheme(

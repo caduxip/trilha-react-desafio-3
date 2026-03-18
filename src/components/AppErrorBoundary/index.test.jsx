@@ -1,11 +1,9 @@
 // Testa o fallback exibido quando um componente lança erro em renderização.
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import { screen } from '@testing-library/react';
 
 import { MESSAGES } from '../../constants/messages';
 import { logger } from '../../lib/observability/logger';
-import { theme } from '../../styles/theme';
+import { renderWithRouterAndTheme } from '../../test/renderWithProviders';
 import { AppErrorBoundary } from './index';
 
 jest.mock('../../lib/observability/logger', () => ({
@@ -13,13 +11,6 @@ jest.mock('../../lib/observability/logger', () => ({
     reportRuntimeError: jest.fn(),
   },
 }));
-
-const renderWithProviders = (component) =>
-  render(
-    <ThemeProvider theme={theme}>
-      <MemoryRouter>{component}</MemoryRouter>
-    </ThemeProvider>,
-  );
 
 const ThrowError = () => {
   throw new Error('boom');
@@ -30,7 +21,7 @@ test('renders the fallback UI when a child component throws', () => {
   // Silenciamos isso aqui para deixar a saída da suíte mais legível.
   const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-  renderWithProviders(
+  renderWithRouterAndTheme(
     <AppErrorBoundary>
       <ThrowError />
     </AppErrorBoundary>,

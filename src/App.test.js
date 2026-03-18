@@ -9,6 +9,7 @@ import { authService } from './features/auth/services/auth';
 import { AUTH_VALIDATION_MESSAGES } from './features/auth/validation/schema';
 import { feedService } from './features/feed/services/feed';
 import { ROUTES } from './routes/paths';
+import { authenticateUser, createPost, createRankingEntry, createUser } from './test/appTestData';
 
 jest.mock('./features/auth/services/auth', () => ({
   EMAIL_IN_USE: 'EMAIL_IN_USE',
@@ -27,34 +28,10 @@ jest.mock('./features/feed/services/feed', () => ({
 const mockedAuthService = authService;
 const mockedFeedService = feedService;
 
-const createUser = () => ({
-  id: 1,
-  name: 'Pablo Henrique',
-  email: 'pablo@email.com',
-  avatar: 'https://avatars.githubusercontent.com/u/45184516?v=4',
-  percentual: 92,
-});
-
-const createPost = () => ({
-  id: 1,
-  title: 'Projeto para curso de HTML e CSS',
-  summary: 'Projeto focado em HTML semântico e composição de interface.',
-  tags: ['HTML', 'CSS'],
-  likes: 10,
-  publishedAt: 'Há 8 minutos',
-  authorName: 'Pablo Henrique',
-  authorAvatar: 'https://avatars.githubusercontent.com/u/45184516?v=4',
-});
-
 const renderAtRoute = (route) => {
   // Simula a navegação do navegador antes de renderizar a aplicação.
   window.history.pushState({}, 'Test page', route);
   return render(<App />);
-};
-
-const authenticateUser = () => {
-  // Atalho para testes que precisam de um usuário já autenticado.
-  window.localStorage.setItem(STORAGE_KEYS.authUser, JSON.stringify(createUser()));
 };
 
 beforeEach(() => {
@@ -63,14 +40,7 @@ beforeEach(() => {
 
   mockedFeedService.getFeedOverview.mockResolvedValue({
     posts: [createPost()],
-    ranking: [
-      {
-        id: 1,
-        nome: 'Pablo Henrique',
-        image: 'https://avatars.githubusercontent.com/u/45184516?v=4',
-        percentual: 92,
-      },
-    ],
+    ranking: [createRankingEntry()],
   });
 });
 
@@ -209,14 +179,7 @@ test('shows an error state and retries feed loading', async () => {
     .mockRejectedValueOnce(new Error('network'))
     .mockResolvedValueOnce({
       posts: [createPost()],
-      ranking: [
-        {
-          id: 1,
-          nome: 'Pablo Henrique',
-          image: 'https://avatars.githubusercontent.com/u/45184516?v=4',
-          percentual: 92,
-        },
-      ],
+      ranking: [createRankingEntry()],
     });
 
   renderAtRoute(ROUTES.feed);

@@ -5,10 +5,10 @@ import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import App from './App';
-import { STORAGE_KEYS } from './constants/storage';
 import { authService } from './features/auth/services/auth';
 import { feedService } from './features/feed/services/feed';
 import { ROUTES } from './routes/paths';
+import { authenticateUser, createPost, createRankingEntry, createUser } from './test/appTestData';
 
 jest.mock('./features/auth/services/auth', () => ({
   EMAIL_IN_USE: 'EMAIL_IN_USE',
@@ -27,33 +27,10 @@ jest.mock('./features/feed/services/feed', () => ({
 const mockedAuthService = authService;
 const mockedFeedService = feedService;
 
-const createUser = () => ({
-  id: 1,
-  name: 'Pablo Henrique',
-  email: 'pablo@email.com',
-  avatar: 'https://avatars.githubusercontent.com/u/45184516?v=4',
-  percentual: 92,
-});
-
-const createPost = () => ({
-  id: 1,
-  title: 'Projeto para curso de HTML e CSS',
-  summary: 'Projeto focado em HTML semântico e composição de interface.',
-  tags: ['HTML', 'CSS'],
-  likes: 10,
-  publishedAt: 'Há 8 minutos',
-  authorName: 'Pablo Henrique',
-  authorAvatar: 'https://avatars.githubusercontent.com/u/45184516?v=4',
-});
-
 const renderAtRoute = (route) => {
   window.history.pushState({}, 'Accessibility test page', route);
 
   return render(<App />);
-};
-
-const authenticateUser = () => {
-  window.localStorage.setItem(STORAGE_KEYS.authUser, JSON.stringify(createUser()));
 };
 
 beforeEach(() => {
@@ -64,14 +41,7 @@ beforeEach(() => {
   mockedAuthService.register.mockResolvedValue(createUser());
   mockedFeedService.getFeedOverview.mockResolvedValue({
     posts: [createPost()],
-    ranking: [
-      {
-        id: 1,
-        nome: 'Pablo Henrique',
-        image: 'https://avatars.githubusercontent.com/u/45184516?v=4',
-        percentual: 92,
-      },
-    ],
+    ranking: [createRankingEntry()],
   });
 });
 
