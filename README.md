@@ -26,6 +26,7 @@ O objetivo atual não é implementar autenticação real de produção, e sim co
 - ranking lateral carregado da API;
 - botão de logout no cabeçalho autenticado;
 - tema global com tokens compartilhados;
+- camada de dados com mapeamento e normalização de erro;
 - testes de navegação, login, cadastro e logout.
 
 ## Stack utilizada
@@ -160,10 +161,21 @@ Esse modelo mantém a validação declarativa e preparada para crescer sem depen
 
 Os domínios principais da aplicação foram agrupados em `src/features`:
 
-- `src/features/auth`: contexto, páginas, estilos e serviço de autenticação;
-- `src/features/feed`: página e serviço do feed autenticado.
+- `src/features/auth`: contexto, páginas, validação, mapeadores e serviço de autenticação;
+- `src/features/feed`: página, mapeadores e serviço do feed autenticado.
 
 Essa organização aproxima UI, regras e integração de cada domínio, reduzindo dependências cruzadas entre pastas genéricas.
+
+## Camada de dados frontend
+
+Os serviços da aplicação passaram a trabalhar com uma camada mais explícita de dados:
+
+- `src/features/auth/services/auth.mapper.js`: normalização do usuário autenticado e payload de cadastro;
+- `src/features/feed/services/feed.mapper.js`: transformação de posts e ranking para o formato da UI;
+- `src/lib/http/errors.js`: criação e normalização de erros de integração;
+- `src/features/feed/services/feed.js`: método consolidado `getFeedOverview()` para entregar o domínio pronto para a tela.
+
+Com isso, a UI fica menos acoplada ao formato bruto do `json-server` e mais preparada para troca futura de backend.
 
 ## Tema e sistema visual
 
@@ -193,9 +205,10 @@ O projeto já conta com:
 - boundary de erro em nível de aplicação;
 - padrão compartilhado para estados de loading, erro e vazio;
 - validação de formulários baseada em schema interno;
+- camada de dados desacoplada com mapeadores e erros normalizados;
 - tema global com tokens compartilhados;
 - rotas modularizadas com carregamento sob demanda;
-- testes cobrindo navegação, validação de login, cadastro, logout e estados do feed;
+- testes cobrindo navegação, validação de login, serviços, cadastro, logout e estados do feed;
 - melhorias básicas de responsividade no fluxo principal.
 
 Melhorias futuras recomendadas:

@@ -1,49 +1,51 @@
 import { api } from '../../../services/api';
+import { APP_ERROR_CODES, createAppError, normalizeRequestError } from '../../../lib/http/errors';
+import { toAuthUser, toRegisterPayload } from './auth.mapper';
 
 const USERS_RESOURCE = '/users';
-const EMAIL_IN_USE = 'EMAIL_IN_USE';
-const DEFAULT_AVATAR = 'https://avatars.githubusercontent.com/u/45184516?v=4';
-
-const sanitizeUser = ({ senha, ...user }) => user;
+const EMAIL_IN_USE = APP_ERROR_CODES.emailInUse;
 
 const authService = {
   async login({ email, senha }) {
-    const { data } = await api.get(USERS_RESOURCE, {
-      params: {
-        email,
-        senha,
-      },
-    });
+    try {
+      const { data } = await api.get(USERS_RESOURCE, {
+        params: {
+          email,
+          senha,
+        },
+      });
 
-    if (!data.length) {
-      return null;
+      if (!data.length) {
+        return null;
+      }
+
+      return toAuthUser(data[0]);
+    } catch (error) {
+      throw normalizeRequestError(error, 'Falha ao buscar o usuário de autenticação.');
     }
-
-    return sanitizeUser(data[0]);
   },
 
   async register({ email, name, senha }) {
-    const { data: existingUsers } = await api.get(USERS_RESOURCE, {
-      params: {
-        email,
-      },
-    });
+    try {
+      const { data: existingUsers } = await api.get(USERS_RESOURCE, {
+        params: {
+          email,
+        },
+      });
 
-    if (existingUsers.length) {
-      const error = new Error(EMAIL_IN_USE);
-      error.code = EMAIL_IN_USE;
-      throw error;
+      if (existingUsers.length) {
+        throw createAppError({
+          code: EMAIL_IN_USE,
+          message: EMAIL_IN_USE,
+        });
+      }
+
+      const { data } = await api.post(USERS_RESOURCE, toRegisterPayload({ email, name, senha }));
+
+      return toAuthUser(data);
+    } catch (error) {
+      throw normalizeRequestError(error, 'Falha ao registrar o usuário.');
     }
-
-    const { data } = await api.post(USERS_RESOURCE, {
-      email,
-      name,
-      avatar: DEFAULT_AVATAR,
-      percentual: 0,
-      senha,
-    });
-
-    return sanitizeUser(data);
   },
 };
 

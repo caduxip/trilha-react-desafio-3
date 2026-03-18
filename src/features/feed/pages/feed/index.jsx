@@ -31,10 +31,7 @@ const Feed = () => {
       setError('');
 
       try {
-        const [nextPosts, nextRanking] = await Promise.all([
-          feedService.getPosts(),
-          feedService.getRanking(),
-        ]);
+        const { posts: nextPosts, ranking: nextRanking } = await feedService.getFeedOverview();
 
         if (!isMounted) {
           return;

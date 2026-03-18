@@ -19,8 +19,7 @@ jest.mock('./features/auth/services/auth', () => ({
 
 jest.mock('./features/feed/services/feed', () => ({
   feedService: {
-    getPosts: jest.fn(),
-    getRanking: jest.fn(),
+    getFeedOverview: jest.fn(),
   },
 }));
 
@@ -59,15 +58,17 @@ beforeEach(() => {
   window.localStorage.clear();
   jest.clearAllMocks();
 
-  mockedFeedService.getPosts.mockResolvedValue([createPost()]);
-  mockedFeedService.getRanking.mockResolvedValue([
-    {
-      id: 1,
-      nome: 'Pablo Henrique',
-      image: 'https://avatars.githubusercontent.com/u/45184516?v=4',
-      percentual: 92,
-    },
-  ]);
+  mockedFeedService.getFeedOverview.mockResolvedValue({
+    posts: [createPost()],
+    ranking: [
+      {
+        id: 1,
+        nome: 'Pablo Henrique',
+        image: 'https://avatars.githubusercontent.com/u/45184516?v=4',
+        percentual: 92,
+      },
+    ],
+  });
 });
 
 test('redirects unauthenticated users from feed to login', async () => {
@@ -109,8 +110,7 @@ test('allows the user to log in and load the authenticated feed', async () => {
   expect(screen.getAllByText('Pablo Henrique').length).toBeGreaterThan(0);
 
   await waitFor(() => {
-    expect(mockedFeedService.getPosts).toHaveBeenCalledTimes(1);
-    expect(mockedFeedService.getRanking).toHaveBeenCalledTimes(1);
+    expect(mockedFeedService.getFeedOverview).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -145,7 +145,10 @@ test('allows the authenticated user to log out from the feed', async () => {
 
 test('shows the empty state when the feed has no posts', async () => {
   authenticateUser();
-  mockedFeedService.getPosts.mockResolvedValue([]);
+  mockedFeedService.getFeedOverview.mockResolvedValue({
+    posts: [],
+    ranking: [],
+  });
 
   renderAtRoute(ROUTES.feed);
 
@@ -156,9 +159,19 @@ test('shows the empty state when the feed has no posts', async () => {
 test('shows an error state and retries feed loading', async () => {
   authenticateUser();
 
-  mockedFeedService.getPosts
+  mockedFeedService.getFeedOverview
     .mockRejectedValueOnce(new Error('network'))
-    .mockResolvedValueOnce([createPost()]);
+    .mockResolvedValueOnce({
+      posts: [createPost()],
+      ranking: [
+        {
+          id: 1,
+          nome: 'Pablo Henrique',
+          image: 'https://avatars.githubusercontent.com/u/45184516?v=4',
+          percentual: 92,
+        },
+      ],
+    });
 
   renderAtRoute(ROUTES.feed);
 
@@ -169,6 +182,6 @@ test('shows an error state and retries feed loading', async () => {
   expect(await screen.findByText('Projeto para curso de HTML e CSS')).toBeInTheDocument();
 
   await waitFor(() => {
-    expect(mockedFeedService.getPosts).toHaveBeenCalledTimes(2);
+    expect(mockedFeedService.getFeedOverview).toHaveBeenCalledTimes(2);
   });
 });
